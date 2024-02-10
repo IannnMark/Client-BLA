@@ -1,67 +1,100 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import "../../App.css";
 import Search from "./Search";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart, FaBell } from "react-icons/fa";
-
 import { logout } from "../../actions/userActions";
 
 const Header = () => {
+  const [isSticky, setSticky] = useState(false);
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { requestDocuments } = useSelector((state) => state.request)
-
+  const { requestDocuments } = useSelector((state) => state.request);
 
   const logoutHandler = () => {
     dispatch(logout());
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log('Scrolling...', window.scrollY);
+      setSticky(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const navbarClass = isSticky ? "navbar row sticky-navbar" : "navbar row";
 
   const iconStyle = { fontSize: "1.5rem", color: "#9C865C" };
   const productsLinkStyle = { color: "black", fontFamily: "Arial" };
 
   return (
     <Fragment>
-      <nav className="navbar row">
+      
+      <nav className={navbarClass}>
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
             <Link to="/">
               <img src="/images/school_logo.png" alt="School Logo" />
+              <span className="ml-2">Blessed Land Academy of Taguig</span>
             </Link>
           </div>
-        </div>
-        <div className="col-12 col-md-6 mt-2 mt-md-0">
-          <Search />
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 d-flex justify-content-end align-items-center">
           {user && user.role !== "admin" && user.role !== "guidance" && (
-            <Link to="/cart" style={{ textDecoration: "none" }} className="d-flex align-items-center">
+            <Link
+              to="/cart"
+              style={{ textDecoration: "none" }}
+              className="d-flex align-items-center"
+            >
               <span id="cart" className="ml-3 icon" style={iconStyle}>
                 <FaShoppingCart />
               </span>
-              <span className="ml-1" id="cart_count" style={{ fontSize: "1rem" }}>
+              <span
+                className="ml-1"
+                id="cart_count"
+                style={{ fontSize: "1rem" }}
+              >
                 {cartItems.length}
               </span>
             </Link>
           )}
 
           {user && user.role === "user" && (
-            <Link to="/request" style={{ textDecoration: "none" }} className="d-flex align-items-center">
+            <Link
+              to="/request"
+              style={{ textDecoration: "none" }}
+              className="d-flex align-items-center"
+            >
               <span id="request" className="ml-3 icon" style={iconStyle}>
                 <FaBell />
               </span>
-              <span className="ml-1" id="request_count" style={{ fontSize: "1rem" }}>
+              <span
+                className="ml-1"
+                id="request_count"
+                style={{ fontSize: "1rem" }}
+              >
                 {requestDocuments.length}
               </span>
             </Link>
           )}
 
-          <Link to="/products" style={{ textDecoration: "none" }}>
-            <span id="product" className="ml-3" style={productsLinkStyle}>
+          <Link to="/products">
+            <span id="product" className="ml-3">
               Products
             </span>
+          </Link>
+
+          <Link className="mx-3" to="/aboutUs">
+            About
           </Link>
 
           {user ? (
@@ -100,7 +133,6 @@ const Header = () => {
                   </Link>
                 )}
 
-
                 {user && user.role === "user" && (
                   <Link className="dropdown-item" to="/orders/me">
                     Orders
@@ -128,7 +160,7 @@ const Header = () => {
             </div>
           ) : (
             !loading && (
-              <Link to="/login" className="btn ml-4" id="login_btn">
+              <Link to="/login" id="login" className="login-nav">
                 Login
               </Link>
             )
@@ -140,4 +172,3 @@ const Header = () => {
 };
 
 export default Header;
-

@@ -48,6 +48,7 @@ import ProcessRequests from "./components/guidance/ProcessRequests";
 import NewViolation from "./components/guidance/NewViolation";
 import ViolationsList from "./components/guidance/ViolationsList";
 import UpdateViolation from "./components/guidance/UpdateViolation";
+import AboutUs from "./components/layout/aboutUs";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/search/:keyword" element={<Home />} exact="true" />
         {/* <Route path="/search/:keyword" element={<Index />} exact="true" /> */}
         <Route path="/products" element={<Home />} exact="true" />
+        <Route path="/aboutUs" element={<AboutUs />} exact="true" />
         <Route path="/product/:id" element={<ProductDetails />} exact="true" />
         <Route path="/document/:id" element={<DocumentDetails />} exact="true" />
         <Route path="/login" element={<Login />} exact="true" />

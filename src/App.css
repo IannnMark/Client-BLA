@@ -55,10 +55,18 @@ body {
 
 
 .navbar-brand img {
-  height: 70px;
-  width: 150px;
-  border-radius: 15%;
-  box-shadow: 3px 3px 3px 3px black;
+  height: 60px;
+  width: 95px;
+  margin-left: 40px;
+  transition: all 0.3s ease; 
+  
+}
+.ml-2 { 
+  font-family: fantasy;
+  font-size: small;
+  color: black;
+  font-weight: medium;
+  transition: all 0.3s ease; 
 }
 
 /* Scroll Bar */
@@ -80,12 +88,79 @@ body {
 }
 
 nav {
-  /* background-color: lightskyblue; */
-  background-color: rgba(255, 255, 255, 0.815);
-  /* padding: 1rem 1rem; */
-  /* background-image: url(/frontend/public/images/bg1.jpeg); */
-  border-style: ridge ;
+  background: rgb(156,134,92);
+  background: linear-gradient(90deg, rgba(156,134,92,1) 17%, rgba(194,186,118,1) 48%, rgba(235,222,112,1) 69%, rgba(217,196,95,1) 76%, rgba(200,169,78,1) 83%, rgba(192,158,70,1) 86%, rgba(177,135,55,1) 92%, rgba(177,135,55,1) 94%);
+  
 }
+
+.sticky-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 100;
+}
+
+#login.login-nav {
+  margin-right: 50%;
+  font-family: fantasy;
+  font-weight: larger;
+  color: black;
+  display: inline-block;
+  padding: 8px 15px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+  
+}
+#login.login-nav:hover {
+  color: #172536; /* Replace with the desired hover color */
+  border-color: #172536; /* Replace with the desired hover border color */
+  border-radius: 30%;
+  background-color: #b18737;
+}
+
+.navbar a.mx-3 {
+  margin-right: 50%;
+  font-family: fantasy;
+  font-weight: larger;
+  color: black;
+  display: inline-block;
+  padding: 8px 15px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.navbar a.mx-3:hover {
+  color: #172536; /* Replace with the desired hover color */
+  border-color: #172536; /* Replace with the desired hover border color */
+  border-radius: 30%;
+  background-color: #b18737;
+}
+
+.navbar .ml-3 {
+  font-family: fantasy;
+  font-weight: larger;
+  color: black;
+  display: inline-block;
+  padding: 8px 15px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.navbar .ml-3:hover {
+  color: #172536; /* Replace with the desired hover color */
+  border-color: #172536; /* Replace with the desired hover border color */
+  border-radius: 30%;
+  background-color: #b18737;
+}
+
+.active-step {
+  font-style: fantasy;
+}
+
 
 #search_btn {
   background-color: #febd69;

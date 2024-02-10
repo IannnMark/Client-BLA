@@ -8,7 +8,9 @@ import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getDocuments } from "../../actions/documentActions";
 import Document from "../document/Document";
+import DocumentAbout from "../document/DocumentAbout";
 import Loader from "../layout/Loader";
+import "./DocumentIndex.css";
 
 const Index = () => {
     const dispatch = useDispatch();
@@ -77,6 +79,12 @@ const Index = () => {
                             )}
                         </div>
                     </section>
+                    <section id="documents" className="container mt-5">
+                        <div className="row-document">
+                            <DocumentAbout/>
+                        </div>
+                    </section>
+                    
                 </Fragment>
             )}
         </Fragment>
