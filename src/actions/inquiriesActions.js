@@ -46,6 +46,11 @@ export const createRequest = (request) => async (dispatch, getState) => {
     }
 };
 
+
+
+
+
+
 export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS,
@@ -95,27 +100,7 @@ export const getRequestDetails = (id) => async (dispatch) => {
 
 
 
-//Admin side
 
-// export const allRequests = () => async (dispatch) => {
-//     try {
-//         dispatch({ type: ALL_REQUESTS });
-
-//         const { data } = await axios.get(`/api/v1/admin/requests`);
-
-//         dispatch({
-//             type: ALL_REQUESTS_SUCCESS,
-
-//             payload: data,
-//         });
-//     } catch (error) {
-//         dispatch({
-//             type: ALL_REQUESTS_FAIL,
-
-//             payload: error.response.data.message,
-//         });
-//     }
-// }
 
 export const allRequests = () => async (dispatch) => {
     try {
@@ -157,6 +142,27 @@ export const allGuidanceRequests = () => async (dispatch) => {
 }
 
 
+export const allCashierRequests = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_REQUESTS });
+
+        const { data } = await axios.get(`/api/v1/cashier/requests`);
+
+        dispatch({
+            type: ALL_REQUESTS_SUCCESS,
+
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: ALL_REQUESTS_FAIL,
+
+            payload: error.response.data.message,
+        });
+    }
+}
+
+
 
 
 
@@ -170,7 +176,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
             },
         };
 
-        console.log('Update Request Data:', requestData); // Add this log
+        console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
             `/api/v1/admin/request/${id}`,
@@ -178,7 +184,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
             config
         );
 
-        console.log('Update Request Response:', response); // Add this log
+        console.log('Update Request Response:', response);
 
         dispatch({
             type: UPDATE_REQUEST_SUCCESS,
@@ -205,7 +211,7 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
             },
         };
 
-        console.log('Update Request Data:', requestData); // Add this log
+        console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
             `/api/v1/guidance/request/${id}`,
@@ -213,8 +219,41 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
             config
         );
 
-        console.log('Update Request Response:', response); // Add this log
+        console.log('Update Request Response:', response);
+        dispatch({
+            type: UPDATE_REQUEST_SUCCESS,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error('Update Request Error:', error);
 
+        dispatch({
+            type: UPDATE_REQUEST_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
+
+
+export const updateCashierRequest = (id, requestData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_REQUEST });
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+
+        console.log('Update Request Data:', requestData);
+
+        const response = await axios.put(
+            `/api/v1/cashier/request/${id}`,
+            requestData,
+            config
+        );
+
+        console.log('Update Request Response:', response);
         dispatch({
             type: UPDATE_REQUEST_SUCCESS,
             payload: response.data,
