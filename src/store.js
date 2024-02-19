@@ -30,6 +30,13 @@ import {
 } from "./reducers/violationReducers";
 
 import {
+  balancesReducer,
+  newBalanceReducer,
+  balanceReducer,
+  balanceDetailsReducer,
+} from "./reducers/balanceReducers";
+
+import {
   authReducer,
   userReducer,
   forgotPasswordReducer,
@@ -107,6 +114,11 @@ const reducer = combineReducers({
   requestsPerMonth: requestsPerMonthReducer,
   documentSales: documentSalesReducer,
   customerRequests: customerRequestsReducer,
+  balances: balancesReducer,
+  newBalance: newBalanceReducer,
+  balance: balanceReducer,
+  balanceDetails: balanceDetailsReducer,
+
 
 });
 
