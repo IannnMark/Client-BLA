@@ -5,12 +5,10 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useSelector } from "react-redux";
 
 const ConfirmOrder = () => {
-  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   let navigate = useNavigate();
 
-  // Calculate Order Prices
 
   const itemsPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
