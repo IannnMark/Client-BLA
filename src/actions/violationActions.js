@@ -27,6 +27,7 @@ export const clearErrors = () => async (dispatch) => {
         type: CLEAR_ERRORS,
     });
 };
+
 export const getGuidanceViolations = () => async (dispatch) => {
     try {
         dispatch({ type: GUIDANCE_VIOLATIONS_REQUEST });
