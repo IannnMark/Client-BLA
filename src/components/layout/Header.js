@@ -100,6 +100,12 @@ const Header = () => {
                   </Link>
                 )}
 
+                {user && user.role === "cashier" && (
+                  <Link className="dropdown-item" to="/cashier/balances">
+                    Dashboard
+                  </Link>
+                )}
+
 
                 {user && user.role === "user" && (
                   <Link className="dropdown-item" to="/orders/me">
@@ -140,4 +146,11 @@ const Header = () => {
 };
 
 export default Header;
+
+
+
+
+
+
+
 
