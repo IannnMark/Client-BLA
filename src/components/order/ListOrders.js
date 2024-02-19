@@ -50,9 +50,9 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
-          label: "Date of Request",
+          label: "Date of Order",
 
-          field: "dateofRequest",
+          field: "dateofOrder",
 
           sort: "asc",
         },
@@ -84,8 +84,8 @@ const ListOrders = () => {
     };
 
     sortedOrders.forEach((order) => {
-      const formattedCreatedDate = order.dateofRequest
-        ? new Date(order.dateofRequest).toLocaleDateString()
+      const formattedCreatedDate = order.createdAt
+        ? new Date(order.createdAt).toLocaleDateString()
         : "N/A";
       const formattedReleaseDate = order.dateRelease ? new Date(order.dateRelease).toLocaleDateString() : "N/A";
 
@@ -98,7 +98,7 @@ const ListOrders = () => {
         orderedMerch: orderedMerch,
         numOfItems: order.orderItems.length,
         amount: `$${order.totalPrice}`,
-        dateofRequest: formattedCreatedDate,
+        dateofOrder: formattedCreatedDate,
         releaseDate: formattedReleaseDate,
         status:
           order.orderStatus &&
