@@ -54,6 +54,8 @@ import NewBalance from "./components/cashier/NewBalance";
 import BalanceList from "./components/cashier/BalanceList";
 import AboutUs from "./components/layout/aboutUs";
 import UpdateBalance from "./components/cashier/UpdateBalance";
+import AboutUs from "./components/layout/aboutUs";
+
 
 
 function App() {
@@ -69,6 +71,7 @@ function App() {
         <Route path="/search/:keyword" element={<Home />} exact="true" />
         {/* <Route path="/search/:keyword" element={<Index />} exact="true" /> */}
         <Route path="/products" element={<Home />} exact="true" />
+        <Route path="/aboutUs" element={<AboutUs />} exact="true" />
         <Route path="/product/:id" element={<ProductDetails />} exact="true" />
         <Route path="/document/:id" element={<DocumentDetails />} exact="true" />
         <Route path="/aboutUs" element={<AboutUs />} exact="true" />
