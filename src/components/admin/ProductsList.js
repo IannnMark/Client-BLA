@@ -64,10 +64,8 @@ const ProductsList = () => {
     const data = {
       columns: [
         {
-          label: "ID",
-
-          field: "id",
-
+          label: "Codename",
+          field: "codename",
           sort: "asc",
         },
 
@@ -115,7 +113,7 @@ const ProductsList = () => {
 
     products.forEach((product) => {
       data.rows.push({
-        id: product._id,
+        codename: product.codename,
 
         name: product.name,
 
@@ -124,12 +122,14 @@ const ProductsList = () => {
         stock: product.stock,
 
         images: (
-          <img
-            src={product.images[0].url} // Assuming that the first image is the main image
-            alt={product.name}
-            className="product-image"
-            style={{ width: "80px", height: "80px" }}
-          />
+          <a href={product.images[0].url} target="_blank" rel="noopener noreferrer">
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              className="product-image"
+              style={{ width: "80px", height: "80px" }}
+            />
+          </a>
         ),
 
         actions: (
