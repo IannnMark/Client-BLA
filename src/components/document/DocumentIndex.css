@@ -1,0 +1,10 @@
+.row-document {
+    background: red;
+    background-size: cover;
+
+}
+
+body {
+    background: rgb(156, 134, 92);
+    background: linear-gradient(90deg, rgba(156, 134, 92, 1) 17%, rgba(194, 186, 118, 1) 48%, rgba(235, 222, 112, 1) 69%, rgba(217, 196, 95, 1) 76%, rgba(200, 169, 78, 1) 83%, rgba(192, 158, 70, 1) 86%, rgba(177, 135, 55, 1) 92%, rgba(177, 135, 55, 1) 94%);
+}
