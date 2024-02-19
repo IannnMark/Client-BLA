@@ -100,12 +100,14 @@ const DocumentList = () => {
                 price: `₱${document.price}`,
 
                 images: (
-                    <img
-                        src={document.images[0].url}
-                        alt="document.name"
-                        className="document-image"
-                        style={{ width: "80px", height: "80px" }}
-                    />
+                    <a href={document.images[0].url} target="_blank" rel="noopener noreferrer">
+                        <img
+                            src={document.images[0].url}
+                            alt="document.name"
+                            className="document-image"
+                            style={{ width: "80px", height: "80px" }}
+                        />
+                    </a>
                 ),
 
                 actions: (
