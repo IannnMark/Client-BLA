@@ -34,6 +34,7 @@ import NewDocument from "./components/admin/NewDocument";
 import OrdersList from "./components/admin/OrdersList";
 import RequestsList from "./components/admin/RequestsList";
 import RequestsLists from "./components/guidance/RequestsList";
+import RequestsListss from "./components/cashier/RequestsList";
 import ProcessOrder from "./components/admin/ProcessOrder";
 import UsersList from "./components/admin/UsersList";
 import UpdateUser from "./components/admin/UpdateUser";
@@ -45,9 +46,14 @@ import ConfirmRequest from "./components/request/ConfirmRequest";
 import RequestSuccess from "./components/request/RequestSuccess";
 import ProcessRequest from "./components/admin/ProcessRequest";
 import ProcessRequests from "./components/guidance/ProcessRequests";
+import ProcessRequestss from "./components/cashier/ProcessRequests";
 import NewViolation from "./components/guidance/NewViolation";
 import ViolationsList from "./components/guidance/ViolationsList";
 import UpdateViolation from "./components/guidance/UpdateViolation";
+import NewBalance from "./components/cashier/NewBalance";
+import BalanceList from "./components/cashier/BalanceList";
+import AboutUs from "./components/layout/aboutUs";
+import UpdateBalance from "./components/cashier/UpdateBalance";
 
 
 function App() {
@@ -65,6 +71,7 @@ function App() {
         <Route path="/products" element={<Home />} exact="true" />
         <Route path="/product/:id" element={<ProductDetails />} exact="true" />
         <Route path="/document/:id" element={<DocumentDetails />} exact="true" />
+        <Route path="/aboutUs" element={<AboutUs />} exact="true" />
         <Route path="/login" element={<Login />} exact="true" />
         <Route path="/register" element={<Register />} exact="true" />
         <Route path="/me" element={<Profile />} exact="true" />
@@ -275,6 +282,16 @@ function App() {
         />
 
         <Route
+          path="/cashier/requests"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <RequestsListss />
+            </ProtectedRoute>
+          }
+          exact="true"
+        />
+
+        <Route
           path="/admin/order/:id"
           element={
             <ProtectedRoute isAdmin={true}>
@@ -296,6 +313,15 @@ function App() {
           element={
             <ProtectedRoute isGuidance={true}>
               <ProcessRequests />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cashier/request/:id"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <ProcessRequestss />
             </ProtectedRoute>
           }
         />
@@ -352,6 +378,35 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/cashier/balance"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <NewBalance />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cashier/balances"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <BalanceList />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/cashier/balance/:id"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <UpdateBalance />
+            </ProtectedRoute>
+          }
+        />
+
 
         <Route path="/cart" element={<Cart />} exact="true" />
         <Route path="/request" element={<Request />} exact="true" />
