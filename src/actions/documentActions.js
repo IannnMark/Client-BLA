@@ -138,7 +138,7 @@ export const getAdminDocuments = () => async (dispatch) => {
     try {
         dispatch({ type: ADMIN_DOCUMENTS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/admin/documents`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/documents`);
 
         dispatch({
             type: ADMIN_DOCUMENTS_SUCCESS,
@@ -167,7 +167,7 @@ export const newDocument = (documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `/api/v1/admin/document/new`,
+            `${process.env.REACT_APP_API}/api/v1/admin/document/new`,
             documentData,
             config
         );
@@ -220,11 +220,10 @@ export const updateDocument = (id, documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.put(
-            `/api/v1/admin/document/${id}`,
+            `${process.env.REACT_APP_API}/api/v1/admin/document/${id}`,
             documentData,
             config
         );
-
 
         dispatch({
             type: UPDATE_DOCUMENT_SUCCESS,
