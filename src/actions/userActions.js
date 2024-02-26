@@ -255,21 +255,41 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
 // Get all users
 
+// export const allUsers = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: ALL_USERS_REQUEST });
+
+//     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/users`);
+
+//     dispatch({
+//       type: ALL_USERS_SUCCESS,
+
+//       payload: data.users,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: ALL_USERS_FAIL,
+
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
 export const allUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
-
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/users`);
-
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/admin/users`,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: ALL_USERS_SUCCESS,
-
       payload: data.users,
     });
   } catch (error) {
     dispatch({
       type: ALL_USERS_FAIL,
-
       payload: error.response.data.message,
     });
   }
