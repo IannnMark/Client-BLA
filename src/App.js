@@ -415,7 +415,7 @@ function App() {
         <Route path="/cart" element={<Cart />} exact="true" />
         <Route path="/request" element={<Request />} exact="true" />
       </Routes>
-      {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />};
+      {/* {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />}; */}
     </div>
   );
 }
