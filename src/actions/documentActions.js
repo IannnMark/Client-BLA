@@ -90,7 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/document/${id}`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/document/${id}`);
 
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
@@ -191,7 +191,7 @@ export const deleteDocument = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_DOCUMENT_REQUEST });
 
-        const { data } = await axios.delete(`/api/v1/admin/document/${id}`);
+        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/document/${id}`);
 
         dispatch({
             type: DELETE_DOCUMENT_SUCCESS,
