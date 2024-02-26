@@ -1,21 +1,15 @@
 import React, { Fragment } from "react";
 import ErrorBoundary from './ErrorBoundary';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { addDocumentRequest, removeDocumentRequest } from "../../actions/requestActions";
+import { removeDocumentRequest } from "../../actions/requestActions";
 
 const DocumentRequest = () => {
-    // const dispatch = useDispatch();
-    // const { request } = useSelector((state) => state);
-    // const { requestDocuments } = request;
+
 
     const dispatch = useDispatch();
     const { requestDocuments } = useSelector((state) => state.request);
-
-    // const removeDocumentHandler = (id) => {
-    //     dispatch(removeDocumentRequest(id));
-    // };
 
     const removeDocumentHandler = (id) => {
         console.log('Removing document with id:', id);
@@ -60,9 +54,7 @@ const DocumentRequest = () => {
                                                 </div>
 
                                                 <div className="col-5 col-lg-3">
-                                                    {/* <Link> */}
                                                     {document.name}
-                                                    {/* </Link> */}
                                                 </div>
 
                                                 <div className="col-4 col-lg-2 mt-4 mt-lg-0">

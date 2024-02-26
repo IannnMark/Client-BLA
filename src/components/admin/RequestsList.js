@@ -13,6 +13,7 @@ import {
     deleteRequest,
 } from "../../actions/inquiriesActions";
 import { DELETE_REQUEST_RESET } from "../../constants/inquiriesConstants";
+import "./RequestList.css";
 
 const RequestsList = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const RequestsList = () => {
     const [endDate, setEndDate] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedDocument, setSelectedDocument] = useState("");
-    const [selectedGrade, setSelectedGrade] = useState("1");
+    const [selectedGrade, setSelectedGrade] = useState("");
 
     useEffect(() => {
         dispatch(allRequests());
@@ -45,8 +46,6 @@ const RequestsList = () => {
     const deleteRequestHandler = async (id) => {
         try {
             await dispatch(deleteRequest(id));
-
-            const updatedRequests = requests.filter((request) => request._id !== id);
 
             toast.success("Request deleted successfully", {
                 position: toast.POSITION.BOTTOM_CENTER,
@@ -70,6 +69,19 @@ const RequestsList = () => {
 
         return Array.from(uniqueDocuments);
     };
+
+    const getUniqueGrades = () => {
+        const uniqueGrades = new Set();
+
+        requests.forEach((request) => {
+            if (request.user && request.user.grade) {
+                uniqueGrades.add(request.user.grade);
+            }
+        });
+
+        return Array.from(uniqueGrades);
+    };
+
 
     const setRequests = () => {
         const filteredRequests = requests.filter((request) => {
@@ -102,20 +114,9 @@ const RequestsList = () => {
                 console.log('Selected Grade:', selectedGradeNum, typeof selectedGradeNum);
                 console.log('User Grade:', userGrade, typeof userGrade);
 
-                const result = userGrade >= selectedGradeNum;
-                console.log('Comparison Result:', result);
-
-                return result;
+                return userGrade === selectedGradeNum;
             })
             : documentFilteredRequests;
-
-
-
-
-
-
-
-
 
 
 
@@ -131,7 +132,7 @@ const RequestsList = () => {
         const data = {
             columns: [
                 {
-                    label: "Request ID",
+                    label: "Tracking   ID",
                     field: "id",
                     sort: "asc",
                 },
@@ -178,6 +179,22 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
+                    label: "Reference Number",
+
+                    field: "referenceNumber",
+
+                    sort: "asc",
+                },
+
+
+                {
+                    label: "Gcash ScreenShot",
+
+                    field: "screenShot",
+
+                    sort: "asc",
+                },
+                {
                     label: "Status",
                     field: "status",
                     sort: "asc",
@@ -215,7 +232,7 @@ const RequestsList = () => {
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
                 authorizationLetter: (
-                    request.authorizationLetter && request.authorizationLetter.length > 0 && (
+                    request.authorizationLetter && request.authorizationLetter.length > 0 ? (
                         <a href={request.authorizationLetter[0].url} target="_blank" rel="noopener noreferrer">
                             <img
                                 src={request.authorizationLetter[0].url}
@@ -224,8 +241,28 @@ const RequestsList = () => {
                                 style={{ width: "80px", height: "80px" }}
                             />
                         </a>
+                    ) : (
+                        "N/A"
                     )
                 ),
+
+                referenceNumber: request.referenceNumber || "N/A",
+
+                screenShot: (
+                    request.screenShot && request.screenShot.length > 0 ? (
+                        <a href={request.screenShot[0].url} target="_blank" rel="noopener noreferrer">
+                            <img
+                                src={request.screenShot[0].url}
+                                alt={request.orderItems}
+                                className="screenShot-image"
+                                style={{ width: "80px", height: "80px" }}
+                            />
+                        </a>
+                    ) : (
+                        "N/A"
+                    )
+                ),
+
 
                 status: request.requestStatus ? (
                     <p
@@ -276,7 +313,8 @@ const RequestsList = () => {
                                     type="date"
                                     onChange={(e) => setStartDate(new Date(e.target.value))}
                                 />
-                                <label className="ml-3">End Date: </label>
+                                {/* <label className="ml-3">End Date: </label> */}
+                                <label>End Date: </label>
                                 <input
                                     type="date"
                                     onChange={(e) => setEndDate(new Date(e.target.value))}
@@ -325,20 +363,14 @@ const RequestsList = () => {
                                     value={selectedGrade}
                                 >
                                     <option value="">All</option>
-                                    <option value="1">Grade 1</option>
-                                    <option value="2">Grade 2</option>
-                                    <option value="3">Grade 3</option>
-                                    <option value="4">Grade 4</option>
-                                    <option value="5">Grade 5</option>
-                                    <option value="6">Grade 6</option>
-                                    <option value="7">Grade 7</option>
-                                    <option value="8">Grade 8</option>
-                                    <option value="9">Grade 9</option>
-                                    <option value="10">Grade 10</option>
-                                    <option value="11">Grade 11</option>
-                                    <option value="12">Grade 12</option>
+                                    {getUniqueGrades().map((grade, index) => (
+                                        <option key={index} value={grade}>
+                                            {grade}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
 
                         </div>
 

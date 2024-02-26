@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
@@ -23,10 +23,6 @@ const Cart = () => {
   const removeCartItemHandler = (id) => {
     dispatch(removeItemFromCart(id));
   };
-
-  // const checkoutHandler = () => {
-  //   navigate("/login?redirect=shipping");
-  // };
   const checkoutHandler = () => {
     navigate("/confirm");
   };

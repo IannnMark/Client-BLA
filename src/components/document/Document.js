@@ -14,14 +14,6 @@ const Document = ({ document, backgroundImage }) => {
         setQuantity(storedQuantity);
     }, [document._id]);
 
-    const increaseQty = () => {
-        setQuantity((prevQty) => prevQty + 1);
-    };
-
-    const decreaseQty = () => {
-        setQuantity((prevQty) => (prevQty > 1 ? prevQty - 1 : 1));
-    };
-
     const addRequest = () => {
         dispatch(addDocumentRequest(document._id, quantity));
 

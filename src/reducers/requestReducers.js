@@ -1,7 +1,6 @@
 import {
     ADD_REQUEST,
     REMOVE_REQUEST,
-    SAVE_SHIPPING_INFO,
     CLEAR_REQUEST,
 } from "../constants/requestConstants";
 

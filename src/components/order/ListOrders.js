@@ -11,6 +11,7 @@ import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import { myOrders, clearErrors } from "../../actions/orderActions";
+import "./order.css";
 
 const ListOrders = () => {
   const dispatch = useDispatch();
@@ -50,9 +51,9 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
-          label: "Date of Order",
+          label: "Date of Request",
 
-          field: "dateofOrder",
+          field: "dateofRequest",
 
           sort: "asc",
         },
@@ -84,8 +85,8 @@ const ListOrders = () => {
     };
 
     sortedOrders.forEach((order) => {
-      const formattedCreatedDate = order.createdAt
-        ? new Date(order.createdAt).toLocaleDateString()
+      const formattedCreatedDate = order.dateofRequest
+        ? new Date(order.dateofRequest).toLocaleDateString()
         : "N/A";
       const formattedReleaseDate = order.dateRelease ? new Date(order.dateRelease).toLocaleDateString() : "N/A";
 
@@ -98,7 +99,7 @@ const ListOrders = () => {
         orderedMerch: orderedMerch,
         numOfItems: order.orderItems.length,
         amount: `$${order.totalPrice}`,
-        dateofOrder: formattedCreatedDate,
+        dateofRequest: formattedCreatedDate,
         releaseDate: formattedReleaseDate,
         status:
           order.orderStatus &&
@@ -120,23 +121,55 @@ const ListOrders = () => {
   };
 
   return (
+    // <div style={{backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.svg)`,
+    // backgroundSize: "cover",marginTop: "-47px",  }}>
     <Fragment>
       <MetaData title={"My Orders"} />
 
-      <h1 className="my-5">My Orders</h1>
+      <h1 className="my-55">My Orders</h1>
 
       {loading ? (
         <Loader />
       ) : (
         <MDBDataTable
           data={setOrders()}
-          className="px-3"
+          className="px-4"
           bordered
           striped
+          classNamee="px-3 custom-mdb-datatable" // Add custom class here
+          borderedd
+          stripedd
           hover
+          noBottomColumns
+          responsive
+          searching={false}
+          entriesLabel="Show entries"
+          entriesOptions={[10, 20, 30]}
+          infoLabel={["Showing", "to", "of", "entries"]}
+          paginationLabel={["Previous", "Next"]}
+          responsiveSm
+          responsiveMd
+          responsiveLg
+          responsiveXl
+          noRecordsFoundLabel="No records found"
+          paginationRowsPerPageOptions={[10, 20, 30]}
+          pagingTop
+          pagingBottom
+          paginationLabels={["Previous", "Next"]}
+          style={{
+              fontSize: "18px",
+              fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+          }}
+          // Add custom styling for cells based on request status
+          tbodyTextBlack
+          tbodyBorderY
+          tbodyBorderX
+          tbodyBorderBottom
+          tbodyBorderTop
         />
       )}
     </Fragment>
+  // </div>
   );
 };
 

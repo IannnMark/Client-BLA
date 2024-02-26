@@ -7,7 +7,7 @@ const CashierSidebar = () => {
 
     return (
         <div className="sidebar-wrapper">
-            <nav id="sidebar">
+            <navv id="sidebar">
                 <ul className="list-unstyled components">
 
                     {user && user.role === "cashier" && (
@@ -33,9 +33,7 @@ const CashierSidebar = () => {
                                 <Link to="/cashier/balances">
                                     <i className="fa fa-clipboard"></i> All
                                 </Link>
-                            </li>
-
-                            <li>
+                                <br/>
                                 <Link to="/cashier/balance">
                                     <i className="fa fa-plus"></i> Create
                                 </Link>
@@ -43,7 +41,7 @@ const CashierSidebar = () => {
                         </ul>
                     </li>
                 </ul>
-            </nav>
+            </navv>
         </div>
     );
 };

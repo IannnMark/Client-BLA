@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { newProduct, clearErrors } from "../../actions/productActions";
 
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import "./NewProduct.css";
+
 
 const NewProduct = () => {
   const [name, setName] = useState("");

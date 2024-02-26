@@ -10,8 +10,8 @@
 .carousel-images {
     position: relative;
     border-radius: 10px;
-    height: 400px;
-    max-width: 650px;
+    height: 500px;
+    max-width: 1000px;
     margin: auto;
     overflow: hidden;
 }
@@ -20,7 +20,7 @@
     width: 99%;
     height: 99%;
     border-radius: 8px;
-    border: #ff00008e solid 2px;
+    border: black solid 2px;
 }
 
 .slide_direction {

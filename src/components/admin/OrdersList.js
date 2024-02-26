@@ -11,7 +11,6 @@ import {
   allOrders,
   clearErrors,
   deleteOrder,
-  getOrderDetails,
 } from "../../actions/orderActions";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
@@ -106,13 +105,7 @@ const OrdersList = () => {
 
     const data = {
       columns: [
-        {
-          label: "Order ID",
 
-          field: "id",
-
-          sort: "asc",
-        },
 
         {
           label: "User Last Name",
@@ -157,6 +150,22 @@ const OrdersList = () => {
 
           sort: "asc",
         },
+        {
+          label: "Reference Number",
+
+          field: "referenceNumber",
+
+          sort: "asc",
+        },
+
+
+        {
+          label: "Gcash ScreenShot",
+
+          field: "screenShot",
+
+          sort: "asc",
+        },
 
         {
           label: "Status",
@@ -192,7 +201,7 @@ const OrdersList = () => {
         : "N/A";
 
       data.rows.push({
-        id: order._id,
+
 
         userLastName: order.user.lastname,
 
@@ -205,6 +214,23 @@ const OrdersList = () => {
         createdAt: formattedCreatedDate,
 
         dateRelease: formattedReleaseDate,
+
+        referenceNumber: order.referenceNumber || "N/A",
+
+        screenShot: (
+          order.screenShot && order.screenShot.length > 0 ? (
+            <a href={order.screenShot[0].url} target="_blank" rel="noopener noreferrer">
+              <img
+                src={order.screenShot[0].url}
+                alt={order.orderItems}
+                className="screenShot-image"
+                style={{ width: "80px", height: "80px" }}
+              />
+            </a>
+          ) : (
+            "N/A"
+          )
+        ),
 
         status:
           order.orderStatus &&

@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 
+import "./Profile.css"; // Import the CSS file for styling
+
 const Profile = () => {
   const { user, loading } = useSelector((state) => state.auth);
 
@@ -14,8 +16,18 @@ const Profile = () => {
       ) : (
         <Fragment>
           <MetaData title={"Your Profile"} />
-
-          <h2 className="mt-5 ml-5">My Profile</h2>
+       
+          <div className="profile-page"  style={{
+              backgroundImage: `url('/images/login.svg')`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              paddingTop: "1%",
+              height: "700px",  
+              backgroundAttachment: "fixed",
+  
+            }}> {/* Add the 'profile-page' class here */}
+          <h2>My Profile</h2>
 
           <div className="row justify-content-around mt-5 user-info">
             <div className="col-12 col-md-3">
@@ -28,12 +40,19 @@ const Profile = () => {
               </figure>
 
               <Link
-                to="/me/update"
-                id="edit_profile"
-                className="btn btn-primary btn-block my-5"
-              >
-                Edit Profile
-              </Link>
+                  to="/me/update"
+                  id="edit_profile"
+                  className="btn btn-primary btn-block my-3" // Adjust margin for spacing
+                >
+                  Edit Profile
+                </Link>
+                <Link
+                  to="/password/update"
+                   id="edit_profile"
+                  className="btn btn-primary btn-block mt-3"
+                >
+                  Change Password
+                </Link>
             </div>
 
             <div className="col-12 col-md-5">
@@ -51,11 +70,11 @@ const Profile = () => {
 
               <p>{String(user.createdAt).substring(0, 10)}</p>
 
-              {user.role !== "admin" && (
+              {/* {user.role !== "admin" && (
                 <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
                   My Orders
                 </Link>
-              )}
+              )} */}
 
               {/* {user.role !== "admin" && (
                 <Link to="/requests/me" className="btn btn-danger btn-block mt-5">
@@ -63,15 +82,14 @@ const Profile = () => {
                 </Link>
               )} */}
 
-              <Link
-                to="/password/update"
-                className="btn btn-primary btn-block mt-3"
-              >
-                Change Password
-              </Link>
+              
             </div>
           </div>
+          </div>
+          
+
         </Fragment>
+       
       )}
     </Fragment>
   );

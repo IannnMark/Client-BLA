@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     allGuidanceRequests,
     clearErrors,
-    deleteRequest,
 } from "../../actions/inquiriesActions";
 import { DELETE_REQUEST_RESET } from "../../constants/inquiriesConstants";
 
@@ -37,27 +36,6 @@ const RequestsList = () => {
         }
     }, [dispatch, error, navigate, isDeleted]);
 
-
-    const deleteRequestHandler = async (id) => {
-        try {
-            await dispatch(deleteRequest(id));
-
-            // After successful deletion, update local state to trigger re-render
-            const updatedRequests = requests.filter((request) => request._id !== id);
-            // You may need to dispatch an action to update the global state as well
-
-            toast.success("Request deleted successfully", {
-                position: toast.POSITION.BOTTOM_CENTER,
-            });
-
-            // Optionally, you can use setRequests to trigger a re-render
-            // setRequests(updatedRequests);
-
-        } catch (error) {
-            // Handle the error (e.g., show a toast message)
-            toast.error(error.message, { position: toast.POSITION.BOTTOM_CENTER });
-        }
-    };
 
 
     const setRequests = () => {
@@ -96,7 +74,7 @@ const RequestsList = () => {
                 },
                 {
                     label: "Requested Documents",
-                    field: "requestedDocuments", // Add a new field for requested documents
+                    field: "requestedDocuments",
                     sort: "asc",
                 },
 

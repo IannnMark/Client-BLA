@@ -1,4 +1,6 @@
 import React from 'react';
+import "./DocumentIndex.css";
+
 
 const SchoolDocuments = () => {
   const documents = [
@@ -13,15 +15,20 @@ const SchoolDocuments = () => {
 
   return (
     <div>
-      <h1>School Documents</h1>
+
+      <br />
+      <h1 className='school-text'>School Documents Information</h1>
       <ul>
         {documents.map((document) => (
           <li key={document.id}>
-            <strong>{document.name}</strong> 
+            <strong>{document.name}</strong>
             <p>{document.description}</p>
           </li>
         ))}
       </ul>
+
+
+
     </div>
   );
 };

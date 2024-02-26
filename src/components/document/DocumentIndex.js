@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import MetaData from "../layout/MetaData";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Slider, { createSliderWithTooltip } from "rc-slider";
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getDocuments } from "../../actions/documentActions";
@@ -19,21 +19,32 @@ const Index = () => {
         documents,
         error,
         documentsCount,
-        resPerPage,
         filteredDocumentsCount,
     } = useSelector((state) => state.documents);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [price, setPrice] = useState([1, 1000]);
-    const [category, setCategory] = useState("");
+    const [currentPage] = useState(1);
+    const [price] = useState([1, 1000]);
+    const [category] = useState("");
+    const [isRowDocumentActive, setIsRowDocumentActive] = useState(false);
     let { keyword } = useParams();
 
     const notify = (error = "") =>
         toast.error(error, {
             position: toast.POSITION.BOTTOM_CENTER,
         });
+
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
     const Range = createSliderWithTooltip(Slider.Range);
+
+    const documentAboutRef = useRef(null);
+    const selectDocumentsRef = useRef(null); // Add this line
+
+
+    const scrollToSelectDocuments = () => {
+        if (selectDocumentsRef.current) {
+            selectDocumentsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
 
     useEffect(() => {
         if (error) {
@@ -42,9 +53,25 @@ const Index = () => {
         dispatch(getDocuments(keyword, currentPage, price, category));
     }, [dispatch, error, currentPage, keyword, price, category]);
 
-    function setCurrentPageNo(pageNumber) {
-        setCurrentPage(pageNumber);
-    }
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            const threshold = 200;
+
+            if (scrollPosition > threshold) {
+                setIsRowDocumentActive(true);
+            } else {
+                setIsRowDocumentActive(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
 
     let count = documentsCount;
 
@@ -54,37 +81,53 @@ const Index = () => {
 
     return (
         <Fragment>
+            <section className="firstrow">
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <button type="button" className="your-button-class" onClick={scrollToSelectDocuments}>
+                    Click to View Documents
+                </button>
+            </section>
             {loading ? (
                 <Loader />
             ) : (
                 <Fragment>
                     <MetaData title={"Select Documents"} />
-                    <h1 id="documents_heading">Available Documents</h1>
-                    <section id="documents" className="container mt-5">
-                        <div className="row">
-                            {keyword ? (
-                                <Fragment>
-                                    <div className="col-6 col-md-9">
-                                        <div className="row">
-                                            {documents.map((document) => (
-                                                <Document key={document._id} document={document} col={4} />
-                                            ))}
+                    <section ref={selectDocumentsRef} className="avail">
+                        <h1 className="h1">Available Documents</h1>
+                        <section id="documents" className="container mt-5">
+                            <div className="row">
+                                {keyword ? (
+                                    <Fragment>
+                                        <div className="col-6 col-md-9">
+                                            <div className="row">
+                                                {documents.map((document) => (
+                                                    <Document
+                                                        key={document._id}
+                                                        document={document}
+                                                        col={4}
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                </Fragment>
-                            ) : (
-                                documents.map((document) => (
-                                    <Document key={document._id} document={document} col={3} />
-                                ))
-                            )}
-                        </div>
+                                    </Fragment>
+                                ) : (
+                                    documents.map((document) => (
+                                        <Document key={document._id} document={document} col={3} />
+                                    ))
+                                )}
+                            </div>
+                        </section>
+                        <br />
+                        <br />
                     </section>
-                    <section id="documents" className="container mt-5">
-                        <div className="row-document">
-                            <DocumentAbout/>
-                        </div>
-                    </section>
-                    
+
+                    <div
+                        ref={documentAboutRef}
+                        className={`row-document ${isRowDocumentActive ? "active" : ""}`}
+                    >
+                        <DocumentAbout />
+                    </div>
                 </Fragment>
             )}
         </Fragment>

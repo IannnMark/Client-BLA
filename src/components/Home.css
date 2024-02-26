@@ -1,0 +1,9 @@
+.background-containers {
+    background: url('../images/login.svg') no-repeat;
+    background-size: cover;
+    background-position: center top;
+}
+
+#products {
+    padding: 5px;
+}

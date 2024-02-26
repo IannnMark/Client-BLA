@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getDocumentDetails } from "../../actions/documentActions";
 import { addItemToCart } from "../../actions/cartActions";
 

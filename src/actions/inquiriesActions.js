@@ -19,7 +19,6 @@ import {
     UPDATE_REQUEST_FAIL,
     DELETE_REQUEST,
     DELETE_REQUEST_SUCCESS,
-    DELETE_REQUEST_RESET,
     DELETE_REQUEST_FAIL,
 } from "../constants/inquiriesConstants";
 

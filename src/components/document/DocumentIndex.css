@@ -1,0 +1,152 @@
+.row-document {
+    margin-top: 1%;
+    background: url('../../images/description.gif') no-repeat center center fixed;
+    background-size: 100% 100%;
+    border-radius: 20px;
+    transition: transform 0.5s ease;
+    background-attachment: scroll, local;
+}
+
+.row-document.active {
+    transform: translateY(0);
+}
+
+/* Add a class for the hover effect */
+.row-document:hover {
+    transform: translateY(42px);
+    ;
+    /* Adjust the scaling factor as needed */
+    transition: transform 0.5s ease;
+}
+
+#documents {
+    position: relative;
+    overflow: hidden;
+}
+
+#documents_heading {
+    color: black;
+    font-size: 3rem;
+    text-align: center;
+    font-style: italic;
+    font-family: fantasy;
+    margin-bottom: 2%;
+}
+
+.avail {
+    background: url('../../images/bg111.svg') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: scroll;
+    transition: transform 0.5s ease;
+    color: black;
+    font-size: 3rem;
+    text-align: center;
+    font-style: italic;
+    font-family: fantasy;
+}
+
+.avail:hover {
+    transform: scale(1.05);
+    /* Adjust the scaling factor as needed */
+    transition: transform 0.5s ease;
+}
+
+/* body {
+    background: rgb(156,134,92);
+    background: linear-gradient(90deg, rgba(156,134,92,1) 17%, rgba(194,186,118,1) 48%, rgba(235,222,112,1) 69%, rgba(217,196,95,1) 76%, rgba(200,169,78,1) 83%, rgba(192,158,70,1) 86%, rgba(177,135,55,1) 92%, rgba(177,135,55,1) 94%);
+} */
+
+.school-text {
+    color: black;
+    font-size: 3rem;
+    text-align: center;
+    font-style: italic;
+    font-family: fantasy;
+}
+
+ul {
+    list-style: none;
+    padding: 3%;
+    font-size: 1rem;
+}
+
+li {
+    margin-bottom: 40px;
+}
+
+strong {
+    color: #333;
+    font-size: 1.5rem;
+
+}
+
+p {
+    font-size: 1rem;
+    color: black;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.firstrow {
+    margin-top: 0%;
+    background: url('../../images/homebg.gif') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: scroll, local;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* transition: transform 0.5s ease; */
+}
+
+/* 
+  .firstrow:hover {
+    transform: scale(1.05); /* Adjust the scaling factor as needed */
+/* transition: transform 0.5s ease; */
+
+.h1 {
+    padding-top: 70px;
+    padding-bottom: -1px;
+}
+
+@keyframes moveDown {
+    0% {
+        margin-top: 400px;
+    }
+
+    50% {
+        margin-top: 600px;
+    }
+
+    100% {
+        margin-top: 400px;
+    }
+}
+
+.your-button-class {
+    font-size: 30px;
+    margin-left: 30%;
+    font-style: italic;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 25px;
+
+    /* Default color */
+    background: linear-gradient(90deg, rgba(255, 222, 89, 1) 9%, rgba(255, 145, 77, 1) 86%);
+    color: black;
+
+    /* Hover effect */
+    &:hover {
+        background-color: #9c865c;
+        cursor: pointer;
+    }
+
+    /* Active (clicked) effect */
+    &:active {
+        background-color: #1c6ca9;
+    }
+
+    /* Animation */
+    animation: moveDown 4s infinite;
+    /* Adjust the animation duration and iteration count as needed */
+}

@@ -13,6 +13,8 @@ import { getProducts } from "../actions/productActions";
 import Product from "./product/Product";
 import Loader from "./layout/Loader";
 import Index from "./Index.js";
+import "./Home.css";
+import BouncingText from './layout/BouncingText';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -57,11 +59,7 @@ const Home = () => {
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
-  // let count = productsCount;
 
-  // if (keyword) {
-  //   let count = filteredProductsCount;
-  // }
 
   return (
     <Fragment>
@@ -69,49 +67,53 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Index />
-          <MetaData title={"Grab your exclusive school merch now"} />
-          <section id="products" className="container mt-5">
-            <div className="row">
-              {keyword ? (
-                <Fragment>
-                  <div className="col-6 col-md-3 mt-5 mb-5">
-                    <div className="px-5">
-                      <div className="mt-5">
-                        <h4 className="mb-3">Categories</h4>
-                        <ul className="pl-0">
-                          {categories.map((category) => (
-                            <li
-                              style={{
-                                cursor: "pointer",
-                                listStyleType: "none",
-                              }}
-                              key={category}
-                              onClick={() => setCategory(category)}
-                            >
-                              {category}
-                            </li>
-                          ))}
-                        </ul>
+          <MetaData title={"Grab your Documents now!"} />
+          {/* <Index /> */}
+          <br />
+          <div className="background-containers">
+            <BouncingText />
+            <section id="products" className="container mt-5">
+              <div className="row">
+                {keyword ? (
+                  <Fragment>
+                    <div className="col-6 col-md-3 mt-5 mb-5">
+                      <div className="px-5">
+                        <div className="mt-5">
+                          <h4 className="mb-3">Categories</h4>
+                          <ul className="pl-0">
+                            {categories.map((category) => (
+                              <li
+                                style={{
+                                  cursor: "pointer",
+                                  listStyleType: "none",
+                                }}
+                                key={category}
+                                onClick={() => setCategory(category)}
+                              >
+                                {category}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="col-6 col-md-9">
-                    <div className="row">
-                      {products.map((product) => (
-                        <Product key={product._id} product={product} col={4} />
-                      ))}
+                    <div className="col-6 col-md-9">
+                      <div className="row">
+                        {products.map((product) => (
+                          <Product key={product._id} product={product} col={4} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </Fragment>
-              ) : (
-                products.map((product) => (
-                  <Product key={product._id} product={product} col={3} />
-                ))
-              )}
-            </div>
-          </section>
+                  </Fragment>
+                ) : (
+                  products.map((product) => (
+                    <Product key={product._id} product={product} col={3} />
+                  ))
+                )}
+              </div>
+            </section>
+          </div>
         </Fragment>
       )}
     </Fragment>
@@ -119,7 +121,6 @@ const Home = () => {
 };
 
 export default Home;
-
 
 
 

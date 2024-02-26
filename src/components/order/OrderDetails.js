@@ -6,7 +6,7 @@ import MetaData from "../layout/MetaData";
 
 import Loader from "../layout/Loader";
 
-// import { useAlert } from "react-alert";
+import "./order.css";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,7 +24,6 @@ const OrderDetails = () => {
   const {
     orderItems,
     orderStatus,
-    paymentInfo,
   } = order;
 
   let { id } = useParams();
@@ -49,7 +48,7 @@ const OrderDetails = () => {
         <Fragment>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8 mt-5 order-details">
-              <h1 className="my-5">Order # {order._id}</h1>
+              <h1 className="my-4">Order Number: {order._id}</h1>
 
               <hr />
 
@@ -73,7 +72,7 @@ const OrderDetails = () => {
               <div className="cart-item my-1">
                 {orderItems &&
                   orderItems.map((item) => (
-                    <div key={item.product} className="row my-5">
+                    <div key={item.product} className="row my-4">
                       <div className="col-4 col-lg-2">
                         <img
                           src={item.image}
@@ -105,6 +104,15 @@ const OrderDetails = () => {
           </div>
         </Fragment>
       )}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </Fragment>
   );
 };

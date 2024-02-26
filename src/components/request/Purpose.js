@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Purpose = ({ selectedPurpose, onPurposeChange }) => {
     const purposes = ["Lani Scholarship", "Graduation Requirements", "Transfer Request", "Academic Records"];

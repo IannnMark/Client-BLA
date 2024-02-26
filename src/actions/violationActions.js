@@ -3,7 +3,6 @@ import axios from "axios";
 import {
     NEW_VIOLATION_REQUEST,
     NEW_VIOLATION_SUCCESS,
-    NEW_VIOLATION_RESET,
     NEW_VIOLATION_FAIL,
     CLEAR_ERRORS,
     GUIDANCE_VIOLATIONS_FAIL,
@@ -11,11 +10,9 @@ import {
     GUIDANCE_VIOLATIONS_SUCCESS,
     DELETE_VIOLATION_REQUEST,
     DELETE_VIOLATION_SUCCESS,
-    DELETE_VIOLATION_RESET,
     DELETE_VIOLATION_FAIL,
     UPDATE_VIOLATION_REQUEST,
     UPDATE_VIOLATION_SUCCESS,
-    UPDATE_VIOLATION_RESET,
     UPDATE_VIOLATION_FAIL,
     VIOLATION_DETAILS_REQUEST,
     VIOLATION_DETAILS_SUCCESS,
@@ -92,35 +89,7 @@ export const deleteViolation = (id) => async (dispatch) => {
     }
 };
 
-// export const getViolationDetails = (id) => async (dispatch) => {
-//     try {
-//         dispatch({ type: VIOLATION_DETAILS_REQUEST });
 
-//         const { data } = await axios.get(`/api/v1/guidance/violation/${id}`);
-
-//         console.log("Violation details response:", data);
-
-//         if (!data.success || !data.violation) {
-//             dispatch({
-//                 type: VIOLATION_DETAILS_FAIL,
-//                 payload: { error: 'Invalid response format' },
-//             });
-//             return;
-//         }
-
-//         dispatch({
-//             type: VIOLATION_DETAILS_SUCCESS,
-//             payload: data.violation,
-//         });
-//     } catch (error) {
-//         console.error("Error in getViolationDetails:", error);
-
-//         dispatch({
-//             type: VIOLATION_DETAILS_FAIL,
-//             payload: { error: 'Error fetching violation details' },
-//         });
-//     }
-// };
 
 
 export const getViolationDetails = (id) => async (dispatch) => {

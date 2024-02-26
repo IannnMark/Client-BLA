@@ -21,7 +21,7 @@ const ProcessRequest = () => {
     const dispatch = useDispatch();
     let { id } = useParams();
     const { loading, request = {} } = useSelector((state) => state.requestDetails);
-    const { requestItems, paymentInfo, user, totalPrice, requestStatus, dateRelease } = request;
+    const { requestItems, paymentInfo, user, totalPrice, requestStatus } = request;
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
 
@@ -181,7 +181,6 @@ const ProcessRequest = () => {
                                             value={status}
                                             onChange={(e) => setStatus(e.target.value)}
                                         >
-                                            <option value="Processing">Processing</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Received">Received</option>
                                         </select>

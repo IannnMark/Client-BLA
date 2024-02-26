@@ -1,0 +1,22 @@
+/* NewProduct.css */
+
+.wrapper {
+    padding: 100px;
+  }
+  
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  h1 {
+    color: black;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Add more styles as needed */
+  

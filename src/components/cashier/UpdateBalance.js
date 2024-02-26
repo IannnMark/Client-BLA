@@ -13,7 +13,6 @@ const UpdateBalance = () => {
     const [amount, setAmount] = useState("");
 
     const dispatch = useDispatch();
-    const balanceState = useSelector((state) => state.balance);
     const { error, balance } = useSelector((state) => state.balanceDetails);
     const { loading, error: updateError, isUpdated } = useSelector(
         (state) => state.balance

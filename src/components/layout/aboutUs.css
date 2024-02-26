@@ -1,0 +1,135 @@
+.flip-card {
+    margin-top: 8%;
+    perspective: 950px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    transform: translateX(-200px);
+
+
+}
+
+.flip-card.flipped {
+    transform: translateX(-200px) rotateY(180deg);
+    /* Adjust the value as needed */
+}
+
+.flip-card-inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+/* .flip-card-front {
+    background-image: #d7fbda;
+    color: green;
+} */
+
+.flip-card-front {
+    background-image: url('../../images/mission.svg');
+    background-size: cover;
+    background-position: center;
+    color: green;
+    border: 3px solid black;
+    border-radius: 25px;
+}
+
+
+.flip-card-back {
+    background-image: url('../../images/vision.svg');
+    background-size: cover;
+    background-position: center;
+    color: green;
+    transform: rotateY(180deg);
+    border: 3px solid black;
+    border-radius: 25px;
+}
+
+.card-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.flip-button {
+    width: 100px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: #957D68;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 10px;
+}
+
+.aboutt p {
+    text-align: justify;
+    margin-top: -530px;
+    margin-left: 600px;
+    padding: 40px;
+    /* Adjust the padding as needed */
+    font-size: 20px !important;
+    /* Add !important to ensure it takes precedence */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.iconss {
+    margin-top: 2%;
+    text-align: center;
+
+}
+
+
+
+a[href="https://www.facebook.com/blessedlandacademy"] i.fab.fa-facebook {
+    color: #007bff !important;
+    /* Replace with your desired icon color code */
+}
+
+a[href="https://www.facebook.com/blessedlandacademy"] {
+    color: #007bff !important;
+    /* Replace with your desired text color code */
+    font-size: 20px;
+}
+
+a[href="mailto:blessedlandacademy2005@yahoo.com"] i.fab.fa-yahoo {
+    color: #007bff;
+    /* Replace with your desired Yahoo icon color code */
+}
+
+a[href="mailto:blessedlandacademy2005@yahoo.com"] {
+    color: #007bff;
+    /* Replace with your desired text color code */
+    font-size: 20px;
+}
+
+.school-name {
+    color: #007bff;
+    /* Replace with your desired color code */
+    font-size: larger;
+}
+
+.aboutUs {
+    background-image: url('../../images/login.svg');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}

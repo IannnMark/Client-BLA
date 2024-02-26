@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "../../App.css";
-import Search from "./Search";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart, FaBell } from "react-icons/fa";
@@ -37,13 +36,13 @@ const Header = () => {
 
   return (
     <Fragment>
-      
+
       <nav className={navbarClass}>
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
             <Link to="/">
               <img src="/images/school_logo.png" alt="School Logo" />
-              <span className="ml-2">Blessed Land Academy of Taguig</span>
+              <span className="lg-3"> Blessed Land Academy of Taguig</span>
             </Link>
           </div>
         </div>
@@ -93,9 +92,17 @@ const Header = () => {
             </span>
           </Link>
 
+
+          <Link to="/announcement">
+            <span id="announcement" className="ml-3">
+              Announcement
+            </span>
+          </Link>
+
           <Link className="mx-3" to="/aboutUs">
             About
           </Link>
+
 
           {user ? (
             <div className="ml-4 dropdown d-inline">
@@ -107,6 +114,7 @@ const Header = () => {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+
               >
                 <figure className="avatar avatar-nav">
                   <img
@@ -133,6 +141,11 @@ const Header = () => {
                   </Link>
                 )}
 
+                {user && user.role === "cashier" && (
+                  <Link className="dropdown-item" to="cashier/balances">
+                    Dashboard
+                  </Link>
+                )}
 
                 {user && user.role === "user" && (
                   <Link className="dropdown-item" to="/orders/me">
@@ -173,4 +186,3 @@ const Header = () => {
 };
 
 export default Header;
-

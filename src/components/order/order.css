@@ -1,0 +1,14 @@
+.my-55 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 240%;
+    border-style: ridge;
+    border-width: 3px; 
+    width: 18%; 
+    margin: 0 auto; 
+    border-radius: 75px 75px;
+    background: linear-gradient(90deg, rgba(255,222,89,1) 9%, rgba(252,161,104,1) 86%);
+    border-color: orange;
+    margin-top: 5%;
+
+} 
+

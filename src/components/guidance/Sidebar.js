@@ -7,7 +7,7 @@ const GuidanceSidebar = () => {
 
     return (
         <div className="sidebar-wrapper">
-            <nav id="sidebar">
+            <navv id="sidebar">
                 <ul className="list-unstyled components">
                     {user && user.role === "guidance" && (
                         <li>
@@ -32,9 +32,7 @@ const GuidanceSidebar = () => {
                                 <Link to="/guidance/violations">
                                     <i className="fa fa-clipboard"></i> All
                                 </Link>
-                            </li>
-
-                            <li>
+                            <br/>
                                 <Link to="/guidance/violation">
                                     <i className="fa fa-plus"></i> Create
                                 </Link>
@@ -42,7 +40,7 @@ const GuidanceSidebar = () => {
                         </ul>
                     </li>
                 </ul>
-            </nav>
+            </navv>
         </div>
     );
 };
