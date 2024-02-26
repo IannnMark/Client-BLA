@@ -31,6 +31,8 @@ import {
   DELETE_REVIEW_FAIL,
 } from "../constants/productConstants";
 
+const apiUrl = process.env.REACT_APP_API;
+
 export const getProducts = (
   keyword = "",
   currentPage = 1,
@@ -42,9 +44,14 @@ export const getProducts = (
       type: ALL_PRODUCTS_REQUEST,
       ADMIN_PRODUCTS_REQUEST,
     });
-    let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+    // let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+    // if (category) {
+    //   link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`;
+    // }
+
+    let link = `${apiUrl}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
     if (category) {
-      link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`;
+      link = `${apiUrl}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`;
     }
 
     const { data } = await axios.get(link);

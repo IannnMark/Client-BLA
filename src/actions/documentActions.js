@@ -27,6 +27,8 @@ import {
     UPDATE_DOCUMENT_FAIL
 } from "../constants/documentConstants";
 
+const apiUrl = process.env.REACT_APP_API;
+
 export const getDocuments = (
     keyword = "",
     currentPage = 1,
@@ -39,7 +41,7 @@ export const getDocuments = (
             payload: null,
         });
 
-        let link = `/api/v1/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+        let link = `${apiUrl}/api/v1/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
         if (category) {
             link += `&category=${category}`;
