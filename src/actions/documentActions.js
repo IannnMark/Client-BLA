@@ -41,7 +41,7 @@ export const getDocuments = (
             payload: null,
         });
 
-        let link = `${apiUrl}/api/v1/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+        let link = `${apiUrl}/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
 
         if (category) {
             link += `&category=${category}`;
