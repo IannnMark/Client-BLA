@@ -19,6 +19,8 @@ import {
     VIOLATION_DETAILS_FAIL,
 } from "../constants/violationConstants";
 
+const apiUrl = process.env.REACT_APP_API;
+
 export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS,
@@ -29,7 +31,7 @@ export const getGuidanceViolations = () => async (dispatch) => {
     try {
         dispatch({ type: GUIDANCE_VIOLATIONS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/guidance/violations`);
+        const { data } = await axios.get(`${apiUrl}/api/v1/guidance/violations`);
 
         dispatch({
             type: GUIDANCE_VIOLATIONS_SUCCESS,
@@ -54,7 +56,7 @@ export const newViolation = (violationData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `http://localhost:3000/api/v1/guidance/violation/new`,
+            `${apiUrl}/api/v1/guidance/violation/new`,
             violationData,
             config
         );
@@ -75,7 +77,7 @@ export const deleteViolation = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_VIOLATION_REQUEST });
 
-        const { data } = await axios.delete(`/api/v1/guidance/violation/${id}`);
+        const { data } = await axios.delete(`${apiUrl}/api/v1/guidance/violation/${id}`);
 
         dispatch({
             type: DELETE_VIOLATION_SUCCESS,
@@ -96,7 +98,7 @@ export const getViolationDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: VIOLATION_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/guidance/violation/${id}`);
+        const { data } = await axios.get(`${apiUrl}/api/v1/guidance/violation/${id}`);
 
         console.log("Violation details response:", data);
 
@@ -132,7 +134,7 @@ export const updateViolation = (id, violationData) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.put(`/api/v1/guidance/violation/${id}`, violationData, config);
+        const { data } = await axios.put(`${apiUrl}/api/v1/guidance/violation/${id}`, violationData, config);
 
         dispatch({
             type: UPDATE_VIOLATION_SUCCESS,

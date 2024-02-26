@@ -90,7 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/document/${id}`);
+        const { data } = await axios.get(`${apiUrl}/api/v1/document/${id}`);
 
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
@@ -138,7 +138,7 @@ export const getAdminDocuments = () => async (dispatch) => {
     try {
         dispatch({ type: ADMIN_DOCUMENTS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/admin/documents`);
+        const { data } = await axios.get(`${apiUrl}/api/v1/admin/documents`);
 
         dispatch({
             type: ADMIN_DOCUMENTS_SUCCESS,
@@ -167,7 +167,7 @@ export const newDocument = (documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `/api/v1/admin/document/new`,
+            `${apiUrl}/api/v1/admin/document/new`,
             documentData,
             config
         );
@@ -190,7 +190,7 @@ export const deleteDocument = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_DOCUMENT_REQUEST });
 
-        const { data } = await axios.delete(`/api/v1/admin/document/${id}`);
+        const { data } = await axios.delete(`${apiUrl}/api/v1/admin/document/${id}`);
 
         dispatch({
             type: DELETE_DOCUMENT_SUCCESS,
@@ -219,7 +219,7 @@ export const updateDocument = (id, documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.put(
-            `/api/v1/admin/document/${id}`,
+            `${apiUrl}/api/v1/admin/document/${id}`,
             documentData,
             config
         );

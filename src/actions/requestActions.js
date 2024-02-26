@@ -1,9 +1,11 @@
 import axios from "axios";
 import { ADD_REQUEST, REMOVE_REQUEST, CLEAR_REQUEST } from '../constants/requestConstants'
 
+const apiUrl = process.env.REACT_APP_API;
+
 export const addDocumentRequest = (id, quantity) => async (dispatch, getState) => {
     try {
-        const { data } = await axios.get(`/api/v1/document/${id}`)
+        const { data } = await axios.get(`${apiUrl}/api/v1/document/${id}`)
         dispatch({
             type: ADD_REQUEST,
             payload: {
