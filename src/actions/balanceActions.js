@@ -25,7 +25,6 @@ import {
 
 } from "../constants/balanceConstants";
 
-const apiUrl = process.env.REACT_APP_API;
 
 export const clearErrors = () => async (dispatch) => {
     dispatch({
@@ -38,7 +37,7 @@ export const getCashierBalance = () => async (dispatch) => {
     try {
         dispatch({ type: CASHIER_BALANCE_REQUEST });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/cashier/balance`);
+        const { data } = await axios.get(`/api/v1/cashier/balance`);
 
         dispatch({
             type: CASHIER_BALANCE_SUCCESS,
@@ -66,7 +65,7 @@ export const newBalance = (balanceData) => async (dispatch) => {
 
 
         const { data } = await axios.post(
-            `${apiUrl}/api/v1/cashier/balance/new`,
+            `/api/v1/cashier/balance/new`,
             balanceData,
             config
         );
@@ -89,7 +88,7 @@ export const deleteBalance = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_BALANCE_REQUEST });
 
-        const { data } = await axios.delete(`${apiUrl}/api/v1/cashier/balance/${id}`);
+        const { data } = await axios.delete(`/api/v1/cashier/balance/${id}`);
 
         dispatch({
             type: DELETE_BALANCE_SUCCESS,
@@ -112,7 +111,7 @@ export const getBalanceDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: BALANCE_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/cashier/balance/${id}`);
+        const { data } = await axios.get(`/api/v1/cashier/balance/${id}`);
 
         console.log("Balance details response:", data);
 
@@ -149,7 +148,7 @@ export const updateBalance = (id, balanceData) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.put(`${apiUrl}/api/v1/cashier/balance/${id}`, balanceData, config);
+        const { data } = await axios.put(`/api/v1/cashier/balance/${id}`, balanceData, config);
 
         dispatch({
             type: UPDATE_BALANCE_SUCCESS,

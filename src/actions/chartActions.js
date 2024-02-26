@@ -15,6 +15,7 @@ import {
   DOCUMENT_SALES_FAIL,
 } from "../constants/chartConstants";
 
+
 export const monthlySalesChart = () => async (dispatch) => {
   try {
     const config = {

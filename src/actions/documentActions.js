@@ -27,7 +27,6 @@ import {
     UPDATE_DOCUMENT_FAIL
 } from "../constants/documentConstants";
 
-const apiUrl = process.env.REACT_APP_API;
 
 export const getDocuments = (
     keyword = "",
@@ -41,7 +40,8 @@ export const getDocuments = (
             payload: null,
         });
 
-        let link = `${apiUrl}/api/v1/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+        let link = `/api/v1/documents?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+
 
         if (category) {
             link += `&category=${category}`;
@@ -90,7 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/document/${id}`);
+        const { data } = await axios.get(`/api/v1/document/${id}`);
 
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
@@ -138,7 +138,7 @@ export const getAdminDocuments = () => async (dispatch) => {
     try {
         dispatch({ type: ADMIN_DOCUMENTS_REQUEST });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/admin/documents`);
+        const { data } = await axios.get(`/api/v1/admin/documents`);
 
         dispatch({
             type: ADMIN_DOCUMENTS_SUCCESS,
@@ -167,10 +167,11 @@ export const newDocument = (documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `${apiUrl}/api/v1/admin/document/new`,
+            `/api/v1/admin/document/new`,
             documentData,
             config
         );
+
 
         dispatch({
             type: NEW_DOCUMENT_SUCCESS,
@@ -190,7 +191,7 @@ export const deleteDocument = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_DOCUMENT_REQUEST });
 
-        const { data } = await axios.delete(`${apiUrl}/api/v1/admin/document/${id}`);
+        const { data } = await axios.delete(`/api/v1/admin/document/${id}`);
 
         dispatch({
             type: DELETE_DOCUMENT_SUCCESS,
@@ -219,10 +220,11 @@ export const updateDocument = (id, documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.put(
-            `${apiUrl}/api/v1/admin/document/${id}`,
+            `/api/v1/admin/document/${id}`,
             documentData,
             config
         );
+
 
         dispatch({
             type: UPDATE_DOCUMENT_SUCCESS,

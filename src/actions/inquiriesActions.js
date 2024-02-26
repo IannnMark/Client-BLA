@@ -22,7 +22,6 @@ import {
     DELETE_REQUEST_FAIL,
 } from "../constants/inquiriesConstants";
 
-const apiUrl = process.env.REACT_APP_API;
 
 export const createRequest = (request) => async (dispatch, getState) => {
     try {
@@ -33,7 +32,7 @@ export const createRequest = (request) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.post(`${apiUrl}/api/v1/request/new`, request, config);
+        const { data } = await axios.post("/api/v1/request/new", request, config);
         dispatch({
             type: CREATE_REQUEST_SUCCESS,
             payload: data,
@@ -62,7 +61,7 @@ export const myRequests = () => async (dispatch) => {
     try {
         dispatch({ type: MY_REQUESTS });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/requests/me`);
+        const { data } = await axios.get("/api/v1/requests/me");
 
         dispatch({
             type: MY_REQUESTS_SUCCESS,
@@ -82,7 +81,7 @@ export const getRequestDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: REQUEST_DETAILS });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/request/${id}`);
+        const { data } = await axios.get(`/api/v1/request/${id}`);
 
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
@@ -107,7 +106,7 @@ export const allRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/admin/requests`);
+        const { data } = await axios.get(`/api/v1/admin/requests`);
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
@@ -126,7 +125,7 @@ export const allGuidanceRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/guidance/requests`);
+        const { data } = await axios.get(`/api/v1/guidance/requests`);
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
@@ -147,7 +146,7 @@ export const allCashierRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${apiUrl}/api/v1/cashier/requests`);
+        const { data } = await axios.get(`/api/v1/cashier/requests`);
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
@@ -180,7 +179,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${apiUrl}/api/v1/admin/request/${id}`,
+            `/api/v1/admin/request/${id}`,
             requestData,
             config
         );
@@ -215,7 +214,7 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${apiUrl}/api/v1/guidance/request/${id}`,
+            `/api/v1/guidance/request/${id}`,
             requestData,
             config
         );
@@ -249,7 +248,7 @@ export const updateCashierRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${apiUrl}/api/v1/cashier/request/${id}`,
+            `/api/v1/cashier/request/${id}`,
             requestData,
             config
         );
@@ -279,7 +278,7 @@ export const deleteRequest = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_REQUEST });
 
-        const { data } = await axios.delete(`${apiUrl}/api/v1/admin/request/${id}`);
+        const { data } = await axios.delete(`/api/v1/admin/request/${id}`);
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,
