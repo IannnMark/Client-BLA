@@ -414,7 +414,6 @@ function App() {
 
         <Route path="/cart" element={<Cart />} exact="true" />
         <Route path="/request" element={<Request />} exact="true" />
-        {/* <Route path="/login" component={Login} /> */}
       </Routes>
       {!loading && (!isAuthenticated || user.role !== "admin") && <Footer />};
     </div>
