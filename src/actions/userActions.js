@@ -86,20 +86,24 @@ export const login = (email, password) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.post(
+    const response = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
       { email, password },
       config
     );
 
+    console.log('Login Response:', response.data); // Add this line to log the response
+
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: data.user,
+      payload: response.data.user,
     });
   } catch (error) {
+    console.error('Login Error:', error); // Add this line to log the error
+
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.response.data.errMessage,
+      payload: error.response ? error.response.data.errMessage : 'Unknown error',
     });
   }
 };
@@ -151,19 +155,24 @@ export const register = (userData) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, { withCredentials: true });
+
+    const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, { withCredentials: true });
+
+    console.log('Load User Response:', response.data); // Add this line to log the response
+
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data.user,
+      payload: response.data.user,
     });
   } catch (error) {
+    console.error('Load User Error:', error); // Add this line to log the error
+
     dispatch({
       type: LOAD_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response ? error.response.data.message : 'Unknown error',
     });
   }
 };
-
 export const logout = () => async (dispatch) => {
   try {
     await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`);
