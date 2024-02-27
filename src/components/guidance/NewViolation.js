@@ -7,18 +7,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { newViolation, clearErrors } from "../../actions/violationActions";
 import { NEW_VIOLATION_RESET } from "../../constants/violationConstants";
-import axios from "axios";
+import { allGuidanceUsers } from "../../actions/userActions";
 
 const NewViolation = () => {
     const [selectedStudent, setSelectedStudent] = useState({});
     const [type, setType] = useState("");
     const [description, setDescription] = useState("");
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const { loading, error, success } = useSelector((state) => state.newViolation);
+    const { loading, error, success, } = useSelector((state) => state.newViolation);
+    const { users } = useSelector((state) => state.allUsers);
 
     const message = (message = "") =>
         toast.success(message, {
@@ -41,15 +42,16 @@ const NewViolation = () => {
         // Fetch students from the backend
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("/api/v1/guidance/users");
-                setUsers(response.data.users);
+                // Dispatch the action to fetch users
+                await dispatch(allGuidanceUsers());
             } catch (error) {
                 console.error("Error fetching Users:", error);
             }
         };
 
         fetchUsers();
-    }, []);
+    }, [dispatch, users]);
+
 
     const submitHandler = (e) => {
         e.preventDefault();

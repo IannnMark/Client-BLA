@@ -31,7 +31,6 @@ const ProcessRequest = () => {
         setSelectedDate(date);
     };
 
-
     const errMsg = (message = "") =>
         toast.error(message, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -67,17 +66,13 @@ const ProcessRequest = () => {
         }
     }, [dispatch, error, isUpdated, status, requestId]);
 
-
-    const updateStatusHandler = async (id) => {
+    const updateStatusHandler = async () => {
         const formData = new FormData();
         formData.set("status", status);
-
-        // Convert the selected date to a string and set it in the formData
         formData.set("dateRelease", selectedDate.toISOString());
 
-
         try {
-            await dispatch(updateRequest(id, formData));
+            await dispatch(updateRequest(requestId, formData));
             localStorage.setItem('updatedStatus', status);
             dispatch(getRequestDetails(requestId));
             successMsg(`Request updated successfully. New Status: ${status}`);
@@ -112,7 +107,6 @@ const ProcessRequest = () => {
 
                                     <h4 className="my-4">Requested by: {user ? user._id : 'Unknown'}</h4>
 
-
                                     <h4 className="my-4">Payment</h4>
                                     <p
                                         className={
@@ -137,7 +131,6 @@ const ProcessRequest = () => {
                                             dateFormat="MMMM dd, yyyy"
                                             className="form-control"
                                             popperClassName="datepicker-popper"
-
                                         />
                                     </div>
 
@@ -187,12 +180,11 @@ const ProcessRequest = () => {
                                     </div>
                                     <button
                                         className="btn btn-primary btn-block"
-                                        onClick={() => updateStatusHandler(request._id)}
+                                        onClick={updateStatusHandler}
                                     >
                                         Update Status
                                     </button>
                                 </div>
-
                             </div>
                         )}
                     </Fragment>
@@ -203,5 +195,3 @@ const ProcessRequest = () => {
 };
 
 export default ProcessRequest;
-
-

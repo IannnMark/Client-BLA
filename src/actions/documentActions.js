@@ -90,8 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/document/${id}`);
-
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/document/${id}`, { withCredentials: true });
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
             payload: data.document,
@@ -103,6 +102,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
         });
     }
 };
+
 
 export const documentDetailsReducer = (state = { document: {} }, action) => {
     switch (action.type) {
@@ -138,7 +138,11 @@ export const getAdminDocuments = () => async (dispatch) => {
     try {
         dispatch({ type: ADMIN_DOCUMENTS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/documents`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/documents`,
+            {
+                withCredentials: true,
+            });
+
 
         dispatch({
             type: ADMIN_DOCUMENTS_SUCCESS,
@@ -164,6 +168,7 @@ export const newDocument = (documentData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         const { data } = await axios.post(
@@ -172,40 +177,40 @@ export const newDocument = (documentData) => async (dispatch) => {
             config
         );
 
-
         dispatch({
             type: NEW_DOCUMENT_SUCCESS,
-
             payload: data,
         });
     } catch (error) {
         dispatch({
             type: NEW_DOCUMENT_FAIL,
-
             payload: error.response.data.message,
         });
     }
 };
+
 
 export const deleteDocument = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_DOCUMENT_REQUEST });
 
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/document/${id}`);
+        const { data } = await axios.delete(
+            `${process.env.REACT_APP_API}/api/v1/admin/document/${id}`,
+            { withCredentials: true }
+        );
 
         dispatch({
             type: DELETE_DOCUMENT_SUCCESS,
-
             payload: data.success,
         });
     } catch (error) {
         dispatch({
             type: DELETE_DOCUMENT_FAIL,
-
             payload: error.response.data.message,
         });
     }
 };
+
 
 
 
@@ -217,6 +222,7 @@ export const updateDocument = (id, documentData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         const { data } = await axios.put(

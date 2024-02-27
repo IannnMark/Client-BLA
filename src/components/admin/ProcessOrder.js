@@ -1,59 +1,34 @@
 import React, { Fragment, useState, useEffect } from "react";
-
 import { Link, useParams } from "react-router-dom";
-
 import MetaData from "../layout/MetaData";
-
 import Loader from "../layout/Loader";
-
 import Sidebar from "./Sidebar";
-
 import { toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
-
 import "react-datepicker/dist/react-datepicker.css";
-
 import DatePicker from "react-datepicker";
-
 import { useDispatch, useSelector } from "react-redux";
-
-import {
-  getOrderDetails,
-  updateOrder,
-  clearErrors,
-} from "../../actions/orderActions";
-
+import { getOrderDetails, updateOrder, clearErrors } from "../../actions/orderActions";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 
 const ProcessOrder = () => {
   const [status, setStatus] = useState("");
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const dispatch = useDispatch();
-
   let { id } = useParams();
 
   const { loading, order = {} } = useSelector((state) => state.orderDetails);
-
-  const {
-    orderItems,
-    paymentInfo,
-    user,
-    totalPrice,
-    orderStatus,
-  } = order;
-
+  const { orderItems, totalPrice, orderStatus } = order;
   const { error, isUpdated } = useSelector((state) => state.order);
 
   const orderId = id;
-
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-
 
   const errMsg = (message = "") =>
     toast.error(message, {
@@ -68,45 +43,35 @@ const ProcessOrder = () => {
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
 
-
     if (error) {
       errMsg(error);
-
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
       successMsg(`Order updated successfully. New Status: ${status}`);
-
       dispatch({ type: UPDATE_ORDER_RESET });
     }
-
-
-
   }, [dispatch, error, isUpdated, status, orderId]);
-
-
-
 
   const updateOrderHandler = async (id) => {
     const formData = new FormData();
 
     formData.set("status", status);
-
-    // Convert the selected date to a string and set it in the formData
     formData.set("dateRelease", selectedDate.toISOString());
 
     try {
+      setLoadingUpdate(true);
       await dispatch(updateOrder(id, formData));
       localStorage.setItem('updatedStatus', status);
-      // Optionally, you can dispatch an action to update the global state for orders
-      // dispatch(getOrderDetails(orderId));
       successMsg(`Order updated successfully. New Status: ${status}`);
     } catch (error) {
       console.error("Update order failed:", error);
+      errMsg("Failed to update order. Please try again.");
+    } finally {
+      setLoadingUpdate(false);
     }
   };
-
 
   return (
     <Fragment>
@@ -126,8 +91,6 @@ const ProcessOrder = () => {
                 <div className="col-12 col-lg-7 order-details">
                   <h2 className="my-5">Order # {order._id}</h2>
 
-
-
                   <p>
                     <b>Amount:</b> ₱{totalPrice}
                   </p>
@@ -135,24 +98,15 @@ const ProcessOrder = () => {
                   <hr />
 
                   <h4 className="my-4">Payment</h4>
-
-                  {/* <p className={isPaid ? "greenColor" : "redColor"}>
-                    <b>{isPaid ? "PAID" : "NOT PAID"}</b>
-                  </p> */}
-
-                  <p
-                    className={
-                      order.paymentInfo &&
-                      String(order.paymentInfo)
-                    }
-                  >
-                    <b>{paymentInfo}</b>
-                  </p>
-
-
+                  {order.paymentInfo ? (
+                    <div>
+                      <p><b>Type:</b> {order.paymentInfo.type}</p>
+                    </div>
+                  ) : (
+                    <p><b>Payment Information:</b> N/A</p>
+                  )}
 
                   <h4 className="my-4">Order Status:</h4>
-
                   <p
                     className={
                       order.orderStatus &&
@@ -172,10 +126,8 @@ const ProcessOrder = () => {
                       dateFormat="MMMM dd, yyyy"
                       className="form-control"
                       popperClassName="datepicker-popper"
-
                     />
                   </div>
-
 
                   <h4 className="my-4">Order Items:</h4>
 
@@ -225,9 +177,7 @@ const ProcessOrder = () => {
                       onChange={(e) => setStatus(e.target.value)}
                     >
                       <option value="Processing">Pending</option>
-
                       <option value="Approved">Approved</option>
-
                       <option value="Received">Received</option>
                     </select>
                   </div>
@@ -235,8 +185,9 @@ const ProcessOrder = () => {
                   <button
                     className="btn btn-primary btn-block"
                     onClick={() => updateOrderHandler(order._id)}
+                    disabled={loadingUpdate}
                   >
-                    Update Status
+                    {loadingUpdate ? 'Updating...' : 'Update Status'}
                   </button>
                 </div>
               </div>

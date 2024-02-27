@@ -27,9 +27,18 @@ export const clearErrors = () => async (dispatch) => {
 
 export const getGuidanceViolations = () => async (dispatch) => {
     try {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        };
         dispatch({ type: GUIDANCE_VIOLATIONS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/guidance/violations`);
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API}/api/v1/guidance/violations`,
+            config
+        );
 
         dispatch({
             type: GUIDANCE_VIOLATIONS_SUCCESS,
@@ -43,15 +52,17 @@ export const getGuidanceViolations = () => async (dispatch) => {
     }
 };
 
+
 export const newViolation = (violationData) => async (dispatch) => {
     try {
-        dispatch({ type: NEW_VIOLATION_REQUEST });
-
         const config = {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
+
+        dispatch({ type: NEW_VIOLATION_REQUEST });
 
         const { data } = await axios.post(
             `${process.env.REACT_APP_API}/api/v1/guidance/violation/new`,
@@ -71,11 +82,22 @@ export const newViolation = (violationData) => async (dispatch) => {
     }
 };
 
+
+
+
+
 export const deleteViolation = (id) => async (dispatch) => {
     try {
+        const config = {
+            withCredentials: true,
+        };
+
         dispatch({ type: DELETE_VIOLATION_REQUEST });
 
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`);
+        const { data } = await axios.delete(
+            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            config
+        );
 
         dispatch({
             type: DELETE_VIOLATION_SUCCESS,
@@ -92,11 +114,19 @@ export const deleteViolation = (id) => async (dispatch) => {
 
 
 
+
 export const getViolationDetails = (id) => async (dispatch) => {
     try {
+        const config = {
+            withCredentials: true,
+        };
+
         dispatch({ type: VIOLATION_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`);
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            config
+        );
 
         console.log("Violation details response:", data);
 
@@ -122,17 +152,23 @@ export const getViolationDetails = (id) => async (dispatch) => {
 
 
 
+
 export const updateViolation = (id, violationData) => async (dispatch) => {
     try {
-        dispatch({ type: UPDATE_VIOLATION_REQUEST });
-
         const config = {
+            withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
             },
         };
 
-        const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`, violationData, config);
+        dispatch({ type: UPDATE_VIOLATION_REQUEST });
+
+        const { data } = await axios.put(
+            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            violationData,
+            config
+        );
 
         dispatch({
             type: UPDATE_VIOLATION_SUCCESS,

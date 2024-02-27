@@ -73,7 +73,14 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/${id}`);
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/product/${id}`,
+      config
+    );
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -86,6 +93,8 @@ export const getProductDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
@@ -172,6 +181,7 @@ export const newProduct = (productData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.post(
@@ -182,23 +192,24 @@ export const newProduct = (productData) => async (dispatch) => {
 
     dispatch({
       type: NEW_PRODUCT_SUCCESS,
-
       payload: data,
     });
   } catch (error) {
     dispatch({
       type: NEW_PRODUCT_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
 
+
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`);
+    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`,
+      { withCredentials: true, },
+    );
 
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
@@ -224,6 +235,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(
@@ -252,21 +264,27 @@ export const getProductReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_REVIEWS_REQUEST });
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/reviews?id=${id}`);
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/reviews?id=${id}`,
+      config
+    );
 
     dispatch({
       type: GET_REVIEWS_SUCCESS,
-
       payload: data.reviews,
     });
   } catch (error) {
     dispatch({
       type: GET_REVIEWS_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 // Delete product review
 
@@ -274,13 +292,17 @@ export const deleteReview = (id, productId) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_REVIEW_REQUEST });
 
+    const config = {
+      withCredentials: true,
+    };
+
     const { data } = await axios.delete(
-      `/api/v1/reviews?id=${id}&productId=${productId}`
+      `/api/v1/reviews?id=${id}&productId=${productId}`,
+      config
     );
 
     dispatch({
       type: DELETE_REVIEW_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
@@ -288,7 +310,6 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 
     dispatch({
       type: DELETE_REVIEW_FAIL,
-
       payload: error.response.data.message,
     });
   }

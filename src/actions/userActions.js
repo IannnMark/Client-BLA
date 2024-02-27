@@ -45,65 +45,34 @@ import {
   USER_REQUESTS_FAIL,
 } from "../constants/userConstants";
 
-// export const login = (email, password) => async (dispatch) => {
-//   try {
-//     dispatch({ type: LOGIN_REQUEST });
-
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     };
-
-//     const { data } = await axios.post(
-//       `${process.env.REACT_APP_API}/api/v1/login`,
-//       { email, password },
-//       { withCredentials: true },
-//       config
-//     );
-
-//     dispatch({
-//       type: LOGIN_SUCCESS,
-
-//       payload: data.user,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: LOGIN_FAIL,
-//       payload: error.response.data.errMessage,
-//     });
-//   }
-// };
-
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      withCredentials: true,
     };
 
-    const response = await axios.post(
+    const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
+      // `http://localhost:4000/api/v1/login`,
+      // "/api/v1/login",
       { email, password },
+      { withCredentials: true },
       config
     );
 
-    console.log('Login Response:', response.data); // Add this line to log the response
-
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: response.data.user,
+
+      payload: data.user,
     });
   } catch (error) {
-    console.error('Login Error:', error); // Add this line to log the error
-
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.response ? error.response.data.errMessage : 'Unknown error',
+      payload: error.response.data.errMessage,
     });
   }
 };
@@ -116,23 +85,23 @@ export const register = (userData) => async (dispatch) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/register`, userData, config);
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
-
       payload: data.user,
     });
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 // Load user
 
@@ -140,6 +109,7 @@ export const register = (userData) => async (dispatch) => {
 //   try {
 //     dispatch({ type: LOAD_USER_REQUEST });
 //     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`);
+//     // const { data } = await axios.get("/api/v1/me");
 //     dispatch({
 //       type: LOAD_USER_SUCCESS,
 //       payload: data.user,
@@ -173,9 +143,11 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
+
+
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`);
+    await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`, { withCredentials: true });
     dispatch({
       type: LOGOUT_SUCCESS,
     });
@@ -186,6 +158,7 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
+
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({
@@ -201,23 +174,23 @@ export const updateProfile = (userData) => async (dispatch) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config);
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
     dispatch({
       type: UPDATE_PROFILE_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 export const updatePassword = (passwords) => async (dispatch) => {
   try {
@@ -227,6 +200,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(
@@ -237,20 +211,18 @@ export const updatePassword = (passwords) => async (dispatch) => {
 
     dispatch({
       type: UPDATE_PASSWORD_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-
       payload: error.response.data.errMessage,
     });
   }
 };
 
-// Forgot password
 
+// Forgot password
 export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
@@ -259,23 +231,27 @@ export const forgotPassword = (email) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/password/forgot`, email, config);
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_API}/api/v1/password/forgot`,
+      email,
+      config
+    );
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
-
       payload: data.message,
     });
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 // Reset password
 
 export const resetPassword = (token, passwords) => async (dispatch) => {
@@ -286,6 +262,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(
@@ -296,17 +273,16 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
     dispatch({
       type: NEW_PASSWORD_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
     dispatch({
       type: NEW_PASSWORD_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 // Get all users
 
@@ -350,6 +326,49 @@ export const allUsers = () => async (dispatch) => {
   }
 };
 
+export const allGuidanceUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USERS_REQUEST });
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/guidance/users`,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: ALL_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const allCashierUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USERS_REQUEST });
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API}/api/v1/cashier/users`,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: ALL_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
 // Update user - ADMIN
 
 export const updateUser = (id, userData) => async (dispatch) => {
@@ -360,6 +379,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.put(
@@ -370,37 +390,39 @@ export const updateUser = (id, userData) => async (dispatch) => {
 
     dispatch({
       type: UPDATE_USER_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`);
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
-
       payload: data.user,
     });
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 // Delete user - ADMIN
 
@@ -408,21 +430,24 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
 
-    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`);
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
 
     dispatch({
       type: DELETE_USER_SUCCESS,
-
       payload: data.success,
     });
   } catch (error) {
     dispatch({
       type: DELETE_USER_FAIL,
-
       payload: error.response.data.message,
     });
   }
 };
+
 
 export const userSales = () => async (dispatch) => {
   try {
@@ -448,6 +473,7 @@ export const userSales = () => async (dispatch) => {
     });
   }
 };
+
 
 
 

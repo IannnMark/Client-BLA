@@ -37,7 +37,14 @@ export const getCashierBalance = () => async (dispatch) => {
     try {
         dispatch({ type: CASHIER_BALANCE_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/balance`);
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API}/api/v1/cashier/balance`,
+            config
+        );
 
         dispatch({
             type: CASHIER_BALANCE_SUCCESS,
@@ -53,6 +60,7 @@ export const getCashierBalance = () => async (dispatch) => {
 
 
 
+
 export const newBalance = (balanceData) => async (dispatch) => {
     try {
         dispatch({ type: NEW_BALANCE_REQUEST });
@@ -61,8 +69,8 @@ export const newBalance = (balanceData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
-
 
         const { data } = await axios.post(
             `${process.env.REACT_APP_API}/api/v1/cashier/balance/new`,
@@ -84,11 +92,16 @@ export const newBalance = (balanceData) => async (dispatch) => {
 
 
 
+
 export const deleteBalance = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_BALANCE_REQUEST });
 
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`);
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`, config);
 
         dispatch({
             type: DELETE_BALANCE_SUCCESS,
@@ -111,7 +124,11 @@ export const getBalanceDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: BALANCE_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`);
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`, config);
 
         console.log("Balance details response:", data);
 
@@ -138,11 +155,13 @@ export const getBalanceDetails = (id) => async (dispatch) => {
 
 
 
+
 export const updateBalance = (id, balanceData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_BALANCE_REQUEST });
 
         const config = {
+            withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
             },

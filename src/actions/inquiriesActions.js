@@ -30,6 +30,7 @@ export const createRequest = (request) => async (dispatch, getState) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/request/new`, request, config);
@@ -40,7 +41,6 @@ export const createRequest = (request) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: CREATE_REQUEST_FAIL,
-
             payload: error.response.data.message,
         });
     }
@@ -61,31 +61,37 @@ export const myRequests = () => async (dispatch) => {
     try {
         dispatch({ type: MY_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/requests/me`);
+        const config = {
+            withCredentials: true, // Add this line
+        };
+
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/requests/me`, config);
 
         dispatch({
             type: MY_REQUESTS_SUCCESS,
-
             payload: data.requests,
         });
     } catch (error) {
         dispatch({
             type: MY_REQUESTS_FAIL,
-
             payload: error.response.data.message,
         });
     }
 };
 
+
 export const getRequestDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: REQUEST_DETAILS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/request/${id}`);
+        const config = {
+            withCredentials: true, // Add this line
+        };
+
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/request/${id}`, config);
 
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
-
             payload: data.request,
         });
     } catch (error) {
@@ -102,11 +108,15 @@ export const getRequestDetails = (id) => async (dispatch) => {
 
 
 
+
 export const allRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/requests`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/requests`,
+            {
+                withCredentials: true,
+            });
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
@@ -125,42 +135,44 @@ export const allGuidanceRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/guidance/requests`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/guidance/requests`, {
+            withCredentials: true,
+        });
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
-
             payload: data,
         });
     } catch (error) {
         dispatch({
             type: ALL_REQUESTS_FAIL,
-
             payload: error.response.data.message,
         });
     }
-}
+};
+
 
 
 export const allCashierRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/requests`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/requests`, {
+            withCredentials: true,
+        });
 
         dispatch({
             type: ALL_REQUESTS_SUCCESS,
-
             payload: data,
         });
     } catch (error) {
         dispatch({
             type: ALL_REQUESTS_FAIL,
-
             payload: error.response.data.message,
         });
     }
-}
+};
+
 
 
 
@@ -174,6 +186,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         console.log('Update Request Data:', requestData);
@@ -201,6 +214,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
 };
 
 
+
 export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_REQUEST });
@@ -209,6 +223,7 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         console.log('Update Request Data:', requestData);
@@ -235,6 +250,7 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
 };
 
 
+
 export const updateCashierRequest = (id, requestData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_REQUEST });
@@ -243,6 +259,7 @@ export const updateCashierRequest = (id, requestData) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         };
 
         console.log('Update Request Data:', requestData);
@@ -274,11 +291,19 @@ export const updateCashierRequest = (id, requestData) => async (dispatch) => {
 
 
 
+
 export const deleteRequest = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_REQUEST });
 
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/request/${id}`);
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.delete(
+            `${process.env.REACT_APP_API}/api/v1/admin/request/${id}`,
+            config
+        );
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,

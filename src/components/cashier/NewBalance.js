@@ -7,18 +7,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { newBalance, clearErrors } from "../../actions/balanceActions";
 import { NEW_BALANCE_RESET } from "../../constants/balanceConstants";
-import axios from "axios";
+import { allCashierUsers } from "../../actions/userActions";
 
 const NewBalance = () => {
     const [selectedStudent, setSelectedStudent] = useState({});
     const [specificBalance, setSpecificBalance] = useState("");
     const [amount, setAmount] = useState("");
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
+
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const { loading, error, success } = useSelector((state) => state.newBalance);
+    const { users } = useSelector((state) => state.allUsers);
 
     const message = (message = "") =>
         toast.success(message, {
@@ -41,15 +43,15 @@ const NewBalance = () => {
         // Fetch students from the backend
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("/api/v1/cashier/users");
-                setUsers(response.data.users);
+                // Dispatch the action to fetch users
+                await dispatch(allCashierUsers());
             } catch (error) {
                 console.error("Error fetching Users:", error);
             }
         };
 
         fetchUsers();
-    }, []);
+    }, [dispatch, users]);
 
     const balanceOptions = ["Tuition", "Library_fines", "Cafeteria"];
 
