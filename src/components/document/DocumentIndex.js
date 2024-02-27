@@ -48,10 +48,19 @@ const Index = () => {
 
     useEffect(() => {
         if (error) {
-            notify(error);
+            if (error.response && error.response.data) {
+                // Handle errors with response data (e.g., validation errors)
+                notify(error.response.data.message);
+            } else if (error.message) {
+                // Handle network errors or unexpected errors
+                notify(`Network Error: ${error.message}`);
+            } else {
+                notify('An unexpected error occurred.');
+            }
         }
         dispatch(getDocuments(keyword, currentPage, price, category));
     }, [dispatch, error, currentPage, keyword, price, category]);
+
 
     useEffect(() => {
         const handleScroll = () => {
