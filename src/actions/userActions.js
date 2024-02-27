@@ -128,7 +128,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, { withCredentials: true });
+    const response = await axios.get(`${process.env.REACT_APP_API}api/v1/me`, { withCredentials: true });
 
     console.log('Load User Response:', response.data); // Add this line to log the response
 
