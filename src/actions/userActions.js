@@ -64,6 +64,8 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
+    console.log('Login Response:', data);
+
     dispatch({
       type: LOGIN_SUCCESS,
 
