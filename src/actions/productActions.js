@@ -44,9 +44,9 @@ export const getProducts = (
       type: ALL_PRODUCTS_REQUEST,
       ADMIN_PRODUCTS_REQUEST,
     });
-    let link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
+    let link = `${process.env.REACT_APP_API}api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`;
     if (category) {
-      link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`;
+      link = `${process.env.REACT_APP_API}api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`;
     }
     const { data } = await axios.get(link);
     console.log(link);
@@ -78,7 +78,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/product/${id}`,
+      `${process.env.REACT_APP_API}api/v1/product/${id}`,
       config
     );
 
@@ -136,7 +136,7 @@ export const newReview = (reviewData) => async (dispatch) => {
       withCredentials: true,
     };
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/review`,
+      `${process.env.REACT_APP_API}api/v1/review`,
       reviewData,
       config
     );
@@ -156,7 +156,7 @@ export const getAdminProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCTS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/admin/products`,
+      `${process.env.REACT_APP_API}api/v1/admin/products`,
       {
         withCredentials: true,
       }
@@ -185,7 +185,7 @@ export const newProduct = (productData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/api/v1/admin/product/new`,
+      `${process.env.REACT_APP_API}api/v1/admin/product/new`,
       productData,
       config
     );
@@ -207,7 +207,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`,
+    const { data } = await axios.delete(`${process.env.REACT_APP_API}api/v1/admin/product/${id}`,
       { withCredentials: true, },
     );
 
@@ -239,7 +239,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/admin/product/${id}`,
+      `${process.env.REACT_APP_API}api/v1/admin/product/${id}`,
       productData,
       config
     );
@@ -269,7 +269,7 @@ export const getProductReviews = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/reviews?id=${id}`,
+      `${process.env.REACT_APP_API}api/v1/reviews?id=${id}`,
       config
     );
 
@@ -297,7 +297,7 @@ export const deleteReview = (id, productId) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      `/api/v1/reviews?id=${id}&productId=${productId}`,
+      `${process.env.REACT_APP_API}api/v1/reviews?id=${id}&productId=${productId}`,
       config
     );
 

@@ -90,7 +90,7 @@ export const register = (userData) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/register`, userData, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/register`, userData, config);
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
@@ -179,7 +179,7 @@ export const updateProfile = (userData) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config);
+    const { data } = await axios.put(`${process.env.REACT_APP_API}api/v1/me/update`, userData, config);
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
@@ -206,7 +206,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/password/update`,
+      `${process.env.REACT_APP_API}api/v1/password/update`,
       passwords,
       config
     );
@@ -237,7 +237,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `${process.env.REACT_APP_API}/api/v1/password/forgot`,
+      `${process.env.REACT_APP_API}api/v1/password/forgot`,
       email,
       config
     );
@@ -268,7 +268,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/password/reset/${token}`,
+      `${process.env.REACT_APP_API}api/v1/password/reset/${token}`,
       passwords,
       config
     );
@@ -311,7 +311,7 @@ export const allUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/admin/users`,
+      `${process.env.REACT_APP_API}api/v1/admin/users`,
       {
         withCredentials: true,
       }
@@ -332,7 +332,7 @@ export const allGuidanceUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/guidance/users`,
+      `${process.env.REACT_APP_API}api/v1/guidance/users`,
       {
         withCredentials: true,
       }
@@ -353,7 +353,7 @@ export const allCashierUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/cashier/users`,
+      `${process.env.REACT_APP_API}api/v1/cashier/users`,
       {
         withCredentials: true,
       }
@@ -385,7 +385,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/admin/user/${id}`,
+      `${process.env.REACT_APP_API}api/v1/admin/user/${id}`,
       userData,
       config
     );
@@ -411,7 +411,7 @@ export const getUserDetails = (id) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/admin/user/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -436,7 +436,7 @@ export const deleteUser = (id) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config);
+    const { data } = await axios.delete(`${process.env.REACT_APP_API}api/v1/admin/user/${id}`, config);
 
     dispatch({
       type: DELETE_USER_SUCCESS,
@@ -461,7 +461,7 @@ export const userSales = () => async (dispatch) => {
     };
     dispatch({ type: USER_SALES_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/orders/customer-sales`,
+      `${process.env.REACT_APP_API}api/v1/orders/customer-sales`,
       config
     );
     dispatch({
@@ -489,7 +489,7 @@ export const userRequests = () => async (dispatch) => {
     };
     dispatch({ type: USER_REQUESTS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/requests/user-requests`,
+      `${process.env.REACT_APP_API}api/v1/requests/user-requests`,
       config
     );
     dispatch({

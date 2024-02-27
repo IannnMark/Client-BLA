@@ -35,7 +35,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     };
 
 
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/order/new`, order, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/order/new`, order, config);
 
 
     dispatch({
@@ -65,7 +65,7 @@ export const myOrders = () => async (dispatch) => {
     dispatch({ type: MY_ORDERS_REQUEST });
 
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/orders/me`,
+      `${process.env.REACT_APP_API}api/v1/orders/me`,
       {
         withCredentials: true,
       }
@@ -92,7 +92,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/order/${id}`,
+      `${process.env.REACT_APP_API}api/v1/order/${id}`,
       {
         withCredentials: true,
       }
@@ -117,7 +117,7 @@ export const allOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/orders`,
+    const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/admin/orders`,
       {
         withCredentials: true,
       });
@@ -148,7 +148,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `${process.env.REACT_APP_API}/api/v1/admin/order/${id}`,
+      `${process.env.REACT_APP_API}api/v1/admin/order/${id}`,
       orderData,
       config
     );
@@ -174,7 +174,7 @@ export const deleteOrder = (id) => async (dispatch) => {
       withCredentials: true,
     };
 
-    const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/order/${id}`, config);
+    const { data } = await axios.delete(`${process.env.REACT_APP_API}api/v1/admin/order/${id}`, config);
 
     dispatch({
       type: DELETE_ORDER_SUCCESS,

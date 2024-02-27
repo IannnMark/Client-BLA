@@ -42,7 +42,7 @@ export const getCashierBalance = () => async (dispatch) => {
         };
 
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/cashier/balance`,
+            `${process.env.REACT_APP_API}api/v1/cashier/balance`,
             config
         );
 
@@ -73,7 +73,7 @@ export const newBalance = (balanceData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `${process.env.REACT_APP_API}/api/v1/cashier/balance/new`,
+            `${process.env.REACT_APP_API}api/v1/cashier/balance/new`,
             balanceData,
             config
         );
@@ -101,7 +101,7 @@ export const deleteBalance = (id) => async (dispatch) => {
             withCredentials: true,
         };
 
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`, config);
+        const { data } = await axios.delete(`${process.env.REACT_APP_API}api/v1/cashier/balance/${id}`, config);
 
         dispatch({
             type: DELETE_BALANCE_SUCCESS,
@@ -128,7 +128,7 @@ export const getBalanceDetails = (id) => async (dispatch) => {
             withCredentials: true,
         };
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/cashier/balance/${id}`, config);
 
         console.log("Balance details response:", data);
 
@@ -167,7 +167,7 @@ export const updateBalance = (id, balanceData) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/cashier/balance/${id}`, balanceData, config);
+        const { data } = await axios.put(`${process.env.REACT_APP_API}api/v1/cashier/balance/${id}`, balanceData, config);
 
         dispatch({
             type: UPDATE_BALANCE_SUCCESS,

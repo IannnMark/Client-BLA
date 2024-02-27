@@ -36,7 +36,7 @@ export const getGuidanceViolations = () => async (dispatch) => {
         dispatch({ type: GUIDANCE_VIOLATIONS_REQUEST });
 
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/guidance/violations`,
+            `${process.env.REACT_APP_API}api/v1/guidance/violations`,
             config
         );
 
@@ -65,7 +65,7 @@ export const newViolation = (violationData) => async (dispatch) => {
         dispatch({ type: NEW_VIOLATION_REQUEST });
 
         const { data } = await axios.post(
-            `${process.env.REACT_APP_API}/api/v1/guidance/violation/new`,
+            `${process.env.REACT_APP_API}api/v1/guidance/violation/new`,
             violationData,
             config
         );
@@ -95,7 +95,7 @@ export const deleteViolation = (id) => async (dispatch) => {
         dispatch({ type: DELETE_VIOLATION_REQUEST });
 
         const { data } = await axios.delete(
-            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            `${process.env.REACT_APP_API}api/v1/guidance/violation/${id}`,
             config
         );
 
@@ -124,7 +124,7 @@ export const getViolationDetails = (id) => async (dispatch) => {
         dispatch({ type: VIOLATION_DETAILS_REQUEST });
 
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            `${process.env.REACT_APP_API}api/v1/guidance/violation/${id}`,
             config
         );
 
@@ -165,7 +165,7 @@ export const updateViolation = (id, violationData) => async (dispatch) => {
         dispatch({ type: UPDATE_VIOLATION_REQUEST });
 
         const { data } = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/guidance/violation/${id}`,
+            `${process.env.REACT_APP_API}api/v1/guidance/violation/${id}`,
             violationData,
             config
         );

@@ -33,7 +33,7 @@ export const createRequest = (request) => async (dispatch, getState) => {
             withCredentials: true,
         };
 
-        const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/request/new`, request, config);
+        const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/request/new`, request, config);
         dispatch({
             type: CREATE_REQUEST_SUCCESS,
             payload: data,
@@ -65,7 +65,7 @@ export const myRequests = () => async (dispatch) => {
             withCredentials: true, // Add this line
         };
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/requests/me`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/requests/me`, config);
 
         dispatch({
             type: MY_REQUESTS_SUCCESS,
@@ -88,7 +88,7 @@ export const getRequestDetails = (id) => async (dispatch) => {
             withCredentials: true, // Add this line
         };
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/request/${id}`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/request/${id}`, config);
 
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
@@ -113,7 +113,7 @@ export const allRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/requests`,
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/admin/requests`,
             {
                 withCredentials: true,
             });
@@ -135,7 +135,7 @@ export const allGuidanceRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/guidance/requests`, {
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/guidance/requests`, {
             withCredentials: true,
         });
 
@@ -157,7 +157,7 @@ export const allCashierRequests = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_REQUESTS });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/cashier/requests`, {
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/cashier/requests`, {
             withCredentials: true,
         });
 
@@ -192,7 +192,7 @@ export const updateRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/admin/request/${id}`,
+            `${process.env.REACT_APP_API}api/v1/admin/request/${id}`,
             requestData,
             config
         );
@@ -229,7 +229,7 @@ export const updateGuidanceRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/guidance/request/${id}`,
+            `${process.env.REACT_APP_API}api/v1/guidance/request/${id}`,
             requestData,
             config
         );
@@ -265,7 +265,7 @@ export const updateCashierRequest = (id, requestData) => async (dispatch) => {
         console.log('Update Request Data:', requestData);
 
         const response = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/cashier/request/${id}`,
+            `${process.env.REACT_APP_API}api/v1/cashier/request/${id}`,
             requestData,
             config
         );
@@ -301,7 +301,7 @@ export const deleteRequest = (id) => async (dispatch) => {
         };
 
         const { data } = await axios.delete(
-            `${process.env.REACT_APP_API}/api/v1/admin/request/${id}`,
+            `${process.env.REACT_APP_API}api/v1/admin/request/${id}`,
             config
         );
 

@@ -90,7 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/document/${id}`, { withCredentials: true });
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/document/${id}`, { withCredentials: true });
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
             payload: data.document,
@@ -138,7 +138,7 @@ export const getAdminDocuments = () => async (dispatch) => {
     try {
         dispatch({ type: ADMIN_DOCUMENTS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/documents`,
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/admin/documents`,
             {
                 withCredentials: true,
             });
@@ -172,7 +172,7 @@ export const newDocument = (documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `${process.env.REACT_APP_API}/api/v1/admin/document/new`,
+            `${process.env.REACT_APP_API}api/v1/admin/document/new`,
             documentData,
             config
         );
@@ -195,7 +195,7 @@ export const deleteDocument = (id) => async (dispatch) => {
         dispatch({ type: DELETE_DOCUMENT_REQUEST });
 
         const { data } = await axios.delete(
-            `${process.env.REACT_APP_API}/api/v1/admin/document/${id}`,
+            `${process.env.REACT_APP_API}api/v1/admin/document/${id}`,
             { withCredentials: true }
         );
 
@@ -226,7 +226,7 @@ export const updateDocument = (id, documentData) => async (dispatch) => {
         };
 
         const { data } = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/admin/document/${id}`,
+            `${process.env.REACT_APP_API}api/v1/admin/document/${id}`,
             documentData,
             config
         );
