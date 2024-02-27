@@ -132,10 +132,26 @@ export const register = (userData) => async (dispatch) => {
 
 // Load user
 
+// export const loadUser = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: LOAD_USER_REQUEST });
+//     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`);
+//     dispatch({
+//       type: LOAD_USER_SUCCESS,
+//       payload: data.user,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: LOAD_USER_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
+
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`);
+    const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, { withCredentials: true });
     dispatch({
       type: LOAD_USER_SUCCESS,
       payload: data.user,
