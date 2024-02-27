@@ -58,6 +58,7 @@ export const login = (email, password) => async (dispatch) => {
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
       { email, password },
+      { withCredentials: true },
       config
     );
 
