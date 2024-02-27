@@ -26,7 +26,7 @@ export const monthlySalesChart = () => async (dispatch) => {
     };
     dispatch({ type: MONTHLY_SALES_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/orders/sales-per-month`,
+      `${process.env.REACT_APP_API}api/v1/orders/sales-per-month`,
       config
     );
     dispatch({
@@ -51,7 +51,7 @@ export const productSalesChart = () => async (dispatch) => {
     };
     dispatch({ type: PRODUCT_SALES_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/admin/products/sales`,
+      `${process.env.REACT_APP_API}api/v1/admin/products/sales`,
       config
     );
     dispatch({
@@ -78,7 +78,7 @@ export const monthlyRequestsChart = () => async (dispatch) => {
     };
     dispatch({ type: MONTHLY_REQUESTS_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/requests/request-per-month`,
+      `${process.env.REACT_APP_API}api/v1/requests/request-per-month`,
       config
     );
     dispatch({
@@ -104,7 +104,7 @@ export const documentSalesChart = () => async (dispatch) => {
     };
     dispatch({ type: DOCUMENT_SALES_REQUEST });
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/admin/documents/sales`,
+      `${process.env.REACT_APP_API}api/v1/admin/documents/sales`,
       config
     );
     dispatch({
