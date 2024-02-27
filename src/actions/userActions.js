@@ -45,26 +45,55 @@ import {
   USER_REQUESTS_FAIL,
 } from "../constants/userConstants";
 
+// export const login = (email, password) => async (dispatch) => {
+//   try {
+//     dispatch({ type: LOGIN_REQUEST });
+
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     };
+
+//     const { data } = await axios.post(
+//       `${process.env.REACT_APP_API}/api/v1/login`,
+//       { email, password },
+//       { withCredentials: true },
+//       config
+//     );
+
+//     dispatch({
+//       type: LOGIN_SUCCESS,
+
+//       payload: data.user,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: LOGIN_FAIL,
+//       payload: error.response.data.errMessage,
+//     });
+//   }
+// };
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
+      withCredentials: true,
     };
 
     const { data } = await axios.post(
       `${process.env.REACT_APP_API}/api/v1/login`,
       { email, password },
-      { withCredentials: true },
       config
     );
 
     dispatch({
       type: LOGIN_SUCCESS,
-
       payload: data.user,
     });
   } catch (error) {
