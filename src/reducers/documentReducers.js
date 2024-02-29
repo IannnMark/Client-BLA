@@ -29,6 +29,12 @@ import {
     CLEAR_ERRORS,
 } from "../constants/documentConstants";
 
+const initialState = {
+    loading: false,
+    document: {},
+    error: null,
+};
+
 export const documentsReducer = (state = { documents: [] }, action) => {
     switch (action.type) {
         case ALL_DOCUMENTS_REQUEST:
@@ -70,7 +76,7 @@ export const documentsReducer = (state = { documents: [] }, action) => {
 
 
 
-export const documentDetailsReducer = (state = { document: {} }, action) => {
+export const documentDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case DOCUMENT_DETAILS_REQUEST:
             return {
@@ -83,16 +89,19 @@ export const documentDetailsReducer = (state = { document: {} }, action) => {
                 loading: false,
                 document: action.payload,
             };
+
         case DOCUMENT_DETAILS_FAIL:
             return {
                 ...state,
-                error: action.payload
+                error: action.payload,
             };
+
         case CLEAR_ERRORS:
             return {
                 ...state,
                 error: null,
             };
+
         default:
             return state;
     }

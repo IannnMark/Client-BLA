@@ -3,32 +3,54 @@ import { Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addDocumentRequest } from "../../actions/requestActions";
 import { getDocumentDetails } from "../../actions/documentActions";
-import { addItemToCart } from "../../actions/cartActions";
 
 const DocumentDetails = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-    const [document, setDocument] = useState({});
+    const { document, error } = useSelector((state) => state.documentDetails);
     const [quantity, setQuantity] = useState(1);
+    const { user } = useSelector((state) => state.auth);
 
     useEffect(() => {
         const fetchDocumentDetails = async () => {
             try {
-                const { data } = await dispatch(getDocumentDetails(id));
-                console.log(data); // Check console log for data structure
-                setDocument(data.document); // Assuming the document object is nested under 'document' property
+                dispatch({ type: "DOCUMENT_DETAILS_REQUEST" });
+
+                const response = await dispatch(getDocumentDetails(id));
+                const data = response?.payload?.data;
+
+                if (data) {
+                    const documentData = data.document || {};
+                    dispatch({
+                        type: "DOCUMENT_DETAILS_SUCCESS",
+                        payload: documentData,
+                    });
+                } else {
+                    dispatch({
+                        type: "DOCUMENT_DETAILS_FAIL",
+                        payload: "Invalid data structure in the response",
+                    });
+                }
+
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching document details:", error);
+                dispatch({
+                    type: "DOCUMENT_DETAILS_FAIL",
+                    payload: error.response?.data?.message || "Error fetching document details",
+                });
+
                 setLoading(false);
             }
         };
 
         fetchDocumentDetails();
     }, [dispatch, id]);
+
+
 
     const increaseQty = () => {
         setQuantity((prevQty) => prevQty + 1);
@@ -38,8 +60,8 @@ const DocumentDetails = () => {
         setQuantity((prevQty) => (prevQty > 1 ? prevQty - 1 : 1));
     };
 
-    const addToCart = () => {
-        dispatch(addItemToCart(id, quantity));
+    const addRequest = () => {
+        dispatch(addDocumentRequest(document._id, quantity));
     };
 
     return (
@@ -59,11 +81,13 @@ const DocumentDetails = () => {
                                                 className="d-block w-100"
                                                 src={image.url}
                                                 alt={document.name}
+                                                style={{ maxWidth: '100%', maxHeight: '175px' }}
                                             />
                                         </Carousel.Item>
                                     ))}
                             </Carousel>
                         </div>
+
 
                         <div className="col-12 col-lg-5 mt-5">
                             <h3>{document.name}</h3>
@@ -90,20 +114,28 @@ const DocumentDetails = () => {
                                 </span>
                             </div>
 
-                            <button
-                                type="button"
-                                id="cart_btn"
-                                className="btn btn-primary d-inline ml-4"
-                                disabled={document.stock === 0}
-                                onClick={addToCart}
-                            >
-                                Add to Cart
-                            </button>
+                            {user ? (
+                                <button
+                                    type="button"
+                                    id="cart_btn"
+                                    className="btn btn-primary d-inline ml-4"
+                                    disabled={document.stock === 0}
+                                    onClick={addRequest}
+                                >
+                                    Add Request
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    id="cart_btn"
+                                    className="btn btn-primary d-inline ml-4"
+                                    disabled
+                                >
+                                    Add Request
+                                </button>
+                            )}
 
                             <hr />
-
-                            <h4 className="mt-2">Description:</h4>
-                            <p>{document.description}</p>
                         </div>
                     </div>
                 </Fragment>
