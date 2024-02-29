@@ -90,7 +90,7 @@ export const getDocumentDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: DOCUMENT_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/document/${id}`, { withCredentials: true });
+        const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/document/${id}`, { withCredentials: true });
 
         dispatch({
             type: DOCUMENT_DETAILS_SUCCESS,
