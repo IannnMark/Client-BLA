@@ -37,8 +37,68 @@ const RequestDetails = () => {
       ) : (
         <Fragment>
           <div className="row d-flex justify-content-between">
-            <div className="col-12 col-lg-8 mt-5 order-details">
+            <div className="col-12 col-lg-8 mt-5 request-details">
               <h1 className="my-4">Request # {request._id}</h1>
+
+              <hr />
+
+              <h4 className="my-4">Full Name:</h4>
+
+              <p className={request.user?.lastname && String(request.user.lastname)}>
+                <b>{`${request.user?.firstname || "N/A"} ${request.user?.lastname || "N/A"}`}</b>
+              </p>
+
+              <hr />
+
+              <h4 className="my-4">Payment Info:</h4>
+
+              {request.paymentInfo ? (
+                <div>
+                  {(() => {
+                    // Parse the JSON string
+                    try {
+                      const paymentInfoObject = JSON.parse(request.paymentInfo);
+                      return (
+                        <>
+                          {paymentInfoObject.type !== undefined ? (
+                            <p>
+                              <b>Type:</b> {paymentInfoObject.type}
+                            </p>
+                          ) : (
+                            <p>
+                              <b>Type:</b> N/A
+                            </p>
+                          )}
+                        </>
+                      );
+                    } catch (error) {
+                      console.error("Error parsing paymentInfo:", error);
+                      return (
+                        <p>
+                          <b>Error parsing paymentInfo</b>
+                        </p>
+                      );
+                    }
+                  })()}
+                </div>
+              ) : (
+                <p>
+                  <b>Type:</b> N/A
+                </p>
+              )}
+
+              {request.purpose ? (
+                <div>
+                  <h4 className="my-4">Purpose:</h4>
+                  <p>
+                    {request.purpose}
+                  </p>
+                </div>
+              ) : (
+                <p>
+                  <b>Purpose:</b> N/A
+                </p>
+              )}
 
               <hr />
 

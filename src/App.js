@@ -55,6 +55,9 @@ import BalanceList from "./components/cashier/BalanceList";
 import AboutUs from "./components/layout/aboutUs";
 import UpdateBalance from "./components/cashier/UpdateBalance";
 import Announcement from "./components/layout/announcement";
+import NewClearance from "./components/user/NewClearance";
+import ClearanceList from "./components/guidance/ClearanceList";
+import ClearanceLists from "./components/user/ClearanceList";
 
 
 
@@ -411,6 +414,33 @@ function App() {
           }
         />
 
+
+        <Route
+          path="/clearance/new"
+          element={
+            <ProtectedRoute>
+              <NewClearance />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/guidance/clearance"
+          element={
+            <ProtectedRoute isGuidance={true}>
+              <ClearanceList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/clearance"
+          element={
+            <ProtectedRoute>
+              <ClearanceLists />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/cart" element={<Cart />} exact="true" />
         <Route path="/request" element={<Request />} exact="true" />

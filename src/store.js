@@ -37,6 +37,13 @@ import {
 } from "./reducers/balanceReducers";
 
 import {
+  clearancesReducer,
+  newClearanceReducer,
+  clearanceReducer,
+  clearanceDetailsReducer,
+} from "./reducers/clearanceReducers";
+
+import {
   authReducer,
   userReducer,
   forgotPasswordReducer,
@@ -118,6 +125,10 @@ const reducer = combineReducers({
   newBalance: newBalanceReducer,
   balance: balanceReducer,
   balanceDetails: balanceDetailsReducer,
+  clearances: clearancesReducer,
+  newClearance: newClearanceReducer,
+  clearance: clearanceReducer,
+  clearanceDetails: clearanceDetailsReducer,
 
 
 });

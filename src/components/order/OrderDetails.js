@@ -52,6 +52,30 @@ const OrderDetails = () => {
 
               <hr />
 
+              <h4 className="my-4">Full Name:</h4>
+
+              <p className={order.user?.lastname && String(order.user.lastname)}>
+                <b>{`${order.user?.firstname || "N/A"} ${order.user?.lastname || "N/A"}`}</b>
+              </p>
+
+              <hr />
+              <h4 className="my-4">Payment Info:</h4>
+
+              {order.paymentInfo ? (
+                <div>
+                  <p>
+                    <b>Type:</b> {order.paymentInfo.type || "N/A"}
+                  </p>
+                </div>
+              ) : (
+                <p>
+                  <b>N/A</b>
+                </p>
+              )}
+
+
+              <hr />
+
               <h4 className="my-4">Order Status:</h4>
 
               <p

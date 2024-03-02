@@ -32,9 +32,28 @@ const GuidanceSidebar = () => {
                                 <Link to="/guidance/violations">
                                     <i className="fa fa-clipboard"></i> All
                                 </Link>
-                            <br/>
+                                <br />
                                 <Link to="/guidance/violation">
                                     <i className="fa fa-plus"></i> Create
+                                </Link>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#clearanceSubmenu"
+                            data-toggle="collapse"
+                            aria-expanded="false"
+                            className="dropdown-toggle"
+                        >
+                            <i className="fa fa-file"></i> Clearance
+                        </a>
+
+                        <ul className="collapse list-unstyled" id="clearanceSubmenu">
+                            <li>
+                                <Link to="/guidance/clearance">
+                                    <i className="fa fa-clipboard"></i> All
                                 </Link>
                             </li>
                         </ul>

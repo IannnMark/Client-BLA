@@ -159,6 +159,12 @@ const Header = () => {
                   </Link>
                 )}
 
+                {user && user.role === "user" && (
+                  <Link className="dropdown-item" to="/clearance">
+                    Clearance
+                  </Link>
+                )}
+
                 <Link className="dropdown-item" to="/me">
                   Profile
                 </Link>
