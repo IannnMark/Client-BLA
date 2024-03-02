@@ -48,10 +48,8 @@ const DocumentList = () => {
         const data = {
             columns: [
                 {
-                    label: "ID",
-
-                    field: "id",
-
+                    label: "Codename",
+                    field: "codename",
                     sort: "asc",
                 },
 
@@ -93,7 +91,7 @@ const DocumentList = () => {
 
         documents.forEach((document) => {
             data.rows.push({
-                id: document._id,
+                codename: document.codename,
 
                 name: document.name,
 
