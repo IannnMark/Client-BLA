@@ -916,10 +916,12 @@ ul.CTAs a {
 }
 
 
-/* .chart-card {
-  height: 300px;
-} */
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-/* .icon {
-  color: #1CC3F6;
-} */
+.logo {
+  max-width: 100%;
+  height: auto;
+}
