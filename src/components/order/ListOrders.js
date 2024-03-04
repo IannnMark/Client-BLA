@@ -51,9 +51,9 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
-          label: "Date of Request",
+          label: "Date of Order",
 
-          field: "dateofRequest",
+          field: "dateofOrder",
 
           sort: "asc",
         },
@@ -85,8 +85,8 @@ const ListOrders = () => {
     };
 
     sortedOrders.forEach((order) => {
-      const formattedCreatedDate = order.dateofRequest
-        ? new Date(order.dateofRequest).toLocaleDateString()
+      const formattedCreatedDate = order.createdAt
+        ? new Date(order.createdAt).toLocaleDateString()
         : "N/A";
       const formattedReleaseDate = order.dateRelease ? new Date(order.dateRelease).toLocaleDateString() : "N/A";
 
@@ -99,7 +99,7 @@ const ListOrders = () => {
         orderedMerch: orderedMerch,
         numOfItems: order.orderItems.length,
         amount: `$${order.totalPrice}`,
-        dateofRequest: formattedCreatedDate,
+        dateofOrder: formattedCreatedDate,
         releaseDate: formattedReleaseDate,
         status:
           order.orderStatus &&
@@ -121,8 +121,6 @@ const ListOrders = () => {
   };
 
   return (
-    // <div style={{backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.svg)`,
-    // backgroundSize: "cover",marginTop: "-47px",  }}>
     <Fragment>
       <MetaData title={"My Orders"} />
 
@@ -136,7 +134,7 @@ const ListOrders = () => {
           className="px-4"
           bordered
           striped
-          classNamee="px-3 custom-mdb-datatable" // Add custom class here
+          classNamee="px-3 custom-mdb-datatable"
           borderedd
           stripedd
           hover
@@ -157,10 +155,9 @@ const ListOrders = () => {
           pagingBottom
           paginationLabels={["Previous", "Next"]}
           style={{
-              fontSize: "18px",
-              fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+            fontSize: "18px",
+            fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
           }}
-          // Add custom styling for cells based on request status
           tbodyTextBlack
           tbodyBorderY
           tbodyBorderX
@@ -169,7 +166,6 @@ const ListOrders = () => {
         />
       )}
     </Fragment>
-  // </div>
   );
 };
 

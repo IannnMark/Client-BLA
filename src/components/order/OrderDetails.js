@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 
 import { Link, useParams } from "react-router-dom";
 
@@ -12,9 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getOrderDetails, clearErrors } from "../../actions/orderActions";
 
-const OrderDetails = () => {
-  //   const alert = useAlert();
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
+const OrderDetails = () => {
   const dispatch = useDispatch();
 
   const { loading, error, order = {} } = useSelector(
@@ -38,6 +38,17 @@ const OrderDetails = () => {
     }
   }, [dispatch, error, id]);
 
+  const pdfExportComponent = useRef(null);
+  const contentArea = useRef(null);
+
+  const handleExportWithComponent = (event) => {
+    pdfExportComponent.current.save();
+  };
+
+  const handleExportWithMethod = (event) => {
+    savePDF(contentArea.current, { paperSize: "A4" });
+  }
+
   return (
     <Fragment>
       <MetaData title={"Order Details"} />
@@ -48,80 +59,95 @@ const OrderDetails = () => {
         <Fragment>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8 mt-5 order-details">
-              <h1 className="my-4">Order Number: {order._id}</h1>
+              <button onClick={handleExportWithMethod}>Download Receipt</button>
 
-              <hr />
+              <PDFExport ref={pdfExportComponent} paperSize={"A4"}>
+                <div ref={contentArea}>
 
-              <h4 className="my-4">Full Name:</h4>
+                  <div className="logo-container">
+                    <img
+                      src="/images/school_logo.png"
+                      alt="Company Logo"
+                      className="logo"
+                      style={{ maxWidth: '120%', height: 'auto', maxHeight: '200px' }}
+                    />
+                  </div>
+                  <h1 className="my-4">Order Number: {order._id}</h1>
 
-              <p className={order.user?.lastname && String(order.user.lastname)}>
-                <b>{`${order.user?.firstname || "N/A"} ${order.user?.lastname || "N/A"}`}</b>
-              </p>
+                  <hr />
 
-              <hr />
-              <h4 className="my-4">Payment Info:</h4>
+                  <h4 className="my-4">Full Name:</h4>
 
-              {order.paymentInfo ? (
-                <div>
-                  <p>
-                    <b>Type:</b> {order.paymentInfo.type || "N/A"}
+                  <p className={order.user?.lastname && String(order.user.lastname)}>
+                    <b>{`${order.user?.firstname || "N/A"} ${order.user?.lastname || "N/A"}`}</b>
                   </p>
-                </div>
-              ) : (
-                <p>
-                  <b>N/A</b>
-                </p>
-              )}
 
+                  <hr />
+                  <h4 className="my-4">Payment Info:</h4>
 
-              <hr />
-
-              <h4 className="my-4">Order Status:</h4>
-
-              <p
-                className={
-                  order.orderStatus &&
-                    String(order.orderStatus).includes("Received")
-                    ? "greenColor"
-                    : "redColor"
-                }
-              >
-                <b>{orderStatus}</b>
-              </p>
-
-              <h4 className="my-4">Order Items:</h4>
-
-              <hr />
-
-              <div className="cart-item my-1">
-                {orderItems &&
-                  orderItems.map((item) => (
-                    <div key={item.product} className="row my-4">
-                      <div className="col-4 col-lg-2">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          height="45"
-                          width="65"
-                        />
-                      </div>
-
-                      <div className="col-5 col-lg-5">
-                        <Link to={`/products/${item.product}`}>
-                          {item.name}
-                        </Link>
-                      </div>
-
-                      <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p>${item.price}</p>
-                      </div>
-
-                      <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                        <p>{item.quantity} Piece(s)</p>
-                      </div>
+                  {order.paymentInfo ? (
+                    <div>
+                      <p>
+                        <b>Type:</b> {order.paymentInfo.type || "N/A"}
+                      </p>
                     </div>
-                  ))}
-              </div>
+                  ) : (
+                    <p>
+                      <b>N/A</b>
+                    </p>
+                  )}
+
+
+                  <hr />
+
+                  <h4 className="my-4">Order Status:</h4>
+
+                  <p
+                    className={
+                      order.orderStatus &&
+                        String(order.orderStatus).includes("Received")
+                        ? "greenColor"
+                        : "redColor"
+                    }
+                  >
+                    <b>{orderStatus}</b>
+                  </p>
+
+                  <h4 className="my-4">Order Items:</h4>
+
+                  <hr />
+
+                  <div className="cart-item my-1">
+                    {orderItems &&
+                      orderItems.map((item) => (
+                        <div key={item.product} className="row my-4">
+                          <div className="col-4 col-lg-2">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              height="45"
+                              width="65"
+                            />
+                          </div>
+
+                          <div className="col-5 col-lg-5">
+                            <Link to={`/products/${item.product}`}>
+                              {item.name}
+                            </Link>
+                          </div>
+
+                          <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                            <p>${item.price}</p>
+                          </div>
+
+                          <div className="col-4 col-lg-3 mt-4 mt-lg-0">
+                            <p>{item.quantity} Piece(s)</p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </PDFExport>
 
               <hr />
             </div>

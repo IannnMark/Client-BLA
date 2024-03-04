@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getRequestDetails, clearErrors } from "../../actions/inquiriesActions";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 const RequestDetails = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,18 @@ const RequestDetails = () => {
 
   console.log(request);
 
+
+  const pdfExportComponent = useRef(null);
+  const contentArea = useRef(null);
+
+  const handleExportWithComponent = (event) => {
+    pdfExportComponent.current.save();
+  };
+
+  const handleExportWithMethod = (event) => {
+    savePDF(contentArea.current, { paperSize: "A4" });
+  }
+
   return (
     <Fragment>
       <MetaData title={"Request Details"} />
@@ -38,116 +51,126 @@ const RequestDetails = () => {
         <Fragment>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8 mt-5 request-details">
-              <h1 className="my-4">Request # {request._id}</h1>
+              <button onClick={handleExportWithMethod}>Download Receipt</button>
 
-              <hr />
+              <PDFExport ref={pdfExportComponent} paperSize={"A4"}>
+                <div ref={contentArea}>
+                  <div className="logo-container">
+                    <img
+                      src="/images/school_logo.png"
+                      alt="Company Logo"
+                      className="logo"
+                      style={{ maxWidth: '120%', height: 'auto', maxHeight: '200px' }}
+                    />
+                  </div>
+                  <h1 className="my-4">Request Number: {request._id}</h1>
 
-              <h4 className="my-4">Full Name:</h4>
+                  <hr />
 
-              <p className={request.user?.lastname && String(request.user.lastname)}>
-                <b>{`${request.user?.firstname || "N/A"} ${request.user?.lastname || "N/A"}`}</b>
-              </p>
+                  <h4 className="my-4">Full Name:</h4>
 
-              <hr />
-
-              <h4 className="my-4">Payment Info:</h4>
-
-              {request.paymentInfo ? (
-                <div>
-                  {(() => {
-                    // Parse the JSON string
-                    try {
-                      const paymentInfoObject = JSON.parse(request.paymentInfo);
-                      return (
-                        <>
-                          {paymentInfoObject.type !== undefined ? (
-                            <p>
-                              <b>Type:</b> {paymentInfoObject.type}
-                            </p>
-                          ) : (
-                            <p>
-                              <b>Type:</b> N/A
-                            </p>
-                          )}
-                        </>
-                      );
-                    } catch (error) {
-                      console.error("Error parsing paymentInfo:", error);
-                      return (
-                        <p>
-                          <b>Error parsing paymentInfo</b>
-                        </p>
-                      );
-                    }
-                  })()}
-                </div>
-              ) : (
-                <p>
-                  <b>Type:</b> N/A
-                </p>
-              )}
-
-              {request.purpose ? (
-                <div>
-                  <h4 className="my-4">Purpose:</h4>
-                  <p>
-                    {request.purpose}
+                  <p className={request.user?.lastname && String(request.user.lastname)}>
+                    <b>{`${request.user?.firstname || "N/A"} ${request.user?.lastname || "N/A"}`}</b>
                   </p>
-                </div>
-              ) : (
-                <p>
-                  <b>Purpose:</b> N/A
-                </p>
-              )}
 
-              <hr />
+                  <hr />
 
-              <h4 className="my-4">Request Status:</h4>
+                  <h4 className="my-4">Payment Info:</h4>
 
-              <p
-                className={
-                  request.requestStatus &&
-                    String(request.requestStatus).includes("Received")
-                    ? "greenColor"
-                    : "redColor"
-                }
-              >
-                <b>{requestStatus}</b>
-              </p>
-
-              <h4 className="my-4">Request Items:</h4>
-
-              <hr />
-
-              <div className="cart-item my-1">
-                {requestItems &&
-                  requestItems.map((item) => (
-                    <div key={item.document} className="row m-5">
-                      <div className="col-4 col-lg-2">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          height="45"
-                          width="65"
-                        />
-                      </div>
-                      <div className="col-5 col-lg-5">
-                        <Link to={`/documents/${item.document}`}>
-                          {item.name}
-                        </Link>
-                      </div>
-
-                      <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p>${item.price}</p>
-                      </div>
-
-                      <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                        <p>{item.quantity} Piece(s)</p>
-                      </div>
+                  {request.paymentInfo ? (
+                    <div>
+                      {(() => {
+                        // Parse the JSON string
+                        try {
+                          const paymentInfoObject = JSON.parse(request.paymentInfo);
+                          return (
+                            <>
+                              {paymentInfoObject.type !== undefined ? (
+                                <p>
+                                  <b>Type:</b> {paymentInfoObject.type}
+                                </p>
+                              ) : (
+                                <p>
+                                  <b>Type:</b> N/A
+                                </p>
+                              )}
+                            </>
+                          );
+                        } catch (error) {
+                          console.error("Error parsing paymentInfo:", error);
+                          return (
+                            <p>
+                              <b>Error parsing paymentInfo</b>
+                            </p>
+                          );
+                        }
+                      })()}
                     </div>
-                  ))}
-              </div>
+                  ) : (
+                    <p>
+                      <b>Type:</b> N/A
+                    </p>
+                  )}
 
+                  {request.purpose ? (
+                    <div>
+                      <h4 className="my-4">Purpose:</h4>
+                      <p>
+                        {request.purpose}
+                      </p>
+                    </div>
+                  ) : (
+                    <p>
+                      <b>Purpose:</b> N/A
+                    </p>
+                  )}
+
+                  <hr />
+
+                  <h4 className="my-4">Request Status:</h4>
+
+                  <p
+                    className={
+                      request.requestStatus &&
+                        String(request.requestStatus).includes("Received")
+                        ? "greenColor"
+                        : "redColor"
+                    }
+                  >
+                    <b>{requestStatus}</b>
+                  </p>
+
+                  <h4 className="my-4">Request Items:</h4>
+
+                  <hr />
+
+                  <div className="cart-item my-1">
+                    {requestItems &&
+                      requestItems.map((item) => (
+                        <div key={item.document} className="row m-5">
+                          <div className="col-4 col-lg-2">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              height="45"
+                              width="65"
+                            />
+                          </div>
+                          <div className="col-5 col-lg-5">
+                            <Link to={`/documents/${item.document}`}>
+                              {item.name}
+                            </Link>
+                          </div>
+
+                          <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                            <p>${item.price}</p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+
+                </div>
+              </PDFExport>
               <hr />
             </div>
           </div>
