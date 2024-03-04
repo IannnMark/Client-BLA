@@ -16,80 +16,79 @@ const Profile = () => {
       ) : (
         <Fragment>
           <MetaData title={"Your Profile"} />
-       
-          <div className="profile-page"  style={{
-              backgroundImage: `url('/images/login.svg')`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              paddingTop: "1%",
-              height: "700px",  
-              backgroundAttachment: "fixed",
-  
-            }}> {/* Add the 'profile-page' class here */}
-          <h2>My Profile</h2>
 
-          <div className="row justify-content-around mt-5 user-info">
-            <div className="col-12 col-md-3">
-              <figure className="avatar avatar-profile">
-                <img
-                  className="rounded-circle img-fluid"
-                  src={user.avatar.url}
-                  alt={user.firstname}
-                />
-              </figure>
+          <div className="profile-page" style={{
+            backgroundImage: `url('/images/userprofilebg.gif')`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            paddingTop: "1%",
+            height: "700px",
+            backgroundAttachment: "local, scroll",
 
-              <Link
+          }}> {/* Add the 'profile-page' class here */}
+            <h2>My Profile</h2>
+
+            <div className="row justify-content-around mt-4 user-info">
+              <div style={{ marginLeft: 50, }}>
+                <figure className="avatar avatar-profile">
+                  <img
+                    className="rounded-circle img-fluid"
+                    src={user.avatar.url}
+                    alt={user.firstname}
+                  />
+                </figure>
+
+                <Link
                   to="/me/update"
                   id="edit_profile"
-                  className="btn btn-primary btn-block my-3" // Adjust margin for spacing
+                  className="btn btn-primary btn-block my-3 ml-4" // Adjust margin for spacing
                 >
                   Edit Profile
                 </Link>
                 <Link
                   to="/password/update"
-                   id="edit_profile"
-                  className="btn btn-primary btn-block mt-3"
+                  id="edit_profile"
+                  className="btn btn-primary btn-block mt-2 ml-4"
                 >
                   Change Password
                 </Link>
-            </div>
+              </div>
 
-            <div className="col-12 col-md-5">
-              <h4>Full Name</h4>
+              <div style={{ marginRight: 1000, }}>
+                <div>
+                  <h4 className="">Full Name</h4>
+                  <p>{user.firstname} {user.lastname}</p>
+                </div>
 
-              <p>
-                {user.firstname} {user.lastname}
-              </p>
+                <div>
+                  <h4 className="mr-3">Email Address</h4>
+                  <p>{user.email}</p>
+                </div>
 
-              <h4>Email Address</h4>
+                <div>
+                  <h4 className="mr-3">Joined On</h4>
+                  <p>{String(user.createdAt).substring(0, 10)}</p>
+                </div>
 
-              <p>{user.email}</p>
+                {/* {user.role !== "admin" && (
+            <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
+                My Orders
+            </Link>
+        )} */}
 
-              <h4>Joined On</h4>
-
-              <p>{String(user.createdAt).substring(0, 10)}</p>
-
-              {/* {user.role !== "admin" && (
-                <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                  My Orders
-                </Link>
-              )} */}
-
-              {/* {user.role !== "admin" && (
-                <Link to="/requests/me" className="btn btn-danger btn-block mt-5">
-                  My Requests
-                </Link>
-              )} */}
-
-              
+                {/* {user.role !== "admin" && (
+            <Link to="/requests/me" className="btn btn-danger btn-block mt-5">
+                My Requests
+            </Link>
+        )} */}
+              </div>
             </div>
           </div>
-          </div>
-          
+
 
         </Fragment>
-       
+
       )}
     </Fragment>
   );

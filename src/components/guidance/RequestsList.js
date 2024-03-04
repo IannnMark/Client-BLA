@@ -48,7 +48,7 @@ const RequestsList = () => {
         const data = {
             columns: [
                 {
-                    label: "Request ID",
+                    label: "Tracking ID",
                     field: "id",
                     sort: "asc",
                 },
@@ -163,7 +163,42 @@ const RequestsList = () => {
                         {loading ? (
                             <Loader />
                         ) : (
-                            <MDBDataTable data={setRequests()} className="px-3" bordered striped hover />
+                            <MDBDataTable data={
+                                setRequests()}
+                                className="px-4"
+                                bordered
+                                striped
+                                classNamee="px-3 custom-mdb-datatable" // Add custom class here
+                                borderedd
+                                stripedd
+                                hover
+                                noBottomColumns
+                                responsive
+                                searching={false}
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "18px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop />
                         )}
                     </Fragment>
                 </div>

@@ -18,9 +18,13 @@ const ViolationsList = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const { loading, error, violations } = useSelector((state) => state.violations);
+    const { loading, error, violations } = useSelector(
+        (state) => state.violations
+    );
 
-    const { error: deleteError, isDeleted } = useSelector((state) => state.violation || {});
+    const { error: deleteError, isDeleted } = useSelector(
+        (state) => state.violation || {}
+    );
 
     useEffect(() => {
         dispatch(getGuidanceViolations());
@@ -42,8 +46,6 @@ const ViolationsList = () => {
     const setViolations = () => {
         const data = {
             columns: [
-                // { label: "ID", field: "id", sort: "asc" },
-                // { label: "User ID", field: "userId", sort: "asc" },
                 { label: "Student Last Name", field: "lastname", sort: "asc" },
                 { label: "Grade", field: "grade", sort: "asc" },
                 { label: "Violation Type", field: "type", sort: "asc" },
@@ -56,8 +58,6 @@ const ViolationsList = () => {
 
         violations.forEach((violation) => {
             data.rows.push({
-                // id: violation._id,
-                // userId: violation.user._id,
                 lastname: violation.lastname,
                 grade: violation.grade,
                 type: violation.type,
@@ -102,7 +102,47 @@ const ViolationsList = () => {
                     <Fragment>
                         <h1 className="my-5">All Violations</h1>
 
-                        {loading ? <Loader /> : <MDBDataTable data={setViolations()} className="px-3" bordered striped hover />}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <MDBDataTable
+                                data={setViolations()}
+                                className="px-4"
+                                bordered
+                                striped
+                                classNamee="px-3 custom-mdb-datatable" // Add custom class here
+                                borderedd
+                                stripedd
+                                hover
+                                noBottomColumns
+                                responsive
+                                searching={false}
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "18px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop
+                            />
+                        )}
                     </Fragment>
                 </div>
             </div>
@@ -111,5 +151,3 @@ const ViolationsList = () => {
 };
 
 export default ViolationsList;
-
-

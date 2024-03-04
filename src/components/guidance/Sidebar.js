@@ -22,7 +22,7 @@ const GuidanceSidebar = () => {
                             href="#documentSubmenu"
                             data-toggle="collapse"
                             aria-expanded="false"
-                            className="dropdown-toggle"
+                            className="custom-toggle"
                         >
                             <i className="fa fa-file"></i> Violations
                         </a>
@@ -45,7 +45,7 @@ const GuidanceSidebar = () => {
                             href="#clearanceSubmenu"
                             data-toggle="collapse"
                             aria-expanded="false"
-                            className="dropdown-toggle"
+                            className="custom-toggle"
                         >
                             <i className="fa fa-file"></i> Clearance
                         </a>
@@ -65,4 +65,3 @@ const GuidanceSidebar = () => {
 };
 
 export default GuidanceSidebar;
-

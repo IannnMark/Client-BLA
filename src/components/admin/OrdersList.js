@@ -23,8 +23,13 @@ const OrdersList = () => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState(""); // State for selected status filter
+  const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("");
+  const [showDateFilter, setShowDateFilter] = useState(false);
+  const [showProductFilter, setShowProductFilter] = useState(false);
+  const [showGradeFilter, setShowGradeFilter] = useState(false);
+  const [showStatusFilter, setShowStatusFilter] = useState(false);
 
   const errMsg = (message = "") =>
     toast.error(message, {
@@ -55,7 +60,6 @@ const OrdersList = () => {
     dispatch(deleteOrder(id));
   };
 
-
   const getUniqueProducts = () => {
     const uniqueProducts = new Set();
 
@@ -70,9 +74,23 @@ const OrdersList = () => {
     return Array.from(uniqueProducts);
   };
 
+  const toggleDateFilter = () => {
+    setShowDateFilter(!showDateFilter);
+  };
+
+  const toggleProductFilter = () => {
+    setShowProductFilter(!showProductFilter);
+  };
+
+  const toggleGradeFilter = () => {
+    setShowGradeFilter(!showGradeFilter);
+  };
+
+  const toggleStatusFilter = () => {
+    setShowStatusFilter(!showStatusFilter);
+  };
 
   const setOrders = () => {
-    // Filter orders based on startDate and endDate
     const filteredOrders = orders.filter((order) => {
       const orderDate = new Date(order.createdAt);
       return (
@@ -81,7 +99,6 @@ const OrdersList = () => {
       );
     });
 
-    // Filter orders based on status
     const statusFilteredOrders = selectedStatus
       ? filteredOrders.filter(
         (order) =>
@@ -90,14 +107,24 @@ const OrdersList = () => {
       )
       : filteredOrders;
 
-    // Filter requests based on selected document
     const productFilteredOrders = selectedProduct
       ? statusFilteredOrders.filter((order) =>
         order.orderItems.some((item) => item.name === selectedProduct)
       )
       : statusFilteredOrders;
 
-    const sortedFilteredOrders = [...productFilteredOrders].sort(
+    const gradeFilteredOrders = selectedGrade
+      ? productFilteredOrders.filter((order) => {
+        // Adjust the logic based on your data structure
+        // Replace order.grade with the correct path to the grade in your data
+        const userGrade = parseInt(order.grade, 10);
+        const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
+
+        return userGrade >= selectedGradeNum;
+      })
+      : productFilteredOrders;
+
+    const sortedFilteredOrders = [...gradeFilteredOrders].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
 
@@ -105,86 +132,53 @@ const OrdersList = () => {
 
     const data = {
       columns: [
-
-
+        {
+          label: "Order ID",
+          field: "id",
+          sort: "asc",
+        },
         {
           label: "User Last Name",
           field: "userLastName",
           sort: "asc",
         },
-
         {
           label: "No of Items",
-
           field: "numofItems",
-
           sort: "asc",
         },
-
         {
           label: "Ordered Merchandise",
           field: "orderedMerch",
           sort: "asc",
         },
-
         {
           label: "Amount",
-
           field: "amount",
-
           sort: "asc",
         },
-
         {
           label: "Created Date",
-
           field: "createdAt",
-
           sort: "asc",
         },
-
         {
           label: "Release of Order",
-
           field: "dateRelease",
-
           sort: "asc",
         },
-        {
-          label: "Reference Number",
-
-          field: "referenceNumber",
-
-          sort: "asc",
-        },
-
-
-        {
-          label: "Gcash ScreenShot",
-
-          field: "screenShot",
-
-          sort: "asc",
-        },
-
         {
           label: "Status",
-
           field: "status",
-
           sort: "asc",
         },
-
         {
           label: "Actions",
-
           field: "actions",
         },
       ],
-
       rows: [],
     };
-
 
     sortedFilteredOrders.forEach((order) => {
       const formattedCreatedDate = order.createdAt
@@ -201,37 +195,13 @@ const OrdersList = () => {
         : "N/A";
 
       data.rows.push({
-
-
+        id: order._id,
         userLastName: order.user.lastname,
-
         numofItems: order.orderItems.length,
-
         orderedMerch: orderedMerch || "N/A",
-
         amount: `₱${order.totalPrice}`,
-
         createdAt: formattedCreatedDate,
-
         dateRelease: formattedReleaseDate,
-
-        referenceNumber: order.referenceNumber || "N/A",
-
-        screenShot: (
-          order.screenShot && order.screenShot.length > 0 ? (
-            <a href={order.screenShot[0].url} target="_blank" rel="noopener noreferrer">
-              <img
-                src={order.screenShot[0].url}
-                alt={order.orderItems}
-                className="screenShot-image"
-                style={{ width: "80px", height: "80px" }}
-              />
-            </a>
-          ) : (
-            "N/A"
-          )
-        ),
-
         status:
           order.orderStatus &&
             String(order.orderStatus).includes("Received") ? (
@@ -239,7 +209,6 @@ const OrdersList = () => {
           ) : (
             <p style={{ color: "red" }}>{order.orderStatus}</p>
           ),
-
         actions: (
           <Fragment>
             <Link
@@ -248,7 +217,6 @@ const OrdersList = () => {
             >
               <i className="fa fa-eye"></i>
             </Link>
-
             <button
               className="btn btn-danger py-1 px-2 ml-2"
               onClick={() => deleteOrderHandler(order._id)}
@@ -276,53 +244,115 @@ const OrdersList = () => {
           <Fragment>
             <h1 className="my-5">All Orders</h1>
 
-            {/* Add date and status filters here */}
             <div className="row my-4">
-              <div className="col-md-6">
-                <h4 className="my-5">Filtered by Date</h4>
-                <label>Start Date: </label>
-                <input
-                  type="date"
-                  onChange={(e) => setStartDate(new Date(e.target.value))}
-                />
-                <label className="ml-3">End Date: </label>
-                <input
-                  type="date"
-                  onChange={(e) => setEndDate(new Date(e.target.value))}
-                />
+              <div className="col-md-3">
+                <button className="toggle-button" onClick={toggleDateFilter}>
+                  Filtered by Date
+                </button>
+                <br />
+                <br />
+                {showDateFilter && (
+                  <div className="date-input-section">
+                    <div>
+                      <label>Start Date: </label>
+                      <input
+                        type="date"
+                        onChange={(e) =>
+                          setStartDate(new Date(e.target.value))
+                        }
+                      />
+                    </div>
+                    <div className="mt-3">
+                      <label>End Date: </label>
+                      <input
+                        type="date"
+                        onChange={(e) => setEndDate(new Date(e.target.value))}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div className="col-md-6">
-                <h4 className="my-5">Filtered by Status</h4>
-                <label>Status: </label>
-                <select
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                  value={selectedStatus}
+              <div className="col-md-3">
+                <button
+                  className="toggle-button"
+                  onClick={toggleProductFilter}
                 >
-                  <option value="">All</option>
-                  <option value="Processing">Processing</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Received">Received</option>
-                  {/* Add other status options as needed */}
-                </select>
+                  Filtered by Products
+                </button>
+                <br />
+                <br />
+                {showProductFilter && (
+                  <div className="product-input-section">
+                    <label>Product: </label>
+                    <select
+                      onChange={(e) =>
+                        setSelectedProduct(e.target.value)
+                      }
+                      value={selectedProduct}
+                    >
+                      <option value="">All</option>
+                      {getUniqueProducts().map((product, index) => (
+                        <option key={index} value={product}>
+                          {product}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
-            </div>
 
-            <div className="row my-4">
-              <div className="col-md-6">
-                <h4 className="my-5">Filtered by Products</h4>
-                <label>Product: </label>
-                <select
-                  onChange={(e) => setSelectedProduct(e.target.value)}
-                  value={selectedProduct}
+              {/* <div className="col-md-3">
+                <button className="toggle-button" onClick={toggleGradeFilter}>
+                  Filtered by Grade
+                </button>
+                <br />
+                <br />
+                {showGradeFilter && (
+                  <div className="grade-input-section">
+                    <label>Grade: </label>
+                    <select
+                      onChange={(e) => setSelectedGrade(e.target.value)}
+                      value={selectedGrade}
+                    >
+                      <option value="">All</option>
+                      <option value="7">Grade 7</option>
+                      <option value="8">Grade 8</option>
+                      <option value="9">Grade 9</option>
+                      <option value="10">Grade 10</option>
+                      <option value="11">Grade 11</option>
+                      <option value="12">Grade 12</option>
+                    </select>
+                  </div>
+                )}
+              </div> */}
+
+
+              <div className="col-md-3">
+                <button
+                  className="toggle-button"
+                  onClick={toggleStatusFilter}
                 >
-                  <option value="">All</option>
-                  {getUniqueProducts().map((product, index) => (
-                    <option key={index} value={product}>
-                      {product}
-                    </option>
-                  ))}
-                </select>
+                  Filtered by Status
+                </button>
+                <br />
+                <br />
+                {showStatusFilter && (
+                  <div className="status-input-section">
+                    <label>Status: </label>
+                    <select
+                      onChange={(e) =>
+                        setSelectedStatus(e.target.value)
+                      }
+                      value={selectedStatus}
+                    >
+                      <option value="">All</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Received">Received</option>
+                    </select>
+                  </div>
+                )}
               </div>
             </div>
 

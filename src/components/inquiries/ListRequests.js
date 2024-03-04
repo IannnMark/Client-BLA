@@ -25,11 +25,6 @@ const ListRequest = () => {
         const sortedRequests = [...requests].sort((a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest));
         const data = {
             columns: [
-                // {
-                //     label: "Request ID",
-                //     field: "id",
-                //     sort: "asc",
-                // },
                 {
                     label: "Requested Documents",
                     field: "requestedDocuments",
@@ -111,6 +106,11 @@ const ListRequest = () => {
         <Fragment>
             <MetaData title={"My Requests"} />
             <h1 className="my-55">My Requests</h1>
+            <div className="d-flex justify-content-center">
+                <Link to="/" className="btn btn-warning" style={{ marginTop: "20px" }}>
+                    <i className="fa-regular fa-file" style={{ marginRight: "5px" }}></i> View Documents
+                </Link>
+            </div>
             {loading ? (
                 <Loader />
             ) : (

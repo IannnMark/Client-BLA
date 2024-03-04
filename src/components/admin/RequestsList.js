@@ -18,13 +18,19 @@ import "./RequestList.css";
 const RequestsList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { loading, error, requests } = useSelector((state) => state.allRequests);
+    const { loading, error, requests } = useSelector(
+        (state) => state.allRequests
+    );
     const { isDeleted } = useSelector((state) => state.request);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedDocument, setSelectedDocument] = useState("");
-    const [selectedGrade, setSelectedGrade] = useState("");
+    const [selectedGrade, setSelectedGrade] = useState("1");
+    const [showDateFilter, setShowDateFilter] = useState(false);
+    const [showDocumentFilter, setShowDocumentFilter] = useState(false);
+    const [showGradeFilter, setShowGradeFilter] = useState(false);
+    const [showStatusFilter, setShowStatusFilter] = useState(false);
 
     useEffect(() => {
         dispatch(allRequests());
@@ -47,12 +53,15 @@ const RequestsList = () => {
         try {
             await dispatch(deleteRequest(id));
 
+            const updatedRequests = requests.filter((request) => request._id !== id);
+
             toast.success("Request deleted successfully", {
                 position: toast.POSITION.BOTTOM_CENTER,
             });
-
         } catch (error) {
-            toast.error(error.message, { position: toast.POSITION.BOTTOM_CENTER });
+            toast.error(error.message, {
+                position: toast.POSITION.BOTTOM_CENTER,
+            });
         }
     };
 
@@ -82,6 +91,17 @@ const RequestsList = () => {
         return Array.from(uniqueGrades);
     };
 
+    const toggleDateFilter = () => {
+        setShowDateFilter(!showDateFilter);
+    };
+
+    const toggleDocumentFilter = () => {
+        setShowDocumentFilter(!showDocumentFilter);
+    };
+
+    const toggleGradeFilter = () => {
+        setShowGradeFilter(!showGradeFilter);
+    };
 
     const setRequests = () => {
         const filteredRequests = requests.filter((request) => {
@@ -111,21 +131,21 @@ const RequestsList = () => {
                 const userGrade = parseInt(request.user.grade, 10);
                 const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
-                console.log('Selected Grade:', selectedGradeNum, typeof selectedGradeNum);
-                console.log('User Grade:', userGrade, typeof userGrade);
+                const result = userGrade >= selectedGradeNum;
 
-                return userGrade === selectedGradeNum;
+                return result;
             })
             : documentFilteredRequests;
 
+        const statusAndGradeFilteredRequests = selectedStatus
+            ? gradeFilteredRequests.filter(
+                (request) =>
+                    request.requestStatus &&
+                    String(request.requestStatus).includes(selectedStatus)
+            )
+            : gradeFilteredRequests;
 
-
-        console.log('Filtered by Date:', filteredRequests);
-        console.log('Filtered by Status:', statusFilteredRequests);
-        console.log('Filtered by Documents:', documentFilteredRequests);
-        console.log('Filtered by Grade:', gradeFilteredRequests);
-
-        const sortedFilteredRequests = [...gradeFilteredRequests].sort(
+        const sortedFilteredRequests = [...statusAndGradeFilteredRequests].sort(
             (a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest)
         );
 
@@ -173,25 +193,7 @@ const RequestsList = () => {
                 },
                 {
                     label: "Authorization Letter",
-
                     field: "authorizationLetter",
-
-                    sort: "asc",
-                },
-                {
-                    label: "Reference Number",
-
-                    field: "referenceNumber",
-
-                    sort: "asc",
-                },
-
-
-                {
-                    label: "Gcash ScreenShot",
-
-                    field: "screenShot",
-
                     sort: "asc",
                 },
                 {
@@ -224,16 +226,19 @@ const RequestsList = () => {
             data.rows.push({
                 id: request._id,
                 userLastName: request.user.lastname,
-                // grade: request.user.grade,
                 grade: parseInt(request.user.grade, 10),
                 numofRequests: request.requestItems.length,
                 amount: `₱${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
-                authorizationLetter: (
-                    request.authorizationLetter && request.authorizationLetter.length > 0 ? (
-                        <a href={request.authorizationLetter[0].url} target="_blank" rel="noopener noreferrer">
+                authorizationLetter: request.authorizationLetter &&
+                    request.authorizationLetter.length > 0 && (
+                        <a
+                            href={request.authorizationLetter[0].url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <img
                                 src={request.authorizationLetter[0].url}
                                 alt={request.requestItems}
@@ -241,33 +246,13 @@ const RequestsList = () => {
                                 style={{ width: "80px", height: "80px" }}
                             />
                         </a>
-                    ) : (
-                        "N/A"
-                    )
-                ),
-
-                referenceNumber: request.referenceNumber || "N/A",
-
-                screenShot: (
-                    request.screenShot && request.screenShot.length > 0 ? (
-                        <a href={request.screenShot[0].url} target="_blank" rel="noopener noreferrer">
-                            <img
-                                src={request.screenShot[0].url}
-                                alt={request.orderItems}
-                                className="screenShot-image"
-                                style={{ width: "80px", height: "80px" }}
-                            />
-                        </a>
-                    ) : (
-                        "N/A"
-                    )
-                ),
-
-
+                    ),
                 status: request.requestStatus ? (
                     <p
                         style={{
-                            color: request.requestStatus.includes("Received") ? "green" : "red",
+                            color: request.requestStatus.includes("Received")
+                                ? "green"
+                                : "red",
                         }}
                     >
                         {request.requestStatus}
@@ -275,7 +260,10 @@ const RequestsList = () => {
                 ) : null,
                 actions: (
                     <Fragment>
-                        <Link to={`/admin/request/${request._id}`} className="btn btn-primary py-1 px-2">
+                        <Link
+                            to={`/admin/request/${request._id}`}
+                            className="btn btn-primary py-1 px-2"
+                        >
                             <i className="fa fa-eye"></i>
                         </Link>
                         <button
@@ -306,78 +294,127 @@ const RequestsList = () => {
                         <h1 className="my-5">All Requests</h1>
 
                         <div className="row my-4">
-                            <div className="col-md-6">
-                                <h4 className="my-5">Filtered by Date</h4>
-                                <label>Start Date: </label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => setStartDate(new Date(e.target.value))}
-                                />
-                                {/* <label className="ml-3">End Date: </label> */}
-                                <label>End Date: </label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => setEndDate(new Date(e.target.value))}
-                                />
+                            <div className="col-md-3">
+                                <button className="toggle-button date-filter" onClick={toggleDateFilter}>
+                                    Filtered by Date
+                                </button>
+                                <br />
+                                <br />
+                                {showDateFilter && (
+                                    <div className="date-input-section">
+                                        <div>
+                                            <label>Start Date: </label>
+                                            <input
+                                                type="date"
+                                                onChange={(e) => setStartDate(new Date(e.target.value))}
+                                            />
+                                        </div>
+                                        <div className="mt-3">
+                                            <label>End Date: </label>
+                                            <input
+                                                type="date"
+                                                onChange={(e) => setEndDate(new Date(e.target.value))}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="col-md-6">
-                                <h4 className="my-5">Filtered by Status</h4>
-                                <label>Status: </label>
-                                <select
-                                    onChange={(e) => setSelectedStatus(e.target.value)}
-                                    value={selectedStatus}
+                            <div className="col-md-3">
+                                <button
+                                    className="toggle-button document-filter"
+                                    onClick={toggleDocumentFilter}
                                 >
-                                    <option value="">All</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="Received">Received</option>
-                                </select>
+                                    Filtered by Documents
+                                </button>
+                                <br />
+                                <br />
+                                {showDocumentFilter && (
+                                    <div className="document-input-section">
+                                        <label>Document: </label>
+                                        <select
+                                            onChange={(e) => setSelectedDocument(e.target.value)}
+                                            value={selectedDocument}
+                                        >
+                                            <option value="">All</option>
+                                            {getUniqueDocuments().map((document, index) => (
+                                                <option key={index} value={document}>
+                                                    {document}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="col-md-3">
+                                <button
+                                    className="toggle-button grade-filter"
+                                    onClick={toggleGradeFilter}
+                                >
+                                    Filtered by Grade
+                                </button>
+                                <br />
+                                <br />
+                                {showGradeFilter && (
+                                    <div className="grade-input-section">
+                                        <label>Grade: </label>
+                                        <select
+                                            onChange={(e) => {
+                                                setSelectedGrade(e.target.value);
+                                                console.log("Selected Grade:", e.target.value);
+                                            }}
+                                            value={selectedGrade}
+                                        >
+                                            <option value="">All</option>
+                                            {getUniqueGrades().map((grade, index) => (
+                                                <option key={index} value={grade}>
+                                                    {grade}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                            </div>
+
+
+                            <div className="col-md-3">
+                                <button
+                                    className="toggle-button status-filter"
+                                    onClick={() => setShowStatusFilter(!showStatusFilter)}
+                                >
+                                    Filtered by Status
+                                </button>
+                                <br />
+                                <br />
+                                {showStatusFilter && (
+                                    <div className="status-input-section">
+                                        <label>Status: </label>
+                                        <select
+                                            onChange={(e) => setSelectedStatus(e.target.value)}
+                                            value={selectedStatus}
+                                        >
+                                            <option value="">All</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Received">Received</option>
+                                            <option value="Pending Violation">Pending Violation</option>
+                                            <option value="Pending Balance">Pending Balance</option>
+                                        </select>
+                                    </div>
+                                )}
                             </div>
                         </div>
-
-                        <div className="row my-4">
-                            <div className="col-md-6">
-                                <h4 className="my-5">Filtered by Documents</h4>
-                                <label>Document: </label>
-                                <select
-                                    onChange={(e) => setSelectedDocument(e.target.value)}
-                                    value={selectedDocument}
-                                >
-                                    <option value="">All</option>
-                                    {getUniqueDocuments().map((document, index) => (
-                                        <option key={index} value={document}>
-                                            {document}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="col-md-6">
-                                <h4 className="my-5">Filtered by Grade</h4>
-                                <label>Grade: </label>
-                                <select
-                                    onChange={(e) => {
-                                        setSelectedGrade(e.target.value);
-                                        console.log("Selected Grade:", e.target.value);
-                                    }}
-                                    value={selectedGrade}
-                                >
-                                    <option value="">All</option>
-                                    {getUniqueGrades().map((grade, index) => (
-                                        <option key={index} value={grade}>
-                                            {grade}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-
-                        </div>
-
                         {loading ? (
                             <Loader />
                         ) : (
-                            <MDBDataTable data={setRequests()} className="px-3" bordered striped hover />
+                            <MDBDataTable
+                                data={setRequests()}
+                                className="px-3"
+                                bordered
+                                striped
+                                hover
+                            />
                         )}
                     </Fragment>
                 </div>
@@ -387,8 +424,3 @@ const RequestsList = () => {
 };
 
 export default RequestsList;
-
-
-
-
-

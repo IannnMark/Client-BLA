@@ -23,7 +23,6 @@ import {
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 
 const ProductsList = () => {
-  //   const alert = useAlert();
 
   const dispatch = useDispatch();
 
@@ -170,7 +169,7 @@ const ProductsList = () => {
 
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-5">All Products</h1>
+            <h1 className="my-555">All Products</h1>
 
             {loading ? (
               <Loader />
@@ -178,9 +177,35 @@ const ProductsList = () => {
               <MDBDataTable
                 data={setProducts()}
                 className="px-3"
-                bordered
                 striped
                 hover
+                noBottomColumns
+                responsive
+                searching={false}
+                entriesLabel="Show entries"
+                entriesOptions={[10, 20, 30]}
+                infoLabel={["Showing", "to", "of", "entries"]}
+                paginationLabel={["Previous", "Next"]}
+                responsiveSm
+                responsiveMd
+                responsiveLg
+                responsiveXl
+                noRecordsFoundLabel="No records found"
+                paginationRowsPerPageOptions={[10, 20, 30]}
+                pagingTop
+                pagingBottom
+                paginationLabels={["Previous", "Next"]}
+                style={{
+                  fontSize: "18px",
+                  fontFamily:
+                    "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                }}
+                // Add custom styling for cells based on request status
+                tbodyTextBlack
+                tbodyBorderY
+                tbodyBorderX
+                tbodyBorderBottom
+                tbodyBorderTop
               />
             )}
           </Fragment>
