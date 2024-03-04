@@ -154,7 +154,7 @@ const ProcessRequest = () => {
                                             value={status}
                                             onChange={(e) => setStatus(e.target.value)}
                                         >
-                                            <option value="Processing">Processing</option>
+                                            <option value="Pending">Pending</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Pending Balance">Attention: Pending Balance 🚨</option>
                                         </select>
