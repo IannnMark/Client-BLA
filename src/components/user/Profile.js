@@ -26,7 +26,7 @@ const Profile = () => {
             height: "700px",
             backgroundAttachment: "local, scroll",
 
-          }}>
+          }}> {/* Add the 'profile-page' class here */}
             <h2>My Profile</h2>
 
             <div className="row justify-content-around mt-4 user-info">
@@ -42,7 +42,7 @@ const Profile = () => {
                 <Link
                   to="/me/update"
                   id="edit_profile"
-                  className="btn btn-primary btn-block my-3 ml-4"
+                  className="btn btn-primary btn-block my-3 ml-4" // Adjust margin for spacing
                 >
                   Edit Profile
                 </Link>
@@ -70,6 +70,18 @@ const Profile = () => {
                   <h4 className="mr-3">Joined On</h4>
                   <p>{String(user.createdAt).substring(0, 10)}</p>
                 </div>
+
+                {/* {user.role !== "admin" && (
+            <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
+                My Orders
+            </Link>
+        )} */}
+
+                {/* {user.role !== "admin" && (
+            <Link to="/requests/me" className="btn btn-danger btn-block mt-5">
+                My Requests
+            </Link>
+        )} */}
               </div>
             </div>
           </div>
