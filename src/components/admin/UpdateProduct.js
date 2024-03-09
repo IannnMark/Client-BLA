@@ -21,7 +21,8 @@ import {
 import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 
 const UpdateProduct = () => {
-  const [name, setName] = useState("");
+  const [codename, setCodename] = useState("");
+  const [productName, setproductName] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState(0);
@@ -66,7 +67,8 @@ const UpdateProduct = () => {
     if (product && product._id !== id) {
       dispatch(getProductDetails(id));
     } else {
-      setName(product.name);
+      setCodename(product.codename);
+      setproductName(product.productName);
       setPrice(product.price);
       setCategory(product.category);
       setStock(product.stock);
@@ -106,8 +108,9 @@ const UpdateProduct = () => {
     }
 
     const formData = new FormData();
+    formData.set("codename", codename);
 
-    formData.set("name", name);
+    formData.set("productName", productName);
 
     formData.set("price", price);
 
@@ -166,14 +169,26 @@ const UpdateProduct = () => {
                 <h1 className="mb-4">Update Product</h1>
 
                 <div className="form-group">
-                  <label htmlFor="name_field">Name</label>
+                  <label htmlFor="codename_field">Code Name</label>
+
+                  <input
+                    type="text"
+                    id="codename_field"
+                    className="form-control"
+                    value={codename}
+                    onChange={(e) => setCodename(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="name_field">Product Name</label>
 
                   <input
                     type="text"
                     id="name_field"
                     className="form-control"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={productName}
+                    onChange={(e) => setproductName(e.target.value)}
                   />
                 </div>
 

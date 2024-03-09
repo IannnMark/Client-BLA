@@ -188,7 +188,7 @@ const OrdersList = () => {
       const orderedMerch =
         order.orderItems &&
         order.orderItems.length > 0 &&
-        order.orderItems.map((item) => item.name).join(", ");
+        order.orderItems.map((item) => item.productName).join(", ");
 
       const formattedReleaseDate = order.dateRelease
         ? new Date(order.dateRelease).toLocaleDateString()

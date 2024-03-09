@@ -15,6 +15,8 @@ import { getOrderDetails, clearErrors } from "../../actions/orderActions";
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 const OrderDetails = () => {
+  //   const alert = useAlert();
+
   const dispatch = useDispatch();
 
   const { loading, error, order = {} } = useSelector(
@@ -25,6 +27,16 @@ const OrderDetails = () => {
     orderItems,
     orderStatus,
   } = order;
+
+  const calculateTotal = () => {
+    let total = 0;
+    if (orderItems) {
+      orderItems.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+    }
+    return total.toFixed(2);
+  };
 
   let { id } = useParams();
 
@@ -124,7 +136,7 @@ const OrderDetails = () => {
                           <div className="col-4 col-lg-2">
                             <img
                               src={item.image}
-                              alt={item.name}
+                              alt={item.productName}
                               height="45"
                               width="65"
                             />
@@ -132,12 +144,12 @@ const OrderDetails = () => {
 
                           <div className="col-5 col-lg-5">
                             <Link to={`/products/${item.product}`}>
-                              {item.name}
+                              {item.productName}
                             </Link>
                           </div>
 
                           <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                            <p>${item.price}</p>
+                            <p>₱{item.price}</p>
                           </div>
 
                           <div className="col-4 col-lg-3 mt-4 mt-lg-0">
@@ -145,6 +157,12 @@ const OrderDetails = () => {
                           </div>
                         </div>
                       ))}
+                  </div>
+                  <hr />
+                  <div className="text-center font-weight-bold">
+                    <p>
+                      <b>Total Amount:</b> ₱{calculateTotal()}
+                    </p>
                   </div>
                 </div>
               </PDFExport>

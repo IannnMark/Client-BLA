@@ -69,9 +69,9 @@ const ProductsList = () => {
         },
 
         {
-          label: "Name",
+          label: "Product Name",
 
-          field: "name",
+          field: "productName",
 
           sort: "asc",
         },
@@ -114,7 +114,7 @@ const ProductsList = () => {
       data.rows.push({
         codename: product.codename,
 
-        name: product.name,
+        productName: product.productName,
 
         price: `₱${product.price}`,
 

@@ -67,7 +67,7 @@ const Header = () => {
             </Link>
           )}
 
-          {user && user.role === "user" && (
+          {user && (user.role === "student" || user.role === "alumni") && (
             <Link
               to="/request"
               style={{ textDecoration: "none" }}
@@ -146,20 +146,19 @@ const Header = () => {
                     Dashboard
                   </Link>
                 )}
-
-                {user && user.role === "user" && (
+                {user && (user.role === "student" || user.role === "alumni") && (
                   <Link className="dropdown-item" to="/orders/me">
                     Orders
                   </Link>
                 )}
 
-                {user && user.role === "user" && (
+                {user && (user.role === "student" || user.role === "alumni") && (
                   <Link className="dropdown-item" to="/requests/me">
                     Requests
                   </Link>
                 )}
 
-                {user && user.role === "user" && (
+                {user && user.role === "student" && (
                   <Link className="dropdown-item" to="/clearance">
                     Clearance
                   </Link>

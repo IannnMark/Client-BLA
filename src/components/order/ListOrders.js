@@ -34,7 +34,7 @@ const ListOrders = () => {
       columns: [
         {
           label: "Ordered Merchandise",
-          field: "orderedMerch", // Add a new field for requested documents
+          field: "orderedMerch",
           sort: "asc",
         },
 
@@ -96,7 +96,7 @@ const ListOrders = () => {
       const orderedMerch =
         order.orderItems &&
         order.orderItems.length > 0 &&
-        order.orderItems.map((item) => item.name).join(", ");
+        order.orderItems.map((item) => item.productName).join(", ");
 
       data.rows.push({
         orderedMerch: orderedMerch,
@@ -124,6 +124,8 @@ const ListOrders = () => {
   };
 
   return (
+    // <div style={{backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.svg)`,
+    // backgroundSize: "cover",marginTop: "-47px",  }}>
     <Fragment>
       <MetaData title={"My Orders"} />
 

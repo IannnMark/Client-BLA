@@ -119,7 +119,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={product.name} />
+          <MetaData title={product.productName} />
           <div className="row d-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
@@ -137,7 +137,7 @@ const ProductDetails = () => {
             </div>
 
             <div className="col-12 col-lg-5 mt-5">
-              <h3>{product.name}</h3>
+              <h3>{product.productName}</h3>
               <p id="product_id">Product # {product._id}</p>
 
               <hr />
