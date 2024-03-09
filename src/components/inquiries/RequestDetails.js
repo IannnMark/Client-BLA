@@ -79,36 +79,13 @@ const RequestDetails = () => {
 
                   {request.paymentInfo ? (
                     <div>
-                      {(() => {
-                        // Parse the JSON string
-                        try {
-                          const paymentInfoObject = JSON.parse(request.paymentInfo);
-                          return (
-                            <>
-                              {paymentInfoObject.type !== undefined ? (
-                                <p>
-                                  <b>Type:</b> {paymentInfoObject.type}
-                                </p>
-                              ) : (
-                                <p>
-                                  <b>Type:</b> N/A
-                                </p>
-                              )}
-                            </>
-                          );
-                        } catch (error) {
-                          console.error("Error parsing paymentInfo:", error);
-                          return (
-                            <p>
-                              <b>Error parsing paymentInfo</b>
-                            </p>
-                          );
-                        }
-                      })()}
+                      <p>
+                        <b>Type:</b> {request.paymentInfo.type || "N/A"}
+                      </p>
                     </div>
                   ) : (
                     <p>
-                      <b>Type:</b> N/A
+                      <b>N/A</b>
                     </p>
                   )}
 

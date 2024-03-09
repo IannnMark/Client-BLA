@@ -74,8 +74,8 @@ const DocumentDetails = () => {
                     <div className="row d-flex justify-content-around">
                         <div className="col-12 col-lg-5 img-fluid" id="document_image">
                             <Carousel pause="hover">
-                                {document.images &&
-                                    document.images.map((image) => (
+                                {document.image &&
+                                    document.image.map((image) => (
                                         <Carousel.Item key={image.public_id}>
                                             <img
                                                 className="d-block w-100"

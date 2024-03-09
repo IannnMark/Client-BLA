@@ -100,14 +100,14 @@ const ProcessRequest = () => {
                                     <h4 className="my-4">Requested by: {user ? user._id : 'Unknown'}</h4>
 
                                     <h4 className="my-4">Payment</h4>
-                                    <p
-                                        className={
-                                            request.paymentInfo &&
-                                            String(request.paymentInfo)
-                                        }
-                                    >
-                                        <b>{paymentInfo}</b>
-                                    </p>
+                                    {paymentInfo ? (
+                                        <div>
+                                            <p><b>Type:</b> {paymentInfo.type}</p>
+                                        </div>
+                                    ) : (
+                                        <p><b>Payment Information:</b> N/A</p>
+                                    )}
+
 
                                     <h4 className="my-4">Request Status:</h4>
 

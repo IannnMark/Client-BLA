@@ -29,7 +29,7 @@ const Document = ({ document, backgroundImage }) => {
             <div className="card p-3 rounded" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/bglogin.jpg)`, backgroundSize: 'cover', padding: '20px' }}>
                 <img
                     className="card-img-top mx-auto"
-                    src={document.images[0].url}
+                    src={document.image[0].url}
                     alt={document.name}
                 />
                 <div className="card-body d-flex flex-column">

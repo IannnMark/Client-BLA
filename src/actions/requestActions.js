@@ -10,7 +10,7 @@ export const addDocumentRequest = (id, quantity) => async (dispatch, getState) =
                 document: data.document._id,
                 name: data.document.name,
                 price: data.document.price,
-                image: data.document.images[0].url,
+                image: data.document.image[0].url,
                 quantity
             }
         })

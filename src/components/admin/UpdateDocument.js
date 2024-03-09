@@ -13,9 +13,10 @@ import {
 import { UPDATE_DOCUMENT_RESET } from "../../constants/documentConstants";
 
 const UpdateDocument = () => {
+    const [codename, setCodename] = useState("");
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
-    const [images, setImages] = useState([]);
+    const [image, setImage] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
@@ -30,7 +31,7 @@ const UpdateDocument = () => {
 
     const errMsg = (message = "") =>
         toast.error(message, {
-            position: toast.POSITION.BOTTOM_CENTER,     
+            position: toast.POSITION.BOTTOM_CENTER,
         });
 
     const successMsg = (message = "") =>
@@ -44,6 +45,7 @@ const UpdateDocument = () => {
         if (document && document._id !== id) {
             dispatch(getDocumentDetails(id));
         } else {
+            setCodename(document.codename);
             setName(document.name);
             setPrice(document.price);
             setOldImages(document.images);
@@ -76,11 +78,12 @@ const UpdateDocument = () => {
         }
 
         const formData = new FormData();
+        formData.set("codename", codename);
         formData.set("name", name);
         formData.set("price", price);
 
-        images.forEach((image) => {
-            formData.append("images", image);
+        image.forEach((img) => {
+            formData.append("image", img);
         });
 
         dispatch(updateDocument(document._id, formData));
@@ -90,7 +93,7 @@ const UpdateDocument = () => {
         const files = Array.from(e.target.files);
 
         setImagesPreview([]);
-        setImages([]);
+        setImage([]);
         setOldImages([]);
 
         files.forEach((file) => {
@@ -99,7 +102,7 @@ const UpdateDocument = () => {
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setImagesPreview((oldArray) => [...oldArray, reader.result]);
-                    setImages((oldArray) => [...oldArray, reader.result]);
+                    setImage((oldArray) => [...oldArray, reader.result]);
                 }
             };
 
@@ -126,6 +129,17 @@ const UpdateDocument = () => {
                                 <h1 className="mb-4">Update Document</h1>
 
                                 <div className="form-group">
+                                    <label htmlFor="codename_field">Code Name</label>
+                                    <input
+                                        type="text"
+                                        id="codename_field"
+                                        className="form-control"
+                                        value={codename}
+                                        onChange={(e) => setCodename(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
                                     <input
                                         type="text"
@@ -148,25 +162,24 @@ const UpdateDocument = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Images</label>
+                                    <label>Image</label>
                                     <div className="custom-file">
                                         <input
                                             type="file"
-                                            name="images"
+                                            name="image"
                                             className="custom-file-input"
                                             id="customFile"
                                             onChange={onChange}
-                                            multiple
                                         />
                                         <label className="custom-file-label" htmlFor="customFile">
-                                            Choose Images
+                                            Choose Image
                                         </label>
                                     </div>
 
                                     {oldImages &&
                                         oldImages.map((img) => (
                                             <img
-                                                key={img}
+                                                key={img.url}
                                                 src={img.url}
                                                 alt={img.url}
                                                 className="mt-3 mr-2"
@@ -179,7 +192,7 @@ const UpdateDocument = () => {
                                         <img
                                             src={img}
                                             key={img}
-                                            alt="Images Preview"
+                                            alt="Image Preview"
                                             className="mt-3 mr-2"
                                             width="55"
                                             height="52"

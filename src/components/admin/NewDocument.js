@@ -10,15 +10,12 @@ import { NEW_DOCUMENT_RESET } from "../../constants/documentConstants";
 
 const NewDocument = () => {
     const [name, setName] = useState("");
-
     const [price, setPrice] = useState(0);
+    const [image, setImage] = useState(null);  // Change from array to single image
 
-    const [images, setImages] = useState([]);
-
-    const [imagesPreview, setImagesPreview] = useState([]);
+    const [imagePreview, setImagePreview] = useState(null);  // Rename from imagesPreview to imagePreview
 
     const dispatch = useDispatch();
-
     let navigate = useNavigate();
 
     const { loading, error, success } = useSelector((state) => state.newDocument);
@@ -48,36 +45,30 @@ const NewDocument = () => {
         const formData = new FormData();
 
         formData.set("name", name);
-
         formData.set("price", price);
 
-        images.forEach((image) => {
-            formData.append("images", image);
-        });
+        // Change to append single image
+        if (image) {
+            formData.append("image", image);
+        }
 
         dispatch(newDocument(formData));
     };
 
     const onChange = (e) => {
-        const files = Array.from(e.target.files);
+        const file = e.target.files[0];  // Change to single file
+        const reader = new FileReader();
 
-        setImagesPreview([]);
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setImage(reader.result);
+                setImagePreview(reader.result);
+            }
+        };
 
-        setImages([]);
-
-        files.forEach((file) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setImagesPreview((oldArray) => [...oldArray, reader.result]);
-
-                    setImages((oldArray) => [...oldArray, reader.result]);
-                }
-            };
-
+        if (file) {
             reader.readAsDataURL(file);
-        });
+        }
     };
 
     return (
@@ -100,7 +91,6 @@ const NewDocument = () => {
 
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
-
                                     <input
                                         type="text"
                                         id="name_field"
@@ -112,7 +102,6 @@ const NewDocument = () => {
 
                                 <div className="form-group">
                                     <label htmlFor="price_field">Price</label>
-
                                     <input
                                         type="text"
                                         id="price_field"
@@ -123,33 +112,29 @@ const NewDocument = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Images</label>
-
+                                    <label>Image</label>
                                     <div className="custom-file">
                                         <input
                                             type="file"
-                                            name="images"
+                                            name="image"
                                             className="custom-file-input"
                                             id="customFile"
                                             onChange={onChange}
-                                            multiple
                                         />
-
                                         <label className="custom-file-label" htmlFor="customFile">
-                                            Choose Images
+                                            Choose Image
                                         </label>
                                     </div>
 
-                                    {imagesPreview.map((img) => (
+                                    {imagePreview && (
                                         <img
-                                            src={img}
-                                            key={img}
-                                            alt="Images Preview"
+                                            src={imagePreview}
+                                            alt="Image Preview"
                                             className="mt-3 mr-2"
                                             width={55}
                                             height={52}
                                         />
-                                    ))}
+                                    )}
                                 </div>
 
                                 <button

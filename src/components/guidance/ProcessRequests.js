@@ -24,9 +24,6 @@ const ProcessRequest = () => {
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
 
-
-
-
     const errMsg = (message = "") =>
         toast.error(message, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -39,7 +36,7 @@ const ProcessRequest = () => {
 
     useEffect(() => {
         dispatch(getRequestDetails(requestId));
-        const savedStatus = localStorage.getItem('updatedStatus');
+        const savedStatus = localStorage.getItem("updatedStatus");
         if (savedStatus) {
             setStatus(savedStatus);
         }
@@ -58,14 +55,13 @@ const ProcessRequest = () => {
         }
     }, [dispatch, error, isUpdated, status, requestId]);
 
-
     const updateStatusHandler = async (id) => {
         const formData = new FormData();
         formData.set("status", status);
 
         try {
             await dispatch(updateGuidanceRequest(id, formData));
-            localStorage.setItem('updatedStatus', status);
+            localStorage.setItem("updatedStatus", status);
             dispatch(getRequestDetails(requestId));
             successMsg(`Request updated successfully. New Status: ${status}`);
         } catch (error) {
@@ -97,17 +93,16 @@ const ProcessRequest = () => {
 
                                     <hr />
 
-                                    <h4 className="my-4">Requested by: {user ? user._id : 'Unknown'}</h4>
+                                    <h4 className="my-4">Requested by: {user ? user._id : "Unknown"}</h4>
 
                                     <h4 className="my-4">Payment</h4>
-                                    <p
-                                        className={
-                                            request.paymentInfo &&
-                                            String(request.paymentInfo)
-                                        }
-                                    >
-                                        <b>{paymentInfo}</b>
-                                    </p>
+                                    {paymentInfo ? (
+                                        <div>
+                                            <p><b>Type:</b> {paymentInfo.type}</p>
+                                        </div>
+                                    ) : (
+                                        <p><b>Payment Information:</b> N/A</p>
+                                    )}
 
                                     <h4 className="my-4">Request Status:</h4>
 
@@ -123,18 +118,11 @@ const ProcessRequest = () => {
                                             requestItems.map((item) => (
                                                 <div key={item.document} className="row my-5">
                                                     <div className="col-4 col-lg-2">
-                                                        <img
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                            height="45"
-                                                            width="65"
-                                                        />
+                                                        <img src={item.image} alt={item.name} height="45" width="65" />
                                                     </div>
 
                                                     <div className="col-5 col-lg-5">
-                                                        <Link to={`/documents/${item.document}`}>
-                                                            {item.name}
-                                                        </Link>
+                                                        <Link to={`/documents/${item.document}`}>{item.name}</Link>
                                                     </div>
 
                                                     <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -154,7 +142,7 @@ const ProcessRequest = () => {
                                             value={status}
                                             onChange={(e) => setStatus(e.target.value)}
                                         >
-                                            <option value="Processing">Pending</option>
+                                            <option value="Pending">Pending</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Pending Violation">Attention: Pending Violation 🚨</option>
                                         </select>
@@ -166,7 +154,6 @@ const ProcessRequest = () => {
                                         Update Status
                                     </button>
                                 </div>
-
                             </div>
                         )}
                     </Fragment>
@@ -177,5 +164,3 @@ const ProcessRequest = () => {
 };
 
 export default ProcessRequest;
-
-

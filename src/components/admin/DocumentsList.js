@@ -70,9 +70,9 @@ const DocumentList = () => {
                 },
 
                 {
-                    label: "Images",
+                    label: "Image",
 
-                    field: "images",
+                    field: "image",
 
                     sort: "asc",
 
@@ -97,10 +97,10 @@ const DocumentList = () => {
 
                 price: `₱${document.price}`,
 
-                images: (
-                    <a href={document.images[0].url} target="_blank" rel="noopener noreferrer">
+                image: (
+                    <a href={document.image[0].url} target="_blank" rel="noopener noreferrer">
                         <img
-                            src={document.images[0].url}
+                            src={document.image[0].url}
                             alt="document.name"
                             className="document-image"
                             style={{ width: "80px", height: "80px" }}
