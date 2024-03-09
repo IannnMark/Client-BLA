@@ -224,7 +224,7 @@ const RequestsList = () => {
 
             data.rows.push({
                 id: request._id,
-                userLastName: request.user.lastname,
+                userLastName: request.user?.lastname,
                 grade: parseInt(request.user.grade, 10),
                 numofRequests: request.requestItems.length,
                 amount: `₱${request.totalPrice}`,
