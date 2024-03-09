@@ -211,9 +211,13 @@ const UpdateUser = () => {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                   >
-                    <option value="user">user</option>
+                    <option value="student">student</option>
 
-                    <option value="admin">admin</option>
+                    <option value="alumni">alumni</option>
+
+                    <option value="cashier">cashier</option>
+
+                    <option value="guidance">guidance</option>
                   </select>
                 </div>
 
