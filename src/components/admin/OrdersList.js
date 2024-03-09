@@ -196,7 +196,7 @@ const OrdersList = () => {
 
       data.rows.push({
         id: order._id,
-        userLastName: order.user.lastname,
+        userLastName: order.user?.lastname,
         numofItems: order.orderItems.length,
         orderedMerch: orderedMerch || "N/A",
         amount: `₱${order.totalPrice}`,
