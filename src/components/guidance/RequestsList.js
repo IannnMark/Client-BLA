@@ -119,7 +119,7 @@ const RequestsList = () => {
             data.rows.push({
                 id: request._id,
                 userLastName: request.user?.lastname,
-                grade: request.user.grade,
+                grade: request.user?.grade,
                 numofRequests: request.requestItems.length,
                 amount: `$${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
