@@ -19,7 +19,7 @@ import "./NewProduct.css";
 
 
 const NewProduct = () => {
-  const [name, setName] = useState("");
+  const [productName, setproductName] = useState("");
 
   const [price, setPrice] = useState(0);
 
@@ -72,7 +72,7 @@ const NewProduct = () => {
 
     const formData = new FormData();
 
-    formData.set("name", name);
+    formData.set("productName", productName);
 
     formData.set("price", price);
 
@@ -129,14 +129,14 @@ const NewProduct = () => {
                 <h1 className="mb-4">New Product</h1>
 
                 <div className="form-group">
-                  <label htmlFor="name_field">Name</label>
+                  <label htmlFor="name_field">Product Name</label>
 
                   <input
                     type="text"
                     id="name_field"
                     className="form-control"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={productName}
+                    onChange={(e) => setproductName(e.target.value)}
                   />
                 </div>
 
