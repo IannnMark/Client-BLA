@@ -128,14 +128,13 @@ const RequestsList = () => {
 
         const gradeFilteredRequests = selectedGrade
             ? documentFilteredRequests.filter((request) => {
-                const userGrade = parseInt(request.user.grade, 10);
+                const userGrade = parseInt(request?.user?.grade, 10) || 0;
                 const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
-                const result = userGrade >= selectedGradeNum;
-
-                return result;
+                return userGrade >= selectedGradeNum;
             })
             : documentFilteredRequests;
+
 
         const statusAndGradeFilteredRequests = selectedStatus
             ? gradeFilteredRequests.filter(
