@@ -345,7 +345,7 @@ const Payment = () => {
 
         const requestInfoWithPayment = {
             ...request,
-            paymentInfo: JSON.stringify(paymentInfo),
+            paymentInfo,
             purpose: selectedPurpose,
             screenShot,
             authorizationLetter,
