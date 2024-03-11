@@ -58,6 +58,7 @@ import Announcement from "./components/layout/announcement";
 import NewClearance from "./components/user/NewClearance";
 import ClearanceList from "./components/guidance/ClearanceList";
 import ClearanceLists from "./components/user/ClearanceList";
+import StockHistory from "./components/admin/StockHistory";
 
 
 
@@ -438,6 +439,17 @@ function App() {
           element={
             <ProtectedRoute>
               <ClearanceLists />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        <Route
+          path="/admin/stock-history"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <StockHistory />
             </ProtectedRoute>
           }
         />
