@@ -78,7 +78,6 @@ const RequestsList = () => {
 
         return Array.from(uniqueDocuments);
     };
-
     const getUniqueGrades = () => {
         const uniqueGrades = new Set();
 
@@ -90,6 +89,7 @@ const RequestsList = () => {
 
         return Array.from(uniqueGrades);
     };
+
 
     const toggleDateFilter = () => {
         setShowDateFilter(!showDateFilter);
