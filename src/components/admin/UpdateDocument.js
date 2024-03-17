@@ -18,7 +18,7 @@ const UpdateDocument = () => {
     const [codename, setCodename] = useState("");
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
-    const [images, setImages] = useState([]);
+    const [image, setImages] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
@@ -86,8 +86,8 @@ const UpdateDocument = () => {
         formData.set("name", name);
         formData.set("price", price);
 
-        images.forEach((image) => {
-            formData.append("images", image);
+        image.forEach((image) => {
+            formData.append("image", image);
         });
 
         dispatch(updateDocument(document._id, formData));
@@ -171,7 +171,7 @@ const UpdateDocument = () => {
                                     <div className="custom-file">
                                         <input
                                             type="file"
-                                            name="images"
+                                            name="image"
                                             className="custom-file-input"
                                             id="customFile"
                                             onChange={onChange}
