@@ -49,6 +49,7 @@ const UpdateDocument = () => {
         if (document && document._id !== id) {
             dispatch(getDocumentDetails(id));
         } else {
+            setCodename(document.codename);
             setName(document.name);
             setPrice(document.price);
             setOldImages(document.images);
