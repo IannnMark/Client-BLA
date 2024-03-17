@@ -387,7 +387,7 @@ const RequestsList = () => {
                                 )}
                             </div>
 
-                            <div className="col-md-3">
+                            {/* <div className="col-md-3">
                                 <button
                                     className="toggle-button grade-filter"
                                     onClick={toggleGradeFilter}
@@ -416,7 +416,7 @@ const RequestsList = () => {
                                         </select>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
 
                             <div className="col-md-3">
                                 <button
