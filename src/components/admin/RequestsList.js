@@ -26,10 +26,8 @@ const RequestsList = () => {
     const [endDate, setEndDate] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedDocument, setSelectedDocument] = useState("");
-    const [selectedGrade, setSelectedGrade] = useState("1");
     const [showDateFilter, setShowDateFilter] = useState(false);
     const [showDocumentFilter, setShowDocumentFilter] = useState(false);
-    const [showGradeFilter, setShowGradeFilter] = useState(false);
     const [showStatusFilter, setShowStatusFilter] = useState(false);
 
     useEffect(() => {
@@ -78,30 +76,6 @@ const RequestsList = () => {
 
         return Array.from(uniqueDocuments);
     };
-    const getUniqueGrades = () => {
-        const uniqueGrades = new Set();
-
-        requests.forEach((request) => {
-            if (request.user && request.user.grade) {
-                uniqueGrades.add(request.user.grade);
-            }
-        });
-
-        return Array.from(uniqueGrades);
-    };
-
-
-    const toggleDateFilter = () => {
-        setShowDateFilter(!showDateFilter);
-    };
-
-    const toggleDocumentFilter = () => {
-        setShowDocumentFilter(!showDocumentFilter);
-    };
-
-    const toggleGradeFilter = () => {
-        setShowGradeFilter(!showGradeFilter);
-    };
 
     const setRequests = () => {
         const filteredRequests = requests.filter((request) => {
@@ -126,26 +100,7 @@ const RequestsList = () => {
             )
             : statusFilteredRequests;
 
-        const gradeFilteredRequests = selectedGrade
-            ? documentFilteredRequests.filter((request) => {
-                const userGrade = parseInt(request.user.grade, 10);
-                const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
-
-                const result = userGrade >= selectedGradeNum;
-
-                return result;
-            })
-            : documentFilteredRequests;
-
-        const statusAndGradeFilteredRequests = selectedStatus
-            ? gradeFilteredRequests.filter(
-                (request) =>
-                    request.requestStatus &&
-                    String(request.requestStatus).includes(selectedStatus)
-            )
-            : gradeFilteredRequests;
-
-        const sortedFilteredRequests = [...statusAndGradeFilteredRequests].sort(
+        const sortedFilteredRequests = [...documentFilteredRequests].sort(
             (a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest)
         );
 
@@ -198,18 +153,12 @@ const RequestsList = () => {
                 },
                 {
                     label: "Reference Number",
-
                     field: "referenceNumber",
-
                     sort: "asc",
                 },
-
-
                 {
                     label: "Gcash ScreenShot",
-
                     field: "screenShot",
-
                     sort: "asc",
                 },
                 {
@@ -263,9 +212,7 @@ const RequestsList = () => {
                             />
                         </a>
                     ),
-
                 referenceNumber: request.referenceNumber || "N/A",
-
                 screenShot: (
                     request.screenShot && request.screenShot.length > 0 ? (
                         <a href={request.screenShot[0].url} target="_blank" rel="noopener noreferrer">
@@ -280,7 +227,6 @@ const RequestsList = () => {
                         "N/A"
                     )
                 ),
-
                 status: request.requestStatus ? (
                     <p
                         style={{
@@ -331,7 +277,7 @@ const RequestsList = () => {
                             <div className="col-md-3">
                                 <button
                                     className="toggle-button date-filter"
-                                    onClick={toggleDateFilter}
+                                    onClick={() => setShowDateFilter(!showDateFilter)}
                                 >
                                     Filtered by Date
                                 </button>
@@ -362,7 +308,7 @@ const RequestsList = () => {
                             <div className="col-md-3">
                                 <button
                                     className="toggle-button document-filter"
-                                    onClick={toggleDocumentFilter}
+                                    onClick={() => setShowDocumentFilter(!showDocumentFilter)}
                                 >
                                     Filtered by Documents
                                 </button>
@@ -386,37 +332,6 @@ const RequestsList = () => {
                                     </div>
                                 )}
                             </div>
-
-                            {/* <div className="col-md-3">
-                                <button
-                                    className="toggle-button grade-filter"
-                                    onClick={toggleGradeFilter}
-                                >
-                                    Filtered by Grade
-                                </button>
-                                <br />
-                                <br />
-                                {showGradeFilter && (
-                                    <div className="grade-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
-                                        <label style={{ marginRight: "10px" }}>Grade: </label>
-                                        <select
-                                            style={{ fontWeight: "bold" }}
-                                            onChange={(e) => {
-                                                setSelectedGrade(e.target.value);
-                                                console.log("Selected Grade:", e.target.value);
-                                            }}
-                                            value={selectedGrade}
-                                        >
-                                            <option value="">All</option>
-                                            {getUniqueGrades().map((grade, index) => (
-                                                <option key={index} value={grade}>
-                                                    {grade}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
-                            </div> */}
 
                             <div className="col-md-3">
                                 <button
