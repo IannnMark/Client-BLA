@@ -69,7 +69,7 @@ const ProductsList = () => {
         },
 
         {
-          label: "Product Name",
+          label: "Name",
 
           field: "productName",
 
@@ -159,17 +159,17 @@ const ProductsList = () => {
   };
 
   return (
-    <Fragment>
+    <Fragment style={{ backgroundColor: "lightgray" }}>
       <MetaData title={"All Products"} />
 
       <div className="row">
-        <div className="col-12 col-md-2">
+        <div className="col-12 col-md-1">
           <Sidebar />
         </div>
 
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-555">All Products</h1>
+            <h1 className="my-555" style={{ marginTop: "30px" }}>All Products</h1>
 
             {loading ? (
               <Loader />
@@ -196,7 +196,7 @@ const ProductsList = () => {
                 pagingBottom
                 paginationLabels={["Previous", "Next"]}
                 style={{
-                  fontSize: "18px",
+                  fontSize: "16px",
                   fontFamily:
                     "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
                 }}

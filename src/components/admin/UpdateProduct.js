@@ -11,6 +11,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 import {
   updateProduct,
@@ -158,10 +159,11 @@ const UpdateProduct = () => {
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="col-12 col-md-8">
           <Fragment>
             <div className="wrapper my-5">
               <form
+                style={{ backgroundColor: "#f0dc9c" }}
                 className="shadow-lg"
                 onSubmit={submitHandler}
                 encType="multipart/form-data"
@@ -181,7 +183,7 @@ const UpdateProduct = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="name_field">Product Name</label>
+                  <label htmlFor="productName_field">Product Name</label>
 
                   <input
                     type="text"
@@ -275,14 +277,21 @@ const UpdateProduct = () => {
                   ))}
                 </div>
 
-                <button
-                  id="login_button"
-                  type="submit"
-                  className="btn btn-block py-3"
-                  disabled={loading ? true : false}
-                >
-                  UPDATE
-                </button>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <Link to="/admin/products" className="btn btn-block py-2">
+                    Back
+                  </Link>
+
+                  <button
+                    id="login_button"
+                    type="submit"
+                    className="btn btn-block py-2"
+                    disabled={loading ? true : false}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Update
+                  </button>
+                </div>
               </form>
             </div>
           </Fragment>

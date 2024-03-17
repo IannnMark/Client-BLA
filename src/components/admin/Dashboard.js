@@ -33,12 +33,6 @@ const Dashboard = () => {
   const { customerRequests } = useSelector((state) => state.customerRequests);
   let outOfStock = 0;
 
-  // products.forEach((product) => {
-  //   if (product.stock === 0) {
-  //     outOfStock += 1;
-  //   }
-  // });
-
   if (products && products.length > 0) {
     products.forEach((product) => {
       if (product.stock === 0) {
@@ -64,8 +58,8 @@ const Dashboard = () => {
 
   return (
     <Fragment>
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="row" style={{ backgroundColor: '#D3D3D3' }}>
+        <div className="col-md-1">
           <Sidebar />
         </div>
 
@@ -80,7 +74,7 @@ const Dashboard = () => {
 
               <div className="row pr-4">
                 <div className="col-xl-12 col-sm-12 mb-3">
-                  <div className="card text-white bg-primary o-hidden h-100">
+                  <div className="card text-white bg-brown o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
@@ -94,7 +88,7 @@ const Dashboard = () => {
               <div className="row pr-4">
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-secondary o-hidden h-100">
+                  <div className="card text-white bg-redd o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Documents
@@ -114,7 +108,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-black bg-cyan o-hidden h-100">
+                  <div className="card text-black bg-orangee o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Requests
@@ -134,7 +128,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-success o-hidden h-100">
+                  <div className="card text-white bg-darkbrownn o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Products
@@ -154,7 +148,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-danger o-hidden h-100">
+                  <div className="card text-white bg-lightt o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Orders
@@ -174,7 +168,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-info o-hidden h-100">
+                  <div className="card text-white bg-bluee o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Users
@@ -194,7 +188,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-warning o-hidden h-100">
+                  <div className="card text-white bg-purplee o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Out of Stock

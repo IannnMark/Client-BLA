@@ -128,13 +128,14 @@ const RequestsList = () => {
 
         const gradeFilteredRequests = selectedGrade
             ? documentFilteredRequests.filter((request) => {
-                const userGrade = parseInt(request?.user?.grade, 10) || 0;
+                const userGrade = parseInt(request.user.grade, 10);
                 const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
-                return userGrade >= selectedGradeNum;
+                const result = userGrade >= selectedGradeNum;
+
+                return result;
             })
             : documentFilteredRequests;
-
 
         const statusAndGradeFilteredRequests = selectedStatus
             ? gradeFilteredRequests.filter(
@@ -196,6 +197,22 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
+                    label: "Reference Number",
+
+                    field: "referenceNumber",
+
+                    sort: "asc",
+                },
+
+
+                {
+                    label: "Gcash ScreenShot",
+
+                    field: "screenShot",
+
+                    sort: "asc",
+                },
+                {
                     label: "Status",
                     field: "status",
                     sort: "asc",
@@ -224,7 +241,7 @@ const RequestsList = () => {
 
             data.rows.push({
                 id: request._id,
-                userLastName: request.user?.lastname,
+                userLastName: request.user.lastname,
                 grade: parseInt(request.user.grade, 10),
                 numofRequests: request.requestItems.length,
                 amount: `₱${request.totalPrice}`,
@@ -246,6 +263,24 @@ const RequestsList = () => {
                             />
                         </a>
                     ),
+
+                referenceNumber: request.referenceNumber || "N/A",
+
+                screenShot: (
+                    request.screenShot && request.screenShot.length > 0 ? (
+                        <a href={request.screenShot[0].url} target="_blank" rel="noopener noreferrer">
+                            <img
+                                src={request.screenShot[0].url}
+                                alt={request.orderItems}
+                                className="screenShot-image"
+                                style={{ width: "80px", height: "80px" }}
+                            />
+                        </a>
+                    ) : (
+                        "N/A"
+                    )
+                ),
+
                 status: request.requestStatus ? (
                     <p
                         style={{
@@ -280,11 +315,11 @@ const RequestsList = () => {
     };
 
     return (
-        <Fragment>
+        <Fragment style={{ backgroundColor: "lightgray" }}>
             <MetaData title={"All Requests"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-10 col-md-1 ">
                     <Sidebar />
                 </div>
 
@@ -294,23 +329,28 @@ const RequestsList = () => {
 
                         <div className="row my-4">
                             <div className="col-md-3">
-                                <button className="toggle-button date-filter" onClick={toggleDateFilter}>
+                                <button
+                                    className="toggle-button date-filter"
+                                    onClick={toggleDateFilter}
+                                >
                                     Filtered by Date
                                 </button>
                                 <br />
                                 <br />
                                 {showDateFilter && (
-                                    <div className="date-input-section">
+                                    <div className="date-input-section" style={{ marginLeft: '30px', fontWeight: "bold" }}>
                                         <div>
-                                            <label>Start Date: </label>
+                                            <label style={{ marginRight: "5px" }}>Start Date: </label>
                                             <input
+                                                style={{ fontWeight: "bold" }}
                                                 type="date"
                                                 onChange={(e) => setStartDate(new Date(e.target.value))}
                                             />
                                         </div>
                                         <div className="mt-3">
-                                            <label>End Date: </label>
+                                            <label style={{ marginRight: "10px" }}>End Date: </label>
                                             <input
+                                                style={{ fontWeight: "bold" }}
                                                 type="date"
                                                 onChange={(e) => setEndDate(new Date(e.target.value))}
                                             />
@@ -329,9 +369,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showDocumentFilter && (
-                                    <div className="document-input-section">
-                                        <label>Document: </label>
+                                    <div className="document-input-section" style={{ marginLeft: '60px', fontWeight: "bold" }}>
+                                        <label style={{ marginRight: "10px" }}>Document: </label>
                                         <select
+                                            style={{ fontWeight: "bold" }}
                                             onChange={(e) => setSelectedDocument(e.target.value)}
                                             value={selectedDocument}
                                         >
@@ -356,9 +397,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showGradeFilter && (
-                                    <div className="grade-input-section">
-                                        <label>Grade: </label>
+                                    <div className="grade-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
+                                        <label style={{ marginRight: "10px" }}>Grade: </label>
                                         <select
+                                            style={{ fontWeight: "bold" }}
                                             onChange={(e) => {
                                                 setSelectedGrade(e.target.value);
                                                 console.log("Selected Grade:", e.target.value);
@@ -376,7 +418,6 @@ const RequestsList = () => {
                                 )}
                             </div>
 
-
                             <div className="col-md-3">
                                 <button
                                     className="toggle-button status-filter"
@@ -387,9 +428,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showStatusFilter && (
-                                    <div className="status-input-section">
-                                        <label>Status: </label>
+                                    <div className="status-input-section" style={{ marginLeft: '40px', fontWeight: "bold" }}>
+                                        <label style={{ marginRight: "5px" }}>Status: </label>
                                         <select
+                                            style={{ fontWeight: "bold" }}
                                             onChange={(e) => setSelectedStatus(e.target.value)}
                                             value={selectedStatus}
                                         >
@@ -397,7 +439,9 @@ const RequestsList = () => {
                                             <option value="Pending">Pending</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Received">Received</option>
-                                            <option value="Pending Violation">Pending Violation</option>
+                                            <option value="Pending Violation">
+                                                Pending Violation
+                                            </option>
                                             <option value="Pending Balance">Pending Balance</option>
                                         </select>
                                     </div>
@@ -409,10 +453,37 @@ const RequestsList = () => {
                         ) : (
                             <MDBDataTable
                                 data={setRequests()}
-                                className="px-3"
+                                className="px-3 custom-mdb-datatable" // Add custom class here
                                 bordered
                                 striped
                                 hover
+                                noBottomColumns
+                                responsive
+                                searching={false}
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "16px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop
                             />
                         )}
                     </Fragment>

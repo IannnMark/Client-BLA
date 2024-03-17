@@ -232,11 +232,11 @@ const OrdersList = () => {
   };
 
   return (
-    <Fragment>
+    <Fragment style={{ backgroundColor: "lightgray" }}>
       <MetaData title={"All Orders"} />
 
       <div className="row">
-        <div className="col-12 col-md-2">
+        <div className="col-12 col-md-1">
           <Sidebar />
         </div>
 
@@ -252,10 +252,11 @@ const OrdersList = () => {
                 <br />
                 <br />
                 {showDateFilter && (
-                  <div className="date-input-section">
+                  <div className="date-input-section" style={{ marginLeft: '30px', fontWeight: "bold" }}>
                     <div>
-                      <label>Start Date: </label>
+                      <label style={{ marginRight: "5px" }}>Start Date: </label>
                       <input
+                        style={{ fontWeight: "bold" }}
                         type="date"
                         onChange={(e) =>
                           setStartDate(new Date(e.target.value))
@@ -263,8 +264,9 @@ const OrdersList = () => {
                       />
                     </div>
                     <div className="mt-3">
-                      <label>End Date: </label>
+                      <label style={{ marginRight: "10px" }}>End Date: </label>
                       <input
+                        style={{ fontWeight: "bold" }}
                         type="date"
                         onChange={(e) => setEndDate(new Date(e.target.value))}
                       />
@@ -283,9 +285,10 @@ const OrdersList = () => {
                 <br />
                 <br />
                 {showProductFilter && (
-                  <div className="product-input-section">
-                    <label>Product: </label>
+                  <div className="product-input-section" style={{ marginLeft: '80px', fontWeight: "bold" }}>
+                    <label style={{ marginRight: "10px" }}>Product: </label>
                     <select
+                      style={{ fontWeight: "bold" }}
                       onChange={(e) =>
                         setSelectedProduct(e.target.value)
                       }
@@ -302,16 +305,17 @@ const OrdersList = () => {
                 )}
               </div>
 
-              {/* <div className="col-md-3">
+              <div className="col-md-3">
                 <button className="toggle-button" onClick={toggleGradeFilter}>
                   Filtered by Grade
                 </button>
                 <br />
                 <br />
                 {showGradeFilter && (
-                  <div className="grade-input-section">
-                    <label>Grade: </label>
+                  <div className="grade-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
+                    <label style={{ marginRight: "10px" }}>Grade: </label>
                     <select
+                      style={{ fontWeight: "bold" }}
                       onChange={(e) => setSelectedGrade(e.target.value)}
                       value={selectedGrade}
                     >
@@ -325,7 +329,7 @@ const OrdersList = () => {
                     </select>
                   </div>
                 )}
-              </div> */}
+              </div>
 
 
               <div className="col-md-3">
@@ -338,9 +342,10 @@ const OrdersList = () => {
                 <br />
                 <br />
                 {showStatusFilter && (
-                  <div className="status-input-section">
-                    <label>Status: </label>
+                  <div className="status-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
+                    <label style={{ marginRight: "5px" }}>Status: </label>
                     <select
+                      style={{ fontWeight: "bold" }}
                       onChange={(e) =>
                         setSelectedStatus(e.target.value)
                       }
@@ -361,10 +366,37 @@ const OrdersList = () => {
             ) : (
               <MDBDataTable
                 data={setOrders()}
-                className="px-3"
+                className="px-3 custom-mdb-datatable" // Add custom class here
                 bordered
                 striped
                 hover
+                noBottomColumns
+                responsive
+                searching={false}
+                entriesLabel="Show entries"
+                entriesOptions={[10, 20, 30]}
+                infoLabel={["Showing", "to", "of", "entries"]}
+                paginationLabel={["Previous", "Next"]}
+                responsiveSm
+                responsiveMd
+                responsiveLg
+                responsiveXl
+                noRecordsFoundLabel="No records found"
+                paginationRowsPerPageOptions={[10, 20, 30]}
+                pagingTop
+                pagingBottom
+                paginationLabels={["Previous", "Next"]}
+                style={{
+                  fontSize: "16px",
+                  fontFamily:
+                    "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                }}
+                // Add custom styling for cells based on request status
+                tbodyTextBlack
+                tbodyBorderY
+                tbodyBorderX
+                tbodyBorderBottom
+                tbodyBorderTop
               />
             )}
           </Fragment>

@@ -16,6 +16,7 @@ import { newProduct, clearErrors } from "../../actions/productActions";
 
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import "./NewProduct.css";
+import { Link } from "react-router-dom";
 
 
 const NewProduct = () => {
@@ -118,10 +119,11 @@ const NewProduct = () => {
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="col-12 col-md-8">
           <Fragment>
             <div className="wrapper my-5">
               <form
+                style={{ backgroundColor: "#f0dc9c" }}
                 className="shadow-lg"
                 onSubmit={submitHandler}
                 encType="multipart/form-data"
@@ -212,14 +214,21 @@ const NewProduct = () => {
                   ))}
                 </div>
 
-                <button
-                  id="login_button"
-                  type="submit"
-                  className="btn btn-block py-3"
-                  disabled={loading ? true : false}
-                >
-                  CREATE
-                </button>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <Link to="/admin/products" className="btn btn-block py-2">
+                    Back
+                  </Link>
+
+                  <button
+                    id="login_button"
+                    type="submit"
+                    className="btn btn-block py-2"
+                    disabled={loading ? true : false}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Create
+                  </button>
+                </div>
               </form>
             </div>
           </Fragment>
@@ -228,5 +237,6 @@ const NewProduct = () => {
     </Fragment>
   );
 };
+
 
 export default NewProduct;

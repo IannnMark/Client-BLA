@@ -1,7 +1,5 @@
-/* Add these styles to your existing stylesheet or create a new one */
-
 .toggle-button {
-    --color: #EBDE70;
+    --color: brown;
     --color2: rgb(10, 25, 30);
     padding: 0.8em 1.75em;
     background-color: transparent;
@@ -17,6 +15,9 @@
     font-family: 'Roboto', 'Segoe UI', sans-serif;
     text-transform: uppercase;
     color: var(--color);
+    display: block;
+    margin: 0 auto;
+    /* Center the buttons horizontally */
 }
 
 .toggle-button::after,
@@ -58,3 +59,55 @@
 }
 
 /* Add more styles for other toggle buttons if needed (e.g., product-filter, grade-filter, status-filter) */
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .toggle-button {
+        padding: 0.6em 1.25em;
+        /* Adjust padding for smaller screens */
+        font-size: 14px;
+        /* Adjust font size for smaller screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .col-md-3 {
+        text-align: center;
+        /* Center the contents horizontally */
+    }
+
+    .date-input-section {
+        display: inline-block;
+        /* Make the date input section inline block */
+        margin-top: -20px;
+
+    }
+
+    .document-input-section {
+        display: inline-block;
+        /* Make the date input section inline block */
+        margin-top: -20px;
+        margin-right: 60px;
+    }
+
+    .grade-input-section {
+        display: inline-block;
+        /* Make the date input section inline block */
+        margin-top: -20px;
+        margin-right: 75px;
+    }
+
+    .status-input-section {
+        display: inline-block;
+        /* Make the date input section inline block */
+        margin-top: -20px;
+        margin-right: 75px;
+    }
+
+    .product-input-section {
+        display: inline-block;
+        /* Make the date input section inline block */
+        margin-top: -20px;
+        margin-right: 80px;
+    }
+}

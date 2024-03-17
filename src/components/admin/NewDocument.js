@@ -7,13 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { newDocument, clearErrors } from "../../actions/documentActions";
 import { NEW_DOCUMENT_RESET } from "../../constants/documentConstants";
+import { Link } from "react-router-dom";
 
 const NewDocument = () => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
-    const [image, setImage] = useState(null);  // Change from array to single image
+    const [image, setImage] = useState(null); // Change from array to single image
 
-    const [imagePreview, setImagePreview] = useState(null);  // Rename from imagesPreview to imagePreview
+    const [imagePreview, setImagePreview] = useState(null); // Rename from imagesPreview to imagePreview
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -22,7 +23,7 @@ const NewDocument = () => {
 
     const message = (message = "") =>
         toast.success(message, {
-            position: toast.POSITION.BOTTOM_CENTER
+            position: toast.POSITION.BOTTOM_CENTER,
         });
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const NewDocument = () => {
     };
 
     const onChange = (e) => {
-        const file = e.target.files[0];  // Change to single file
+        const file = e.target.files[0]; // Change to single file
         const reader = new FileReader();
 
         reader.onload = () => {
@@ -79,10 +80,11 @@ const NewDocument = () => {
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-8">
                     <Fragment>
                         <div className="wrapper my-5">
                             <form
+                                style={{ backgroundColor: "#f0dc9c" }}
                                 className="shadow-lg"
                                 onSubmit={submitHandler}
                                 encType="multipart/form-data"
@@ -137,14 +139,21 @@ const NewDocument = () => {
                                     )}
                                 </div>
 
-                                <button
-                                    id="login_button"
-                                    type="submit"
-                                    className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
-                                >
-                                    Create
-                                </button>
+                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                    <Link to="/admin/documents" className="btn btn-block py-2">
+                                        Back
+                                    </Link>
+
+                                    <button
+                                        id="login_button"
+                                        type="submit"
+                                        className="btn btn-block py-2"
+                                        disabled={loading ? true : false}
+                                        style={{ marginLeft: "10px" }}
+                                    >
+                                        Create
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </Fragment>
@@ -155,3 +164,4 @@ const NewDocument = () => {
 };
 
 export default NewDocument;
+

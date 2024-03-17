@@ -34,6 +34,7 @@
 }
 
 .avail {
+
     background: url('../../images/bg111.svg') no-repeat center center fixed;
     background-size: cover;
     background-attachment: scroll;
@@ -43,6 +44,10 @@
     text-align: center;
     font-style: italic;
     font-family: fantasy;
+    border: 10px solid white;
+    /* Adjust border thickness and color as needed */
+    border-radius: 75px;
+
 }
 
 .avail:hover {
@@ -95,14 +100,22 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    /* Set the height to 100% of the viewport height */
 
-    /* transition: transform 0.5s ease; */
+    /* Add the following to make the background responsive */
+    min-height: 100%;
+    width: 100%;
+    position: relative;
 }
 
 /* 
   .firstrow:hover {
     transform: scale(1.05); /* Adjust the scaling factor as needed */
 /* transition: transform 0.5s ease; */
+
+/* Media query for medium-sized screens */
+
 
 .h1 {
     padding-top: 70px;
@@ -149,4 +162,34 @@ p {
     /* Animation */
     animation: moveDown 4s infinite;
     /* Adjust the animation duration and iteration count as needed */
+}
+
+/* Media query for medium-sized screens */
+@media only screen and (max-width: 1200px) {
+    .firstrow {
+        background-size: cover;
+        /* Keep the cover for medium-sized screens */
+    }
+}
+
+/* Media query for small screens */
+@media only screen and (max-width: 880px) {
+    .firstrow {
+        background-color: #EBDE70;
+        background-size: contain;
+        /* Keep the cover for medium-sized screens */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .your-button-class {
+        font-size: 6vw;
+        /* Adjust font size for smaller screens */
+        margin-left: 5%;
+        /* Adjust left margin for smaller screens */
+        position: relative;
+        /* Add position relative */
+        top: -500px;
+        /* Adjust the top position for the desired upward adjustment */
+    }
 }

@@ -135,11 +135,11 @@ const DocumentList = () => {
     };
 
     return (
-        <Fragment>
+        <Fragment style={{ backgroundColor: "lightgray" }}>
             <MetaData title={"All Documents"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-10 col-md-1">
                     <Sidebar />
                 </div>
 
@@ -152,10 +152,35 @@ const DocumentList = () => {
                         ) : (
                             <MDBDataTable
                                 data={setDocuments()}
-                                className="px-3"
-                                bordered
                                 striped
                                 hover
+                                noBottomColumns
+                                responsive
+                                searching={false}
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "16px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop
                             />
                         )}
                     </Fragment>

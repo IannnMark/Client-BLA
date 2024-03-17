@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+
 import {
     updateDocument,
     getDocumentDetails,
@@ -16,15 +18,17 @@ const UpdateDocument = () => {
     const [codename, setCodename] = useState("");
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
-    const [image, setImage] = useState([]);
+    const [images, setImages] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
     const dispatch = useDispatch();
     const { error, document } = useSelector((state) => state.documentDetails);
-    const { loading, error: updateError, isUpdated } = useSelector(
-        (state) => state.document
-    );
+    const {
+        loading,
+        error: updateError,
+        isUpdated,
+    } = useSelector((state) => state.document);
 
     let { id } = useParams();
     let navigate = useNavigate();
@@ -40,12 +44,11 @@ const UpdateDocument = () => {
         });
 
     useEffect(() => {
-        console.log('Document ID:', id);
+        console.log("Document ID:", id);
 
         if (document && document._id !== id) {
             dispatch(getDocumentDetails(id));
         } else {
-            setCodename(document.codename);
             setName(document.name);
             setPrice(document.price);
             setOldImages(document.images);
@@ -73,7 +76,7 @@ const UpdateDocument = () => {
 
         // Check if document and id are available
         if (!document || !id) {
-            console.error('Document or ID is undefined');
+            console.error("Document or ID is undefined");
             return;
         }
 
@@ -82,8 +85,8 @@ const UpdateDocument = () => {
         formData.set("name", name);
         formData.set("price", price);
 
-        image.forEach((img) => {
-            formData.append("image", img);
+        images.forEach((image) => {
+            formData.append("images", image);
         });
 
         dispatch(updateDocument(document._id, formData));
@@ -93,7 +96,7 @@ const UpdateDocument = () => {
         const files = Array.from(e.target.files);
 
         setImagesPreview([]);
-        setImage([]);
+        setImages([]);
         setOldImages([]);
 
         files.forEach((file) => {
@@ -102,7 +105,7 @@ const UpdateDocument = () => {
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setImagesPreview((oldArray) => [...oldArray, reader.result]);
-                    setImage((oldArray) => [...oldArray, reader.result]);
+                    setImages((oldArray) => [...oldArray, reader.result]);
                 }
             };
 
@@ -118,10 +121,11 @@ const UpdateDocument = () => {
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-8">
                     <Fragment>
                         <div className="wrapper my-5">
                             <form
+                                style={{ backgroundColor: "#f0dc9c" }}
                                 className="shadow-lg"
                                 onSubmit={submitHandler}
                                 encType="multipart/form-data"
@@ -162,24 +166,25 @@ const UpdateDocument = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Image</label>
+                                    <label>Images</label>
                                     <div className="custom-file">
                                         <input
                                             type="file"
-                                            name="image"
+                                            name="images"
                                             className="custom-file-input"
                                             id="customFile"
                                             onChange={onChange}
+                                            multiple
                                         />
                                         <label className="custom-file-label" htmlFor="customFile">
-                                            Choose Image
+                                            Choose Images
                                         </label>
                                     </div>
 
                                     {oldImages &&
                                         oldImages.map((img) => (
                                             <img
-                                                key={img.url}
+                                                key={img}
                                                 src={img.url}
                                                 alt={img.url}
                                                 className="mt-3 mr-2"
@@ -192,7 +197,7 @@ const UpdateDocument = () => {
                                         <img
                                             src={img}
                                             key={img}
-                                            alt="Image Preview"
+                                            alt="Images Preview"
                                             className="mt-3 mr-2"
                                             width="55"
                                             height="52"
@@ -200,14 +205,21 @@ const UpdateDocument = () => {
                                     ))}
                                 </div>
 
-                                <button
-                                    id="login_button"
-                                    type="submit"
-                                    className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
-                                >
-                                    UPDATE
-                                </button>
+                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                    <Link to="/admin/documents" className="btn btn-block py-2">
+                                        Back
+                                    </Link>
+
+                                    <button
+                                        id="login_button"
+                                        type="submit"
+                                        className="btn btn-block py-2"
+                                        disabled={loading ? true : false}
+                                        style={{ marginLeft: "10px" }}
+                                    >
+                                        Update
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </Fragment>
