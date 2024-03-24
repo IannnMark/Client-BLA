@@ -152,16 +152,6 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
-                    label: "Reference Number",
-                    field: "referenceNumber",
-                    sort: "asc",
-                },
-                {
-                    label: "Gcash ScreenShot",
-                    field: "screenShot",
-                    sort: "asc",
-                },
-                {
                     label: "Status",
                     field: "status",
                     sort: "asc",
@@ -212,21 +202,6 @@ const RequestsList = () => {
                             />
                         </a>
                     ),
-                referenceNumber: request.referenceNumber || "N/A",
-                screenShot: (
-                    request.screenShot && request.screenShot.length > 0 ? (
-                        <a href={request.screenShot[0].url} target="_blank" rel="noopener noreferrer">
-                            <img
-                                src={request.screenShot[0].url}
-                                alt={request.orderItems}
-                                className="screenShot-image"
-                                style={{ width: "80px", height: "80px" }}
-                            />
-                        </a>
-                    ) : (
-                        "N/A"
-                    )
-                ),
                 status: request.requestStatus ? (
                     <p
                         style={{

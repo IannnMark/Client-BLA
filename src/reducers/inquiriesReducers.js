@@ -34,6 +34,7 @@ export const newRequestReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 request: action.payload,
+                checkoutUrl: action.payload.checkoutUrl,
             };
         case CREATE_REQUEST_FAIL:
             return {
