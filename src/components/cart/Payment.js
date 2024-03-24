@@ -15,6 +15,7 @@ const Payment = () => {
   const { error, checkoutUrl } = useSelector((state) => state.newOrder); // Assuming you're getting the checkoutUrl from the backend
 
   const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [checkoutReady, setCheckoutReady] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -22,29 +23,23 @@ const Payment = () => {
     }
   }, [dispatch, error]);
 
+  const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const order = {
     orderItems: cartItems,
     paymentMeth: paymentMethod,
+    itemsPrice: orderInfo ? orderInfo.itemsPrice : 0,
+    shippingPrice: orderInfo ? orderInfo.shippingPrice : 0,
+    totalPrice: orderInfo ? orderInfo.totalPrice : 0
   };
-
-  const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-  if (orderInfo) {
-    order.itemsPrice = orderInfo.itemsPrice;
-    order.shippingPrice = orderInfo.shippingPrice;
-    order.totalPrice = orderInfo.totalPrice;
-  }
 
   const errMsg = (message = "") =>
     toast.error(message, {
       position: toast.POSITION.BOTTOM_CENTER,
     });
 
-
-
   const submitHandler = async (e) => {
     e.preventDefault();
     document.querySelector("#pay_btn").disabled = true;
-
 
     order.paymentInfo = {
       type: paymentMethod,
@@ -53,26 +48,24 @@ const Payment = () => {
     dispatch(createOrder(order));
     dispatch(clearCart());
 
-    // Redirect to success page if payment method is "Cash"
     if (paymentMethod === "Cash") {
       navigate("/success");
     } else {
-      // Attempt to open the checkout URL in a new window
+      setCheckoutReady(true); // Signal that checkout is ready
+    }
+  };
+
+  useEffect(() => {
+    if (checkoutUrl && checkoutReady) {
       const newWindow = window.open(checkoutUrl);
       if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-        // Pop-up was blocked
-        // Provide feedback to the user
         console.error('Pop-up was blocked. Please allow pop-ups from this site to proceed.');
-        // You can also redirect the user to an error page or display a message
       } else {
-        // Pop-up was successfully opened
         console.log("Opening checkout URL:", checkoutUrl);
         navigate("/success");
       }
     }
-  };
-
-
+  }, [checkoutUrl, checkoutReady, navigate]);
 
   return (
     <Fragment>
@@ -109,10 +102,8 @@ const Payment = () => {
               </div>
             </div>
             <button id="pay_btn" type="submit" className="btn btn-block py-3">
-              ORDER {` - ₱${orderInfo && orderInfo.totalPrice}`}
-
+              ORDER {` - ₱${order.totalPrice}`}
             </button>
-
           </form>
         </div>
       </div>
