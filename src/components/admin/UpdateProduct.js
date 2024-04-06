@@ -31,16 +31,15 @@ const UpdateProduct = () => {
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const categories = [
-    "Uniform",
-    "PE",
-    "Grade 7 Books",
-    "Grade 8 Books",
-    "Grade 9 Books",
-    "Grade 10 Books",
-    "SHS Books",
-    "Lanyard",
+    { _id: "60f4ad422a6c9b0015ebf1a6", name: "Jogging Pants" },
+    { _id: "60f4ad422a6c9b0015ebf1a7", name: "PE" },
+    { _id: "60f4ad422a6c9b0015ebf1a8", name: "Grade 7 Books" },
+    { _id: "60f4ad422a6c9b0015ebf1a9", name: "Grade 8 Books" },
+    { _id: "60f4ad422a6c9b0015ebf1a1", name: "Grade 9 Books" },
+    { _id: "60f4ad422a6c9b0015ebf1a2", name: "Grade 10 Books" },
+    { _id: "60f4ad422a6c9b0015ebf1a3", name: "SHS Books" },
+    { _id: "60f4ad422a6c9b0015ebf1a4", name: "Lanyard" },
   ];
-
   const dispatch = useDispatch();
 
   const { error, product } = useSelector((state) => state.productDetails);
@@ -216,11 +215,13 @@ const UpdateProduct = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
+                      <option key={category._id} value={category._id}>
+                        {category.name}
                       </option>
                     ))}
                   </select>
+
+
                 </div>
 
                 <div className="form-group">
