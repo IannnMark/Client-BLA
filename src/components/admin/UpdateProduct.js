@@ -31,7 +31,7 @@ const UpdateProduct = () => {
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const categories = [
-    { _id: "60f4ad422a6c9b0015ebf1a6", name: "Jogging Pants" },
+    { _id: "60f4ad422a6c9b0015ebf1a6", name: "Uniform" },
     { _id: "60f4ad422a6c9b0015ebf1a7", name: "PE" },
     { _id: "60f4ad422a6c9b0015ebf1a8", name: "Grade 7 Books" },
     { _id: "60f4ad422a6c9b0015ebf1a9", name: "Grade 8 Books" },

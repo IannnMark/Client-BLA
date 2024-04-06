@@ -7,3 +7,54 @@
 #products {
     padding: 5px;
 }
+
+
+.filter-heading {
+    font-weight: bold;
+}
+
+.categories-filter-container {
+    text-align: center;
+    /* Center the items horizontally */
+    margin-top: 20px;
+    /* Add some top margin for spacing */
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+}
+
+.category-item {
+    --color: brown;
+    --color2: rgb(10, 25, 30);
+    padding: 0.6em 1.25em;
+    background-color: transparent;
+    border-radius: 6px;
+    border: .3px solid var(--color);
+    transition: .5s;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    color: var(--color);
+    /* display: inline-block; */
+    cursor: pointer;
+}
+
+.category-item:not(:last-child) {
+    margin-right: 5px;
+    /* Adjust margin for spacing between items */
+}
+
+.category-item:hover {
+    color: var(--color2);
+    border-color: var(--color2);
+}
+
+.category-item:active {
+    filter: brightness(.9);
+    transform: scale(.98);
+}

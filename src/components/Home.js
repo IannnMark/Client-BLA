@@ -3,18 +3,14 @@ import MetaData from "./layout/MetaData";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Slider, { createSliderWithTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { getProducts } from "../actions/productActions";
 import Product from "./product/Product";
 import Loader from "./layout/Loader";
-import Index from "./Index.js";
-import "./Home.css";
 import BouncingText from './layout/BouncingText';
+import './Home.css';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,14 +28,15 @@ const Home = () => {
   let { keyword } = useParams();
 
   const categories = [
-    "Uniform",
-    "PE",
-    "Grade 7 Books",
-    "Grade 8 Books",
-    "Grade 9 Books",
-    "Grade 10 Books",
-    "SHS Books",
-    "Lanyard",
+    { name: "All", id: "" }, // Add an "All" option with an empty ID
+    { name: "Uniform", id: "60f4ad422a6c9b0015ebf1a6" },
+    { name: "PE", id: "60f4ad422a6c9b0015ebf1a7" },
+    { name: "Grade 7 Books", id: "60f4ad422a6c9b0015ebf1a8" },
+    { name: "Grade 8 Books", id: "60f4ad422a6c9b0015ebf1a9" },
+    { name: "Grade 9 Books", id: "60f4ad422a6c9b0015ebf1a1" },
+    { name: "Grade 10 Books", id: "60f4ad422a6c9b0015ebf1a2" },
+    { name: "SHS", id: "60f4ad422a6c9b0015ebf1a3" },
+    { name: "Lanyard", id: "60f4ad422a6c9b0015ebf1a4" },
   ];
 
   const notify = (error = "") =>
@@ -50,6 +47,11 @@ const Home = () => {
   const Range = createSliderWithTooltip(Slider.Range);
 
   useEffect(() => {
+    console.log("Keyword:", keyword);
+    console.log("Current Page:", currentPage);
+    console.log("Price:", price);
+    console.log("Category:", category);
+
     if (error) {
       notify(error);
     }
@@ -60,6 +62,20 @@ const Home = () => {
     setCurrentPage(pageNumber);
   }
 
+  const handleCategoryFilter = (selectedCategory) => {
+    if (selectedCategory === "All") {
+      setCategory(""); // Set category to empty string for "All" option
+    } else {
+      const selectedCategoryObj = categories.find(
+        (cat) => cat.name === selectedCategory
+      );
+      if (selectedCategoryObj) {
+        setCategory(selectedCategoryObj.id);
+      } else {
+        setCategory(""); // If category is not found, reset the filter
+      }
+    }
+  };
 
   return (
     <Fragment>
@@ -68,49 +84,35 @@ const Home = () => {
       ) : (
         <Fragment>
           <MetaData title={"Grab your Documents now!"} />
-          {/* <Index /> */}
           <br />
           <div className="background-containers">
             <BouncingText />
             <section id="products" className="container mt-5">
               <div className="row">
-                {keyword ? (
-                  <Fragment>
-                    <div className="col-6 col-md-3 mt-5 mb-5">
-                      <div className="px-5">
-                        <div className="mt-5">
-                          <h4 className="mb-3">Categories</h4>
-                          <ul className="pl-0">
-                            {categories.map((category) => (
-                              <li
-                                style={{
-                                  cursor: "pointer",
-                                  listStyleType: "none",
-                                }}
-                                key={category}
-                                onClick={() => setCategory(category)}
-                              >
-                                {category}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+                <div className="col-md-12 mb-3">
+                  <div className="categories-filter-container">
+                    <h4 className="filter-heading">Categories</h4>
+                    <ul className="category-list">
+                      {categories.map((category) => (
+                        <li
+                          className="category-item toggle-button" // Add toggle-button class
+                          key={category.name}
+                          onClick={() => handleCategoryFilter(category.name)}
+                        >
+                          {category.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
 
-                    <div className="col-6 col-md-9">
-                      <div className="row">
-                        {products.map((product) => (
-                          <Product key={product._id} product={product} col={4} />
-                        ))}
-                      </div>
-                    </div>
-                  </Fragment>
-                ) : (
-                  products.map((product) => (
-                    <Product key={product._id} product={product} col={3} />
-                  ))
-                )}
+                <div className="col-md-12">
+                  <div className="row">
+                    {products.map((product) => (
+                      <Product key={product._id} product={product} col={4} />
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           </div>
@@ -121,6 +123,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-

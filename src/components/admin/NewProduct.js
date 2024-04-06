@@ -128,7 +128,7 @@ const NewProduct = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <option value="">Select Category</option>
-                    <option value="60f4ad422a6c9b0015ebf1a6">Jogging Pants</option>
+                    <option value="60f4ad422a6c9b0015ebf1a6">Uniform</option>
                     <option value="60f4ad422a6c9b0015ebf1a7">PE</option>
                     <option value="60f4ad422a6c9b0015ebf1a8">Grade 7 Books</option>
                     <option value="60f4ad422a6c9b0015ebf1a9">Grade 8 Books</option>
@@ -136,7 +136,6 @@ const NewProduct = () => {
                     <option value="60f4ad422a6c9b0015ebf1a2">Grade 10 Books</option>
                     <option value="60f4ad422a6c9b0015ebf1a3">SHS Books</option>
                     <option value="60f4ad422a6c9b0015ebf1a4">Lanyard</option>
-                    "Lanyard",
                   </select>
                 </div>
 
