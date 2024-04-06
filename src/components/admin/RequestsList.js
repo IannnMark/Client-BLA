@@ -26,9 +26,11 @@ const RequestsList = () => {
     const [endDate, setEndDate] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState("");
     const [selectedDocument, setSelectedDocument] = useState("");
+    const [selectedGrade, setSelectedGrade] = useState("");
     const [showDateFilter, setShowDateFilter] = useState(false);
     const [showDocumentFilter, setShowDocumentFilter] = useState(false);
     const [showStatusFilter, setShowStatusFilter] = useState(false);
+    const [showGradeFilter, setShowGradeFilter] = useState(false);
 
     useEffect(() => {
         dispatch(allRequests());
@@ -77,6 +79,18 @@ const RequestsList = () => {
         return Array.from(uniqueDocuments);
     };
 
+    const getUniqueGrades = () => {
+        const uniqueGrades = new Set();
+
+        requests.forEach((request) => {
+            if (request.user && request.user.grade) {
+                uniqueGrades.add(request.user.grade);
+            }
+        });
+
+        return Array.from(uniqueGrades);
+    };
+
     const setRequests = () => {
         const filteredRequests = requests.filter((request) => {
             const requestDate = new Date(request.dateofRequest);
@@ -100,7 +114,13 @@ const RequestsList = () => {
             )
             : statusFilteredRequests;
 
-        const sortedFilteredRequests = [...documentFilteredRequests].sort(
+        const gradeFilteredRequests = selectedGrade
+            ? documentFilteredRequests.filter((request) =>
+                request.user && request.user.grade === selectedGrade
+            )
+            : documentFilteredRequests;
+
+        const sortedFilteredRequests = [...gradeFilteredRequests].sort(
             (a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest)
         );
 
@@ -337,6 +357,35 @@ const RequestsList = () => {
                                     </div>
                                 )}
                             </div>
+
+                            <div className="col-md-3">
+                                <button
+                                    className="toggle-button grade-filter"
+                                    onClick={() => setShowGradeFilter(!showGradeFilter)}
+                                >
+                                    Filtered by Grade
+                                </button>
+                                <br />
+                                <br />
+                                {showGradeFilter && (
+                                    <div className="grade-input-section" style={{ marginLeft: '50px', fontWeight: "bold" }}>
+                                        <label style={{ marginRight: "5px" }}>Grade: </label>
+                                        <select
+                                            style={{ fontWeight: "bold" }}
+                                            value={selectedGrade}
+                                            onChange={(e) => setSelectedGrade(e.target.value)}
+                                        >
+                                            <option value="">All</option>
+                                            {getUniqueGrades().map((grade, index) => (
+                                                <option key={index} value={grade}>
+                                                    {grade}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                            </div>
+
                         </div>
                         {loading ? (
                             <Loader />
