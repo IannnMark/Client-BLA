@@ -29,14 +29,14 @@ const Home = () => {
 
   const categories = [
     { name: "All", id: "" }, // Add an "All" option with an empty ID
-    { name: "Uniform", id: "60f4ad422a6c9b0015ebf1a6" },
-    { name: "PE", id: "60f4ad422a6c9b0015ebf1a7" },
-    { name: "Grade 7 Books", id: "60f4ad422a6c9b0015ebf1a8" },
-    { name: "Grade 8 Books", id: "60f4ad422a6c9b0015ebf1a9" },
-    { name: "Grade 9 Books", id: "60f4ad422a6c9b0015ebf1a1" },
-    { name: "Grade 10 Books", id: "60f4ad422a6c9b0015ebf1a2" },
-    { name: "SHS", id: "60f4ad422a6c9b0015ebf1a3" },
-    { name: "Lanyard", id: "60f4ad422a6c9b0015ebf1a4" },
+    { name: "Uniform", id: "66150c3d6bf9d53979e70b13" },
+    { name: "PE", id: "66150c4d6bf9d53979e70b1d" },
+    { name: "Grade 7 Books", id: "66150c9c6bf9d53979e70b28" },
+    { name: "Grade 8 Books", id: "66150cd36bf9d53979e70b34" },
+    { name: "Grade 9 Books", id: "66150cfc6bf9d53979e70b41" },
+    { name: "Grade 10 Books", id: "66150d256bf9d53979e70b4f" },
+    { name: "SHS", id: "66150d3a6bf9d53979e70b5e" },
+    { name: "Lanyard", id: "66150d656bf9d53979e70b6e" },
   ];
 
   const notify = (error = "") =>
