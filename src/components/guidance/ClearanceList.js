@@ -45,7 +45,7 @@ const ClearanceList = () => {
         if (clearances && clearances.length > 0) {
             clearances.forEach((clearance) => {
                 data.rows.push({
-                    userLastName: clearance.user.lastname,
+                    userLastName: clearance.user?.lastname || 'N/A',
                     clearanceImages: (
                         clearance.clearanceImages && clearance.clearanceImages.length > 0 ? (
                             <a href={clearance.clearanceImages[0].url} target="_blank" rel="noopener noreferrer">
