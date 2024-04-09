@@ -78,15 +78,15 @@ const NewViolation = () => {
         <Fragment>
             <MetaData title={"New Violation"} />
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
 
                 <div className="col-12 col-md-10">
                     <Fragment>
                         <div className="wrapper my-5">
-                            <form className="shadow-lg" onSubmit={submitHandler}>
-                                <h1 className="mb-4">New Violation</h1>
+                            <form className="shadow-lg" onSubmit={submitHandler} style={{ backgroundColor: "#f0dc9c" }}>
+                                <h1 className="mb-4">Add Violation Record</h1>
 
                                 <div className="form-group">
                                     <label htmlFor="student_dropdown">Select Student</label>

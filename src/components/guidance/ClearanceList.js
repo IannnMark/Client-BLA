@@ -45,7 +45,7 @@ const ClearanceList = () => {
         if (clearances && clearances.length > 0) {
             clearances.forEach((clearance) => {
                 data.rows.push({
-                    userLastName: clearance.user?.lastname || 'N/A',
+                    userLastName: clearance.user.lastname,
                     clearanceImages: (
                         clearance.clearanceImages && clearance.clearanceImages.length > 0 ? (
                             <a href={clearance.clearanceImages[0].url} target="_blank" rel="noopener noreferrer">
@@ -93,7 +93,7 @@ const ClearanceList = () => {
             <MetaData title={"All Clearances"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
 

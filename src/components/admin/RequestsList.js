@@ -203,7 +203,7 @@ const RequestsList = () => {
                 userLastName: request.user ? request.user.lastname : "N/A",
                 grade: parseInt(request.user ? request.user.grade : 0, 10),
                 numofRequests: request.requestItems.length,
-                amount: `₱${request.totalPrice}`,
+                amount: `â‚±${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
@@ -234,16 +234,18 @@ const RequestsList = () => {
                     </p>
                 ) : null,
                 actions: (
-                    <Fragment>
+                    <Fragment >
                         <Link
                             to={`/admin/request/${request._id}`}
                             className="btn btn-primary py-1 px-2"
+                            style={{ marginLeft: "7.5px", marginBottom: "5px" }}
                         >
                             <i className="fa fa-eye"></i>
                         </Link>
                         <button
-                            className="btn btn-danger py-1 px-2 ml-2"
+                            className="btn btn-danger py-1 px-2"
                             onClick={() => deleteRequestHandler(request._id)}
+                            style={{ marginLeft: "9.5px" }}
                         >
                             <i className="fa fa-trash-o"></i>
                         </button>

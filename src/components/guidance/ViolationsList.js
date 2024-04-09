@@ -47,7 +47,7 @@ const ViolationsList = () => {
         const data = {
             columns: [
                 { label: "Student Last Name", field: "lastname", sort: "asc" },
-                { label: "Grade", field: "grade", sort: "asc" },
+                { label: "Grade Level", field: "grade", sort: "asc" },
                 { label: "Violation Type", field: "type", sort: "asc" },
                 { label: "Description", field: "description", sort: "asc" },
                 { label: "Date", field: "date", sort: "asc" },
@@ -94,13 +94,13 @@ const ViolationsList = () => {
             <MetaData title={"All Violations"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
 
                 <div className="col-12 col-md-10">
                     <Fragment>
-                        <h1 className="my-5">All Violations</h1>
+                        <h1 className="my-5">Violation Records</h1>
 
                         {loading ? (
                             <Loader />

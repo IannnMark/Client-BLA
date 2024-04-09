@@ -58,17 +58,17 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
-                    label: "Grade",
+                    label: "Grade Level",
                     field: "grade",
                     sort: "asc",
                 },
                 {
-                    label: "No of Requests",
+                    label: "No. of Requests",
                     field: "numofRequests",
                     sort: "asc",
                 },
                 {
-                    label: "Amount",
+                    label: "Total Amount",
                     field: "amount",
                     sort: "asc",
                 },
@@ -79,13 +79,13 @@ const RequestsList = () => {
                 },
 
                 {
-                    label: "Date of Request",
+                    label: "Date Requested",
                     field: "dateofRequest",
                     sort: "asc",
                 },
 
                 {
-                    label: "Release of Request",
+                    label: "Date Releasing",
                     field: "dateRelease",
                     sort: "asc",
                 },
@@ -152,7 +152,7 @@ const RequestsList = () => {
             <MetaData title={"All Requests"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
 
@@ -208,4 +208,3 @@ const RequestsList = () => {
 };
 
 export default RequestsList;
-

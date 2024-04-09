@@ -110,19 +110,20 @@ const ProductsList = () => {
         <Fragment>
             <MetaData title={"Product Stock History"} />
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
                 <div className="col-12 col-md-10">
                     <Fragment>
-                        <h1 className="my-5">Product Stock History</h1>
-                        <div className="mb-3">
-                            <label htmlFor="statusFilter">Filter by Status:</label>
+                        <h1 className="my-5">Merch Stock History</h1>
+                        <div className="mb-4">
+                            <label htmlFor="statusFilter" style={{ fontWeight: "bold", fontSize: "14px", marginRight: "10px", display: "block", margin: "0 auto", textAlign: "center" }}>Filter by Status</label>
                             <select
                                 id="statusFilter"
                                 className="form-control"
                                 value={selectedStatus}
                                 onChange={handleStatusChange}
+                                style={{ width: "500px", margin: "0 auto", textAlign: "center" }}
                             >
                                 <option value="">All</option>
                                 <option value="Pending">Pending</option>
@@ -135,10 +136,37 @@ const ProductsList = () => {
                         ) : (
                             <MDBDataTable
                                 data={setProducts()}
-                                className="px-3"
+                                className="px-3 custom-mdb-datatable" // Add custom class here
                                 bordered
                                 striped
                                 hover
+                                noBottomColumns
+                                responsive
+                                searching={false}
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "16px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop
                             />
                         )}
                     </Fragment>
