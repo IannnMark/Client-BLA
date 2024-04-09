@@ -128,14 +128,14 @@ const NewProduct = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <option value="">Select Category</option>
-                    <option value="60f4ad422a6c9b0015ebf1a6">Uniform</option>
-                    <option value="60f4ad422a6c9b0015ebf1a7">PE</option>
-                    <option value="60f4ad422a6c9b0015ebf1a8">Grade 7 Books</option>
-                    <option value="60f4ad422a6c9b0015ebf1a9">Grade 8 Books</option>
-                    <option value="60f4ad422a6c9b0015ebf1a1">Grade 9 Books</option>
-                    <option value="60f4ad422a6c9b0015ebf1a2">Grade 10 Books</option>
-                    <option value="60f4ad422a6c9b0015ebf1a3">SHS Books</option>
-                    <option value="60f4ad422a6c9b0015ebf1a4">Lanyard</option>
+                    <option value="Uniform">Uniform</option>
+                    <option value="PE">PE</option>
+                    <option value="Grade 7 Books">Grade 7 Books</option>
+                    <option value="Grade 8 Books">Grade 8 Books</option>
+                    <option value="Grade 9 Books">Grade 9 Books</option>
+                    <option value="Grade 10 Books">Grade 10 Books</option>
+                    <option value="SHS Books">SHS Books</option>
+                    <option value="Lanyard">Lanyard</option>
                   </select>
                 </div>
 
