@@ -106,6 +106,7 @@ const ProcessOrder = () => {
                     <p><b>Payment Information:</b> N/A</p>
                   )}
 
+
                   <h4 className="my-4">Order Status:</h4>
                   <p
                     className={
