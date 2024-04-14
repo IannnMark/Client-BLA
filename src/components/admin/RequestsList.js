@@ -203,7 +203,7 @@ const RequestsList = () => {
                 userLastName: request.user ? request.user.lastname : "N/A",
                 grade: parseInt(request.user ? request.user.grade : 0, 10),
                 numofRequests: request.requestItems.length,
-                amount: `â‚±${request.totalPrice}`,
+                amount: `${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
