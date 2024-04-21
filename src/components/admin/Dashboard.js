@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
@@ -17,7 +17,7 @@ import { allOrders } from "../../actions/orderActions";
 import { allRequests } from "../../actions/inquiriesActions";
 import { allUsers, userSales, userRequests } from "../../actions/userActions";
 import { monthlySalesChart, productSalesChart, monthlyRequestsChart, documentSalesChart } from "../../actions/chartActions";
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -57,17 +57,6 @@ const Dashboard = () => {
     dispatch(userRequests());
   }, [dispatch]);
 
-
-  const pdfExportComponent = useRef(null);
-  const contentArea = useRef(null);
-
-  const handleExportWithComponent = (event) => {
-    pdfExportComponent.current.save();
-  };
-
-  const handleExportWithMethod = (event) => {
-    savePDF(contentArea.current, { paperSize: "A4" });
-  }
 
   return (
     <Fragment>
@@ -213,70 +202,66 @@ const Dashboard = () => {
               </div>
 
 
-              <button onClick={handleExportWithMethod}>Download Reports</button>
-
-              <PDFExport ref={pdfExportComponent} paperSize={"A4"}>
-                <div ref={contentArea}>
-
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Monthly Requests</div>
-                          <MonthlyRequestsChart data={requestsPerMonth} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Document Requests</div>
-                          <DocumentSalesChart data={documentSales} />
-                        </div>
-                      </div>
-                    </div>
 
 
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Users Requests</div>
-                          <UserRequestsChart data={customerRequests} />
-                        </div>
-                      </div>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Monthly Requests</div>
+                      <MonthlyRequestsChart data={requestsPerMonth} />
                     </div>
                   </div>
-
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Customer Sales</div>
-                          <UserSalesChart data={customerSales} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Monthly Sales</div>
-                          <MonthlySalesChart data={salesPerMonth} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="card text-center card-font-size chart-card">
-                        <div className="card-body">
-                          <div className="text-center card-font-size">Product Sales</div>
-                          <ProductSalesChart data={productSales} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
-              </PDFExport>
+
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Document Requests</div>
+                      <DocumentSalesChart data={documentSales} />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Users Requests</div>
+                      <UserRequestsChart data={customerRequests} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Customer Sales</div>
+                      <UserSalesChart data={customerSales} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Monthly Sales</div>
+                      <MonthlySalesChart data={salesPerMonth} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Product Sales</div>
+                      <ProductSalesChart data={productSales} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </Fragment>
           )}
         </div>

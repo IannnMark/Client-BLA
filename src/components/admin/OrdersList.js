@@ -66,7 +66,7 @@ const OrdersList = () => {
     orders.forEach((order) => {
       if (order.orderItems) {
         order.orderItems.forEach((item) => {
-          uniqueProducts.add(item.name);
+          uniqueProducts.add(item.productName);
         });
       }
     });
