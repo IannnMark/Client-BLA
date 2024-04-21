@@ -80,23 +80,13 @@ const ProcessOrder = () => {
     formData.set("status", status);
     formData.set("dateRelease", selectedDate.toISOString());
 
-    // Check if any orderItem is missing the image field
-    const hasMissingImage = orderItems.some(item => !item.image);
+    // Exclude 'image' fields from orderItems
+    const orderItemsWithoutImage = orderItems.map(({ image, ...rest }) => rest);
 
-    if (hasMissingImage) {
-      // Handle missing image fields
-      // For example, you could provide a default image URL
-      orderItems.forEach((item, index) => {
-        if (!item.image) {
-          // Assuming a default image URL
-          orderItems[index].image = 'default_image_url';
-        }
-      });
-    }
+    formData.set("orderItems", JSON.stringify(orderItemsWithoutImage));
 
     try {
       setLoadingUpdate(true);
-      // Now that missing image fields are handled, update the order
       await dispatch(updateOrder(id, formData));
       localStorage.setItem('updatedStatus', status);
       successMsg(`Order updated successfully. New Status: ${status}`);
@@ -107,6 +97,7 @@ const ProcessOrder = () => {
       setLoadingUpdate(false);
     }
   };
+
 
   return (
     <Fragment>
