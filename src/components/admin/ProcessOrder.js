@@ -54,14 +54,49 @@ const ProcessOrder = () => {
     }
   }, [dispatch, error, isUpdated, status, orderId]);
 
+  // const updateOrderHandler = async (id) => {
+  //   const formData = new FormData();
+
+  //   formData.set("status", status);
+  //   formData.set("dateRelease", selectedDate.toISOString());
+
+  //   try {
+  //     setLoadingUpdate(true);
+  //     await dispatch(updateOrder(id, formData));
+  //     localStorage.setItem('updatedStatus', status);
+  //     successMsg(`Order updated successfully. New Status: ${status}`);
+  //   } catch (error) {
+  //     console.error("Update order failed:", error);
+  //     errMsg("Failed to update order. Please try again.");
+  //   } finally {
+  //     setLoadingUpdate(false);
+  //   }
+  // };
+
+
   const updateOrderHandler = async (id) => {
     const formData = new FormData();
 
     formData.set("status", status);
     formData.set("dateRelease", selectedDate.toISOString());
 
+    // Check if any orderItem is missing the image field
+    const hasMissingImage = orderItems.some(item => !item.image);
+
+    if (hasMissingImage) {
+      // Handle missing image fields
+      // For example, you could provide a default image URL
+      orderItems.forEach((item, index) => {
+        if (!item.image) {
+          // Assuming a default image URL
+          orderItems[index].image = 'default_image_url';
+        }
+      });
+    }
+
     try {
       setLoadingUpdate(true);
+      // Now that missing image fields are handled, update the order
       await dispatch(updateOrder(id, formData));
       localStorage.setItem('updatedStatus', status);
       successMsg(`Order updated successfully. New Status: ${status}`);
