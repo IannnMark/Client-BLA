@@ -54,36 +54,11 @@ const ProcessOrder = () => {
     }
   }, [dispatch, error, isUpdated, status, orderId]);
 
-  // const updateOrderHandler = async (id) => {
-  //   const formData = new FormData();
-
-  //   formData.set("status", status);
-  //   formData.set("dateRelease", selectedDate.toISOString());
-
-  //   try {
-  //     setLoadingUpdate(true);
-  //     await dispatch(updateOrder(id, formData));
-  //     localStorage.setItem('updatedStatus', status);
-  //     successMsg(`Order updated successfully. New Status: ${status}`);
-  //   } catch (error) {
-  //     console.error("Update order failed:", error);
-  //     errMsg("Failed to update order. Please try again.");
-  //   } finally {
-  //     setLoadingUpdate(false);
-  //   }
-  // };
-
-
   const updateOrderHandler = async (id) => {
     const formData = new FormData();
 
     formData.set("status", status);
     formData.set("dateRelease", selectedDate.toISOString());
-
-    // Exclude 'image' fields from orderItems
-    const orderItemsWithoutImage = orderItems.map(({ image, ...rest }) => rest);
-
-    formData.set("orderItems", JSON.stringify(orderItemsWithoutImage));
 
     try {
       setLoadingUpdate(true);
@@ -97,6 +72,8 @@ const ProcessOrder = () => {
       setLoadingUpdate(false);
     }
   };
+
+
 
 
   return (
@@ -164,14 +141,14 @@ const ProcessOrder = () => {
                     {orderItems &&
                       orderItems.map((item) => (
                         <div key={item.product} className="row my-5">
-                          {/* <div className="col-4 col-lg-2">
+                          <div className="col-4 col-lg-2">
                             <img
                               src={item.image}
                               alt={item.productName}
                               height="45"
                               width="65"
                             />
-                          </div> */}
+                          </div>
 
                           <div className="col-5 col-lg-5">
                             <Link to={`/products/${item.product}`}>
