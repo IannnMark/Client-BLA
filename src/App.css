@@ -868,12 +868,12 @@ a[data-toggle='collapse'] {
   transform: translateY(-50%);
 }
 
-ul ul a {
+/* ul ul a {
   font-size: 1rem !important;
   padding-left: 40px !important;
   background: #EBDE70;
   border-radius: 25px;
-}
+} */
 
 ul.CTAs {
   padding: 20px;

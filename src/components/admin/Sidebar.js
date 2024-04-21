@@ -1,103 +1,178 @@
-import React from "react";
-
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "./Sidebar.css";
 
 const Sidebar = () => {
+  const [open, setOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = (event) => {
+    event.preventDefault();
+    const dropdown = document.getElementById("documentDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "none" ? "block" : "none";
+  };
+
+  const toggleDropdownn = (event) => {
+    event.preventDefault();
+    const dropdown = document.getElementById("productDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "none" ? "block" : "none";
+  };
+
   return (
-    <div className="sidebar-wrapper">
-      <navv id="sidebar">
-        <ul className="list-unstyled components">
-          <li>
-            <Link to="/dashboard">
-              <i className="fa fa-tachometer"></i> Dashboard
-            </Link>
-          </li>
-          <li>
-            <a
-              href="#productSubmenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="custom-toggle"
+    <>
+      <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}>
+        {!open && (
+          <div
+            className="sidebar-icon-button"
+            onClick={toggleDrawer}
+            style={{
+              marginRight: "2px",
+              cursor: "pointer",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faBars}
+              style={{
+                marginRight: "5px",
+                marginTop: "5px",
+                fontSize: "3.5rem",
+              }}
+            />
+            <p
+              style={{ margin: "2px", fontWeight: "bold", fontSize: "2rem" }}
+            ></p>
+          </div>
+        )}
+        {open && (
+          <>
+            <div className="sidebar-backdrop" onClick={toggleDrawer}></div>
+            <div
+              className="custom-drawer"
+              style={{
+                backgroundColor: "#B1A078",
+                marginTop: "-1px",
+                zIndex: "1000",
+              }}
+              ref={sidebarRef}
             >
-              <i className="fa fa-product-hunt"></i> Products
-            </a>
+              <div className="drawer-content">
+                <ul className="list-unstyled components">
+                  <li>
+                    <a href="/dashboard">
+                      <i class="fa-solid fa-chart-simple"></i> Dashboard
+                    </a>
+                  </li>
 
-            <ul className="collapse list-unstyled" id="productSubmenu">
-              <li>
-                <Link to="/admin/products">
-                  <i className="fa fa-clipboard"></i> List of Products
-                </Link>
-                <br />
-                <Link to="/admin/product">
-                  <i className="fa fa-plus"></i> Create
-                </Link>
-              </li>
-            </ul>
-          </li>
+                  <li>
+                    <a href="#" onClick={toggleDropdown}>
+                      <i
+                        className="fa fa-file"
+                        style={{ marginBottom: "-0px" }}
+                      ></i>{" "}
+                      Documents
+                    </a>
 
-          <li>
-            <a
-              href="#documentSubmenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="custom-toggle"
-            >
-              <i className="fa fa-file"></i> Documents
-            </a>
+                    <ul
+                      id="documentDropdown"
+                      style={{ display: "none", marginTop: "15px" }}
+                    >
+                      <a href="/admin/documents" className="document-link">
+                        <i class="fa fa-regular fa-rectangle-list"></i> Document
+                        List
+                      </a>
+                      <br></br>
+                      <br></br>
+                      <a href="/admin/document">
+                        <i class="fa-solid fa-folder-plus"></i> Add Document
+                      </a>
+                    </ul>
+                  </li>
 
-            <ul className="collapse list-unstyled" id="documentSubmenu">
-              <li>
-                <Link to="/admin/documents">
-                  <i className="fa fa-clipboard"></i> List of Documents
-                </Link>
-                <br />
-                <Link to="/admin/document">
-                  <i className="fa fa-plus"></i> Create
-                </Link>
-              </li>
-            </ul>
-          </li>
+                  <li>
+                    <a href="#" onClick={toggleDropdownn}>
+                      <i
+                        className="fa-solid fa-book"
+                        style={{ marginBottom: "-0px" }}
+                      ></i>{" "}
+                      Products
+                    </a>
 
-          <li>
-            <Link to="/admin/orders">
-              <i className="fa fa-shopping-basket"></i> Orders
-            </Link>
-          </li>
+                    <ul
+                      id="productDropdown"
+                      style={{ display: "none", marginTop: "15px" }}
+                    >
+                      <a href="/admin/products">
+                        <i class="fa-solid fa-list"></i> Product List
+                      </a>
+                      <br></br>
+                      <br></br>
+                      <a href="/admin/product">
+                        <i class="fa-solid fa-square-plus"></i> Add Product
+                      </a>
+                    </ul>
+                  </li>
 
-          <li>
-            <Link to="/admin/requests">
-              <i className="fa fa-file"></i> Requests
-            </Link>
-          </li>
+                  <li>
+                    <a href="/admin/orders">
+                      <i class="fa-solid fa-cart-shopping"></i> Orders
+                    </a>
+                  </li>
 
-          <li>
-            <Link to="/admin/users">
-              <i className="fa fa-users"></i> Users
-            </Link>
-          </li>
+                  <li>
+                    <a href="/admin/requests">
+                      <i class="fa-solid fa-envelope-open-text"></i> Requests
+                    </a>
+                  </li>
 
-          <li>
-            <Link to="/admin/reviews">
-              <i className="fa fa-star"></i> Reviews
-            </Link>
-          </li>
+                  <li>
+                    <a href="/admin/users">
+                      <i class="fa fa-users"></i> Users
+                    </a>
+                  </li>
 
+                  {/* <li>
+                    <a href="/admin/reviews">
+                      <i class="fa fa-star" ></i> Reviews
+                    </a>
+                  </li> */}
 
-          <li>
-            <Link to="/admin/stock-history">
-              <i className="fa fa-star"></i> Stock History
-            </Link>
-          </li>
-
-
-        </ul>
-      </navv>
-    </div>
+                  <li>
+                    <a href="/admin/stock-history">
+                      <i class="fa-solid fa-warehouse"></i> Stock History
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
 export default Sidebar;
-
-
-
