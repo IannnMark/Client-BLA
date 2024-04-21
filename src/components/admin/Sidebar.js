@@ -1,103 +1,325 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import ExpandLess from "@mui/icons-material/ExpandMore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 const Sidebar = () => {
+  const [open, setOpen] = useState(false);
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen(open);
+  };
+
+  const [openDocuments, setOpenDocuments] = useState(false);
+
+  const handleDocumentsClick = () => {
+    setOpenDocuments(!openDocuments);
+  };
+
+  const [openProducts, setOpenProducts] = useState(false);
+
+  const [isHovered, setIsHovered] = useState(false); // State to track hover state
+
+  const handleProductsClick = () => {
+    setOpenProducts(!openProducts);
+  };
+
   return (
-    <div className="sidebar-wrapper">
-      <navv id="sidebar">
-        <ul className="list-unstyled components">
-          <li>
-            <Link to="/dashboard">
-              <i className="fa fa-tachometer"></i> Dashboard
-            </Link>
-          </li>
-          <li>
-            <a
-              href="#productSubmenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="custom-toggle"
+
+
+    <>
+      <div className="sidebar-container">
+        <div
+          className="sidebar-icon-button"
+          onClick={toggleDrawer(true)}
+          style={{
+            marginRight: "2px",
+            cursor: isHovered ? "pointer" : "default",
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FontAwesomeIcon
+            icon={faBars}
+            style={{ marginRight: "5px", marginTop: "5px", fontSize: "3.5rem" }}
+          />
+          <p
+            style={{ margin: "2px", fontWeight: "bold", fontSize: "2rem" }}
+          ></p>
+        </div>
+        <Drawer
+          anchor="left"
+          open={open}
+          onClose={toggleDrawer(false)}
+          sx={{
+            "& .MuiPaper-root": {
+
+              backgroundColor: "lightgray",
+              width: "220px",
+              marginTop: "130px",
+              background: "#B1A078",
+              "@media (max-width: 800px) and (min-width: 613px)": {
+                marginTop: "180px",
+              },
+              "@media (max-width: 612px)": {
+                marginTop: "180px",
+              },
+              "@media (max-width: 1000px) and (min-width: 801px)": {
+                marginTop: "106px",
+              },
+            },
+          }}
+        >
+          <List className="sidebar-list">
+
+
+            <ListItemButton
+              component={Link}
+              to="/dashboard"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+
+                },
+              }}
             >
-              <i className="fa fa-product-hunt"></i> Products
-            </a>
+              <ListItemIcon>
+                <i class="fa-solid fa-chart-simple"></i>
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
 
-            <ul className="collapse list-unstyled" id="productSubmenu">
-              <li>
-                <Link to="/admin/products">
-                  <i className="fa fa-clipboard"></i> List of Products
-                </Link>
-                <br />
-                <Link to="/admin/product">
-                  <i className="fa fa-plus"></i> Create
-                </Link>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a
-              href="#documentSubmenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="custom-toggle"
+            <ListItemButton
+              onClick={handleDocumentsClick}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
             >
-              <i className="fa fa-file"></i> Documents
-            </a>
+              <ListItemIcon>
+                <i class="fa-solid fa-file"></i>
+              </ListItemIcon>
+              <ListItemText primary="Documents" />
+              {openDocuments ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
 
-            <ul className="collapse list-unstyled" id="documentSubmenu">
-              <li>
-                <Link to="/admin/documents">
-                  <i className="fa fa-clipboard"></i> List of Documents
-                </Link>
-                <br />
-                <Link to="/admin/document">
-                  <i className="fa fa-plus"></i> Create
-                </Link>
-              </li>
-            </ul>
-          </li>
+            <Collapse in={openDocuments} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to="/admin/documents"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ebde70",
+                      borderRadius: "10px",
+                    },
+                    pl: 4,
+                  }}
+                >
+                  <ListItemIcon>
+                    <i class="fa-regular fa-rectangle-list"></i>
+                  </ListItemIcon>
 
-          <li>
-            <Link to="/admin/orders">
-              <i className="fa fa-shopping-basket"></i> Orders
-            </Link>
-          </li>
+                  <ListItemText primary="Document List" />
+                </ListItemButton>
 
-          <li>
-            <Link to="/admin/requests">
-              <i className="fa fa-file"></i> Requests
-            </Link>
-          </li>
+                <ListItemButton
+                  component={Link}
+                  to="/admin/document"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ebde70",
+                      borderRadius: "10px",
+                    },
+                    pl: 4,
+                  }}
+                >
+                  <ListItemIcon>
+                    <i class="fa-solid fa-folder-plus"></i>
+                  </ListItemIcon>
 
-          <li>
-            <Link to="/admin/users">
-              <i className="fa fa-users"></i> Users
-            </Link>
-          </li>
+                  <ListItemText primary="Add Document" />
+                </ListItemButton>
+              </List>
+            </Collapse>
 
-          <li>
-            <Link to="/admin/reviews">
-              <i className="fa fa-star"></i> Reviews
-            </Link>
-          </li>
+            <ListItemButton
+              component={Link}
+              to="/admin/requests"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-envelope-open-text"></i>
+              </ListItemIcon>
+              <ListItemText primary="Requests" />
+            </ListItemButton>
 
+            <ListItemButton
+              onClick={handleProductsClick}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-cart-shopping"></i>
+              </ListItemIcon>
+              <ListItemText primary="Products" />
+              {openProducts ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openProducts} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to="/admin/products"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ebde70",
+                      borderRadius: "10px",
+                    },
+                    pl: 4,
+                  }}
+                >
+                  <ListItemIcon>
+                    <i class="fa-solid fa-list"></i>
+                  </ListItemIcon>
 
-          <li>
-            <Link to="/admin/stock-history">
-              <i className="fa fa-star"></i> Stock History
-            </Link>
-          </li>
+                  <ListItemText primary="Product List" />
+                </ListItemButton>
 
+                <ListItemButton
+                  component={Link}
+                  to="/admin/product"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ebde70",
+                      borderRadius: "10px",
+                    },
+                    pl: 4,
+                  }}
+                >
+                  <ListItemIcon>
+                    <i class="fa-solid fa-square-plus"></i>
+                  </ListItemIcon>
 
-        </ul>
-      </navv>
-    </div>
+                  <ListItemText primary="Add Product" />
+                </ListItemButton>
+
+                <ListItemButton
+                  component={Link}
+                  to="/admin/stock-history"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ebde70",
+                      borderRadius: "10px",
+                    },
+                    pl: 4,
+                  }}
+                >
+                  <ListItemIcon>
+                    <i class="fa-solid fa-warehouse"></i>
+                  </ListItemIcon>
+
+                  <ListItemText primary="Stocks" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton
+              component={Link}
+              to="/admin/orders"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-cart-arrow-down"></i>
+              </ListItemIcon>
+              <ListItemText primary="Orders" />
+            </ListItemButton>
+
+            <ListItemButton
+              component={Link}
+              to="/admin/users"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-users"></i>
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItemButton>
+
+            <ListItemButton
+              component={Link}
+              to="/admin/reviews"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-comments"></i>
+              </ListItemIcon>
+              <ListItemText primary="Reviews" />
+            </ListItemButton>
+
+            <ListItemButton
+              component={Link}
+              to="/admin/stock-history"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#ebde70",
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <ListItemIcon>
+                <i class="fa-solid fa-warehouse"></i>
+              </ListItemIcon>
+              <ListItemText primary="Order Logs" />
+            </ListItemButton>
+          </List>
+        </Drawer>
+      </div>
+    </>
   );
 };
 
 export default Sidebar;
-
-
-
