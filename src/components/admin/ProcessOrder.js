@@ -164,14 +164,14 @@ const ProcessOrder = () => {
                     {orderItems &&
                       orderItems.map((item) => (
                         <div key={item.product} className="row my-5">
-                          <div className="col-4 col-lg-2">
+                          {/* <div className="col-4 col-lg-2">
                             <img
                               src={item.image}
                               alt={item.productName}
                               height="45"
                               width="65"
                             />
-                          </div>
+                          </div> */}
 
                           <div className="col-5 col-lg-5">
                             <Link to={`/products/${item.product}`}>
