@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
@@ -14,6 +14,8 @@ import {
 } from "../../actions/inquiriesActions";
 import { DELETE_REQUEST_RESET } from "../../constants/inquiriesConstants";
 import "./RequestList.css";
+
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 const RequestsList = () => {
     const dispatch = useDispatch();
@@ -31,6 +33,20 @@ const RequestsList = () => {
     const [showDocumentFilter, setShowDocumentFilter] = useState(false);
     const [showStatusFilter, setShowStatusFilter] = useState(false);
     const [showGradeFilter, setShowGradeFilter] = useState(false);
+
+
+    const pdfExportComponent = useRef(null);
+    const contentArea = useRef(null);
+
+    const handleExportWithComponent = () => {
+        pdfExportComponent.current.save();
+    };
+
+    const handleExportWithMethod = () => {
+        savePDF(contentArea.current, { paperSize: "A4" });
+    };
+
+
 
     useEffect(() => {
         dispatch(allRequests());
@@ -126,11 +142,11 @@ const RequestsList = () => {
 
         const data = {
             columns: [
-                {
-                    label: "Tracking   ID",
-                    field: "id",
-                    sort: "asc",
-                },
+                // {
+                //     label: "Tracking   ID",
+                //     field: "id",
+                //     sort: "asc",
+                // },
                 {
                     label: "User Last Name",
                     field: "userLastName",
@@ -199,11 +215,11 @@ const RequestsList = () => {
                 request.requestItems.map((item) => item.name).join(", ");
 
             data.rows.push({
-                id: request._id,
+                // id: request._id,
                 userLastName: request.user ? request.user.lastname : "N/A",
                 grade: parseInt(request.user ? request.user.grade : 0, 10),
                 numofRequests: request.requestItems.length,
-                amount: `${request.totalPrice}`,
+                amount: `₱${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
@@ -389,44 +405,51 @@ const RequestsList = () => {
                             </div>
 
                         </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <MDBDataTable
-                                data={setRequests()}
-                                className="px-3 custom-mdb-datatable" // Add custom class here
-                                bordered
-                                striped
-                                hover
-                                noBottomColumns
-                                responsive
-                                searching={false}
-                                entriesLabel="Show entries"
-                                entriesOptions={[10, 20, 30]}
-                                infoLabel={["Showing", "to", "of", "entries"]}
-                                paginationLabel={["Previous", "Next"]}
-                                responsiveSm
-                                responsiveMd
-                                responsiveLg
-                                responsiveXl
-                                noRecordsFoundLabel="No records found"
-                                paginationRowsPerPageOptions={[10, 20, 30]}
-                                pagingTop
-                                pagingBottom
-                                paginationLabels={["Previous", "Next"]}
-                                style={{
-                                    fontSize: "16px",
-                                    fontFamily:
-                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
-                                }}
-                                // Add custom styling for cells based on request status
-                                tbodyTextBlack
-                                tbodyBorderY
-                                tbodyBorderX
-                                tbodyBorderBottom
-                                tbodyBorderTop
-                            />
-                        )}
+
+                        <button onClick={handleExportWithMethod}>Download Reports</button>
+                        <PDFExport ref={pdfExportComponent}>
+                            <div ref={contentArea}>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <MDBDataTable
+                                        data={setRequests()}
+                                        className="px-3 custom-mdb-datatable" // Add custom class here
+                                        bordered
+                                        striped
+                                        hover
+                                        noBottomColumns
+                                        responsive
+                                        searching={false}
+                                        entriesLabel="Show entries"
+                                        entriesOptions={[10, 20, 30]}
+                                        infoLabel={["Showing", "to", "of", "entries"]}
+                                        paginationLabel={["Previous", "Next"]}
+                                        responsiveSm
+                                        responsiveMd
+                                        responsiveLg
+                                        responsiveXl
+                                        noRecordsFoundLabel="No records found"
+                                        paginationRowsPerPageOptions={[10, 20, 30]}
+                                        pagingTop
+                                        pagingBottom
+                                        paginationLabels={["Previous", "Next"]}
+                                        style={{
+                                            fontSize: "16px",
+                                            fontFamily:
+                                                "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                        }}
+                                        // Add custom styling for cells based on request status
+                                        tbodyTextBlack
+                                        tbodyBorderY
+                                        tbodyBorderX
+                                        tbodyBorderBottom
+                                        tbodyBorderTop
+                                    />
+                                )}
+
+                            </div>
+                        </PDFExport>
                     </Fragment>
                 </div>
             </div>

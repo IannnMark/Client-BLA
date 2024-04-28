@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
@@ -13,6 +13,8 @@ import {
   deleteOrder,
 } from "../../actions/orderActions";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
+
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 const OrdersList = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,17 @@ const OrdersList = () => {
   const [showProductFilter, setShowProductFilter] = useState(false);
   const [showGradeFilter, setShowGradeFilter] = useState(false);
   const [showStatusFilter, setShowStatusFilter] = useState(false);
+
+  const pdfExportComponent = useRef(null);
+  const contentArea = useRef(null);
+
+  const handleExportWithComponent = () => {
+    pdfExportComponent.current.save();
+  };
+
+  const handleExportWithMethod = () => {
+    savePDF(contentArea.current, { paperSize: "A4" });
+  };
 
   const errMsg = (message = "") =>
     toast.error(message, {
@@ -132,11 +145,11 @@ const OrdersList = () => {
 
     const data = {
       columns: [
-        {
-          label: "Order ID",
-          field: "id",
-          sort: "asc",
-        },
+        // {
+        //   label: "Order ID",
+        //   field: "id",
+        //   sort: "asc",
+        // },
         {
           label: "User Last Name",
           field: "userLastName",
@@ -195,7 +208,7 @@ const OrdersList = () => {
         : "N/A";
 
       data.rows.push({
-        id: order._id,
+        // id: order._id,
         userLastName: order.user?.lastname,
         numofItems: order.orderItems.length,
         orderedMerch: orderedMerch || "N/A",
@@ -232,7 +245,7 @@ const OrdersList = () => {
   };
 
   return (
-    <Fragment style={{ backgroundColor: "lightgray" }}>
+    <Fragment>
       <MetaData title={"All Orders"} />
 
       <div className="row">
@@ -361,44 +374,49 @@ const OrdersList = () => {
               </div>
             </div>
 
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={setOrders()}
-                className="px-3 custom-mdb-datatable" // Add custom class here
-                bordered
-                striped
-                hover
-                noBottomColumns
-                responsive
-                searching={false}
-                entriesLabel="Show entries"
-                entriesOptions={[10, 20, 30]}
-                infoLabel={["Showing", "to", "of", "entries"]}
-                paginationLabel={["Previous", "Next"]}
-                responsiveSm
-                responsiveMd
-                responsiveLg
-                responsiveXl
-                noRecordsFoundLabel="No records found"
-                paginationRowsPerPageOptions={[10, 20, 30]}
-                pagingTop
-                pagingBottom
-                paginationLabels={["Previous", "Next"]}
-                style={{
-                  fontSize: "16px",
-                  fontFamily:
-                    "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
-                }}
-                // Add custom styling for cells based on request status
-                tbodyTextBlack
-                tbodyBorderY
-                tbodyBorderX
-                tbodyBorderBottom
-                tbodyBorderTop
-              />
-            )}
+            <button onClick={handleExportWithMethod}>Download Reports</button>
+
+            <PDFExport ref={pdfExportComponent}>
+              <div ref={contentArea}>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <MDBDataTable
+                    data={setOrders()}
+                    className="px-3 custom-mdb-datatable"
+                    bordered
+                    striped
+                    hover
+                    noBottomColumns
+                    responsive
+                    searching={false}
+                    entriesLabel="Show entries"
+                    entriesOptions={[10, 20, 30, 40, 50, 100, 200, 300]}
+                    infoLabel={["Showing", "to", "of", "entries"]}
+                    paginationLabel={["Previous", "Next"]}
+                    responsiveSm
+                    responsiveMd
+                    responsiveLg
+                    responsiveXl
+                    noRecordsFoundLabel="No records found"
+                    paginationRowsPerPageOptions={[10, 20, 30]}
+                    pagingTop
+                    pagingBottom
+                    paginationLabels={["Previous", "Next"]}
+                    style={{
+                      fontSize: "16px",
+                      fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                    }}
+                    tbodyTextBlack
+                    tbodyBorderY
+                    tbodyBorderX
+                    tbodyBorderBottom
+                    tbodyBorderTop
+                  />
+                )}
+              </div>
+            </PDFExport>
+
           </Fragment>
         </div>
       </div>

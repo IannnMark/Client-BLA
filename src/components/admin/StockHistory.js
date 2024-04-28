@@ -1,15 +1,26 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 import { useSelector, useDispatch } from "react-redux";
 import { getAdminProducts, clearErrors } from "../../actions/productActions";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 
 const ProductsList = () => {
     const dispatch = useDispatch();
     const [selectedStatus, setSelectedStatus] = useState("");
     const { loading, error, products } = useSelector((state) => state.products);
+    const pdfExportComponent = useRef(null);
+    const contentArea = useRef(null);
+
+    const handleExportWithComponent = () => {
+        pdfExportComponent.current.save();
+    };
+
+    const handleExportWithMethod = () => {
+        savePDF(contentArea.current, { paperSize: "A4" });
+    };
 
     useEffect(() => {
         // Fetch products based on the selected status
@@ -131,44 +142,51 @@ const ProductsList = () => {
                                 <option value="Received">Received</option>
                             </select>
                         </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <MDBDataTable
-                                data={setProducts()}
-                                className="px-3 custom-mdb-datatable" // Add custom class here
-                                bordered
-                                striped
-                                hover
-                                noBottomColumns
-                                responsive
-                                searching={false}
-                                entriesLabel="Show entries"
-                                entriesOptions={[10, 20, 30]}
-                                infoLabel={["Showing", "to", "of", "entries"]}
-                                paginationLabel={["Previous", "Next"]}
-                                responsiveSm
-                                responsiveMd
-                                responsiveLg
-                                responsiveXl
-                                noRecordsFoundLabel="No records found"
-                                paginationRowsPerPageOptions={[10, 20, 30]}
-                                pagingTop
-                                pagingBottom
-                                paginationLabels={["Previous", "Next"]}
-                                style={{
-                                    fontSize: "16px",
-                                    fontFamily:
-                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
-                                }}
-                                // Add custom styling for cells based on request status
-                                tbodyTextBlack
-                                tbodyBorderY
-                                tbodyBorderX
-                                tbodyBorderBottom
-                                tbodyBorderTop
-                            />
-                        )}
+                        <button onClick={handleExportWithMethod}>Download Reports</button>
+
+                        <PDFExport ref={pdfExportComponent}>
+                            <div ref={contentArea}>
+                                <h1 className="my-5">Merch Stock History</h1>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <MDBDataTable
+                                        data={setProducts()}
+                                        className="px-3 custom-mdb-datatable" // Add custom class here
+                                        bordered
+                                        striped
+                                        hover
+                                        noBottomColumns
+                                        responsive
+                                        searching={false}
+                                        entriesLabel="Show entries"
+                                        entriesOptions={[10, 20, 30]}
+                                        infoLabel={["Showing", "to", "of", "entries"]}
+                                        paginationLabel={["Previous", "Next"]}
+                                        responsiveSm
+                                        responsiveMd
+                                        responsiveLg
+                                        responsiveXl
+                                        noRecordsFoundLabel="No records found"
+                                        paginationRowsPerPageOptions={[10, 20, 30]}
+                                        pagingTop
+                                        pagingBottom
+                                        paginationLabels={["Previous", "Next"]}
+                                        style={{
+                                            fontSize: "16px",
+                                            fontFamily:
+                                                "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                        }}
+                                        // Add custom styling for cells based on request status
+                                        tbodyTextBlack
+                                        tbodyBorderY
+                                        tbodyBorderX
+                                        tbodyBorderBottom
+                                        tbodyBorderTop
+                                    />
+                                )}
+                            </div>
+                        </PDFExport>
                     </Fragment>
                 </div>
             </div>
