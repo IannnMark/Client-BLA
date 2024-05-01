@@ -71,7 +71,7 @@ const ProcessRequest = () => {
                 if (balances && balances.length > 0) {
                     const studentHasBalance = balances.some(balance => balance.user._id === user._id);
                     if (studentHasBalance) {
-                        toast.info(`Attention: Student ${user._id} has a balance.`);
+                        toast.info(`Attention: Student ${user.firstname} ${user.lastname} has a balance.`);
                         return;
                     }
                 }

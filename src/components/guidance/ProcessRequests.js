@@ -67,7 +67,7 @@ const ProcessRequest = () => {
                 if (violations && violations.length > 0) {
                     const studentHasViolation = violations.some(violation => violation.user._id === user._id);
                     if (studentHasViolation) {
-                        toast.info(`Attention: Student ${user._id} has a Violation.`);
+                        toast.info(`Attention: Student ${user.firstname} ${user.lastname} has a Violation.`);
                         return;
                     }
                 }
