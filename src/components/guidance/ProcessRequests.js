@@ -23,6 +23,7 @@ const ProcessRequest = () => {
     const { requestItems, paymentInfo, user, totalPrice, requestStatus } = request;
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
+    const { violations } = useSelector((state) => state.violations);
 
     const errMsg = (message = "") =>
         toast.error(message, {
@@ -68,6 +69,17 @@ const ProcessRequest = () => {
             console.error("Update request failed:", error);
         }
     };
+
+
+    useEffect(() => {
+        // Check if the user has a violation
+        if (violations && violations.length > 0) {
+            const studentHasViolation = violations.some(violation => violation.user._id === user._id);
+            if (studentHasViolation) {
+                toast.info(`Attention: Student ${user._id} has a violation.`);
+            }
+        }
+    }, [violations, user]);
 
     return (
         <Fragment>
