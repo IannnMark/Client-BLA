@@ -1,0 +1,59 @@
+.clas {
+    display: flex;
+    margin-left: 490px;
+    margin-top: 200px;
+}
+
+/* Media Query for Hamburger Menu */
+@media screen and (max-width: 850px) {
+    .clas {
+        margin-left: 100px;
+    }
+
+}
+
+.titlee {
+    display: flex;
+    margin-left: 490px;
+    margin-top: 30px;
+    font-size: 40px;
+}
+
+.custom-button-width {
+    width: 200px;
+
+}
+
+.align-right {
+    margin-left: auto;
+}
+
+.customm-button-width {
+    width: 200px;
+
+}
+
+.align-left {
+    margin-right: auto;
+}
+
+.button-container {
+    display: flex;
+}
+
+.button-container button {
+    flex: 1;
+    margin-right: 10px;
+    /* Adjust as needed */
+}
+
+.button-container button:last-child {
+    margin-right: 0;
+    /* Remove margin from the last button */
+}
+
+.containerr {
+    display: flex;
+    margin-left: -700px;
+
+}

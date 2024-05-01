@@ -7,6 +7,7 @@ import { createRequest, clearErrors } from "../../actions/inquiriesActions";
 import { clearRequest } from "../../actions/requestActions";
 import Purpose from "./Purpose";
 import { toast } from "react-toastify";
+import "./request.css";
 
 const Payment = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const Payment = () => {
         requestItems: requestDocuments,
     };
 
+    const backToConfirmtHandler = () => {
+        navigate("/confirm-request");
+    };
+
     const requestInfo = JSON.parse(sessionStorage.getItem("requestInfo"));
 
     if (requestInfo) {
@@ -36,14 +41,14 @@ const Payment = () => {
     const [paymentMethod, setPaymentMethod] = useState("cash");
     const [selectedPurpose, setSelectedPurpose] = useState("");
     const [authorizationLetter, setAuthorizationLetter] = useState([]);
-    const [authorizationLetterPreview, setAuthorizationLetterPreview] = useState([]);
+    const [authorizationLetterPreview, setAuthorizationLetterPreview] = useState(
+        []
+    );
     const [checkoutReady, setCheckoutReady] = useState(false);
-
 
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method);
     };
-
 
     const handlePurposeChange = (purpose) => {
         setSelectedPurpose(purpose);
@@ -64,7 +69,10 @@ const Payment = () => {
 
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    setAuthorizationLetterPreview((oldArray) => [...oldArray, reader.result]);
+                    setAuthorizationLetterPreview((oldArray) => [
+                        ...oldArray,
+                        reader.result,
+                    ]);
                     setAuthorizationLetter((oldArray) => [...oldArray, reader.result]);
                 }
             };
@@ -72,7 +80,6 @@ const Payment = () => {
             reader.readAsDataURL(file);
         });
     };
-
 
     const errMsg = (message = "") =>
         toast.error(message, {
@@ -100,10 +107,9 @@ const Payment = () => {
     //     navigate("/request-success");
     // };
 
-
     const submitHandler = async (e) => {
         e.preventDefault();
-        document.querySelector("#pay_btn").disabled = true;
+        document.querySelector("#back_btn").disabled = true;
 
         const paymentInfo = {
             type: paymentMethod === "gcash" ? "Gcash" : "Cash",
@@ -140,22 +146,23 @@ const Payment = () => {
         }
     };
 
-
-
     useEffect(() => {
         if (checkoutUrl && checkoutReady) {
             const newWindow = window.open(checkoutUrl);
-            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                console.error('Pop-up was blocked. Please allow pop-ups from this site to proceed.');
+            if (
+                !newWindow ||
+                newWindow.closed ||
+                typeof newWindow.closed === "undefined"
+            ) {
+                console.error(
+                    "Pop-up was blocked. Please allow pop-ups from this site to proceed."
+                );
             } else {
                 console.log("Opening checkout URL:", checkoutUrl);
                 navigate("/request-success");
             }
         }
     }, [checkoutUrl, checkoutReady, navigate]);
-
-
-
 
     return (
         <Fragment>
@@ -221,7 +228,9 @@ const Payment = () => {
 
                         {claimBySomeoneElse && (
                             <div className="form-group">
-                                <label htmlFor="authorizationLetter">Authorization Letter:</label>
+                                <label htmlFor="authorizationLetter">
+                                    Authorization Letter:
+                                </label>
                                 <input
                                     type="file"
                                     id="authorizationLetter"
@@ -243,10 +252,24 @@ const Payment = () => {
                             </div>
                         )}
 
+                        <div className="button-container">
+                            <button
+                                id="back_btn"
+                                className="btn py-2 custom-button-width"
+                                onClick={backToConfirmtHandler}
+                            >
+                                <i className="fa fa-arrow-left" aria-hidden="true"></i> Back
+                            </button>
 
-                        <button id="pay_btn" type="submit" className="btn btn-block py-3">
-                            Pay - {requestInfo && requestInfo.totalPrice}
-                        </button>
+                            <button
+                                id="back_btn"
+                                type="submit"
+                                className="btn py-2 custom-button-width"
+                            >
+                                Pay - {requestInfo && requestInfo.totalPrice}
+                            </button>
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -255,37 +278,3 @@ const Payment = () => {
 };
 
 export default Payment;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
