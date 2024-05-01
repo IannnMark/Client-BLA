@@ -61,6 +61,18 @@ const ProcessRequest = () => {
         formData.set("status", status);
 
         try {
+
+            if (status === "Approved") {
+                // Check if the user has a violation
+                if (violations && violations.length > 0) {
+                    const studentHasViolation = violations.some(violation => violation.user._id === user._id);
+                    if (studentHasViolation) {
+                        toast.info(`Attention: Student ${user._id} has a Violation.`);
+                        return;
+                    }
+                }
+            }
+
             await dispatch(updateGuidanceRequest(id, formData));
             localStorage.setItem("updatedStatus", status);
             dispatch(getRequestDetails(requestId));
@@ -71,15 +83,7 @@ const ProcessRequest = () => {
     };
 
 
-    useEffect(() => {
-        // Check if the user has a violation
-        if (violations && violations.length > 0) {
-            const studentHasViolation = violations.some(violation => violation.user._id === user._id);
-            if (studentHasViolation) {
-                toast.info(`Attention: Student ${user._id} has a violation.`);
-            }
-        }
-    }, [violations, user]);
+
 
     return (
         <Fragment>

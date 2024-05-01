@@ -65,6 +65,18 @@ const ProcessRequest = () => {
         formData.set("status", status);
 
         try {
+
+            if (status === "Approved") {
+                // Check if the user has a balance
+                if (balances && balances.length > 0) {
+                    const studentHasBalance = balances.some(balance => balance.user._id === user._id);
+                    if (studentHasBalance) {
+                        toast.info(`Attention: Student ${user._id} has a balance.`);
+                        return;
+                    }
+                }
+            }
+
             await dispatch(updateCashierRequest(id, formData));
             localStorage.setItem('updatedStatus', status);
             dispatch(getRequestDetails(requestId));
@@ -73,16 +85,6 @@ const ProcessRequest = () => {
             console.error("Update request failed:", error);
         }
     };
-
-    useEffect(() => {
-        // Check if the user has a balance
-        if (balances && balances.length > 0) {
-            const studentHasBalance = balances.some(balance => balance.user._id === user._id);
-            if (studentHasBalance) {
-                toast.info(`Attention: Student ${user._id} has a balance.`);
-            }
-        }
-    }, [balances, user]);
 
     return (
         <Fragment>
