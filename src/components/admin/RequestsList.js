@@ -137,7 +137,7 @@ const RequestsList = () => {
             : documentFilteredRequests;
 
         const sortedFilteredRequests = [...gradeFilteredRequests].sort(
-            (a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest)
+            (a, b) => new Date(a.dateofRequest) - new Date(b.dateofRequest)
         );
 
         const data = {
