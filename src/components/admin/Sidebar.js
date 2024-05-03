@@ -42,6 +42,15 @@ const Sidebar = () => {
       dropdown.style.display === "none" ? "block" : "none";
   };
 
+
+  const toggleDropdownnn = (event) => {
+    event.preventDefault();
+    const dropdown = document.getElementById("userDropdown");
+    dropdown.style.display =
+      dropdown.style.display === "none" ? "block" : "none";
+  };
+
+
   return (
     <>
       <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}>
@@ -148,11 +157,38 @@ const Sidebar = () => {
                     </a>
                   </li>
 
+
+
+
                   <li>
+                    <a href="#" onClick={toggleDropdownnn}>
+                      <i
+                        className="fa-solid fa-book"
+                        style={{ marginBottom: "-0px" }}
+                      ></i>{" "}
+                      Users
+                    </a>
+
+                    <ul
+                      id="userDropdown"
+                      style={{ display: "none", marginTop: "15px" }}
+                    >
+                      <a href="/admin/users">
+                        <i class="fa fa-users"></i> Users List
+                      </a>
+                      <br></br>
+                      <br></br>
+                      <a href="/admin/register">
+                        <i class="fa-solid fa-square-plus"></i> Add User
+                      </a>
+                    </ul>
+                  </li>
+
+                  {/* <li>
                     <a href="/admin/users">
                       <i class="fa fa-users"></i> Users
                     </a>
-                  </li>
+                  </li> */}
 
                   {/* <li>
                     <a href="/admin/reviews">

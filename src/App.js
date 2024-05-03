@@ -7,7 +7,8 @@ import Index from "../src/components/document/DocumentIndex";
 import ProductDetails from "./components/product/ProductDetails";
 import DocumentDetails from "./components/document/DocumentDetails";
 import Login from "./components/user/Login";
-import Register from "./components/user/Register";
+// import Register from "./components/user/Register";
+import Register from "./components/admin/Register";
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import Profile from "./components/user/Profile";
@@ -209,6 +210,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/admin/register"
+          element={
+            <ProtectedRoute >
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/admin/documents"
           element={
