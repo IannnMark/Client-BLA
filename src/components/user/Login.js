@@ -104,9 +104,9 @@ const Login = () => {
                   LOGIN
                 </button>
 
-                {/* <Link to="/register" className="float-right mt-3">
-                  New User?
-                </Link> */}
+                <Link to="/guest" className="float-right mt-3">
+                  Don't have an account yet? Click here to contact the Registrar
+                </Link>
               </form>
             </div>
           </div>

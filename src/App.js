@@ -60,6 +60,7 @@ import NewClearance from "./components/user/NewClearance";
 import ClearanceList from "./components/guidance/ClearanceList";
 import ClearanceLists from "./components/user/ClearanceList";
 import StockHistory from "./components/admin/StockHistory";
+import Guest from "./components/user/Guest";
 
 
 
@@ -464,6 +465,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+
+
+        <Route path="/guest" element={<Guest />} exact="true" />
 
         <Route path="/cart" element={<Cart />} exact="true" />
         <Route path="/request" element={<Request />} exact="true" />
