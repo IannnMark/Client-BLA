@@ -92,7 +92,7 @@ export const register = (userData) => async (dispatch) => {
 
     // const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/register`, userData, config);
 
-    const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/admin/register`, userData, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/admin/register`, userData, config);
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
