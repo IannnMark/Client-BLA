@@ -138,7 +138,7 @@ const OrdersList = () => {
       : productFilteredOrders;
 
     const sortedFilteredOrders = [...gradeFilteredOrders].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
     );
 
     sortedFilteredOrders.reverse();
