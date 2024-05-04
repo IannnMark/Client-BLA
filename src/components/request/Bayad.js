@@ -86,56 +86,13 @@ const Payment = () => {
             position: toast.POSITION.BOTTOM_CENTER,
         });
 
-    // const submitHandler = async (e) => {
-    //     e.preventDefault();
-    //     document.querySelector("#back_btn").disabled = true;
-
-    //     const paymentInfo = {
-    //         type: paymentMethod === "gcash" ? "Gcash" : "Cash",
-    //     };
-
-    //     const requestInfoWithPayment = {
-    //         ...request,
-    //         paymentInfo,
-    //         purpose: selectedPurpose,
-    //         authorizationLetter,
-    //     };
-
-    //     try {
-    //         // Dispatch createRequest action
-    //         await dispatch(createRequest(requestInfoWithPayment));
-
-    //         // Log before clearing the request
-    //         console.log("Request before clear:", request);
-
-    //         // Clear request after successful request creation
-    //         dispatch(clearRequest());
-
-    //         // Log after clearing the request
-    //         console.log("Request after clear:", request);
-
-    //         if (paymentMethod === "Cash") {
-    //             navigate("/request-success");
-    //         } else {
-    //             setCheckoutReady(true);
-    //         }
-    //     } catch (error) {
-    //         // Handle any errors here
-    //         console.error("Error:", error);
-    //     }
-    // };
-
-
-
     const submitHandler = async (e) => {
         e.preventDefault();
         document.querySelector("#back_btn").disabled = true;
 
-        // const paymentInfo = {
-        //     type: paymentMethod === "gcash" ? "Gcash" : "Cash",
-        // };
-
-        const paymentInfo = paymentMethod === "gcash" ? "Gcash" : "Cash";
+        const paymentInfo = {
+            type: paymentMethod === "gcash" ? "Gcash" : "Cash",
+        };
 
         const requestInfoWithPayment = {
             ...request,
@@ -167,6 +124,8 @@ const Payment = () => {
             console.error("Error:", error);
         }
     };
+
+
 
     useEffect(() => {
         if (checkoutUrl && checkoutReady) {

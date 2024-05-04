@@ -41,13 +41,11 @@ const Payment = () => {
     e.preventDefault();
     document.querySelector("#pay_btn").disabled = true;
 
-    // order.paymentInfo = {
-    //   type: paymentMethod,
-    // };
+    order.paymentInfo = {
+      type: paymentMethod,
+    };
 
-    const paymentInfo = paymentMethod;
-
-    dispatch(createOrder({ ...order, paymentInfo }));
+    dispatch(createOrder(order));
     dispatch(clearCart());
 
     if (paymentMethod === "Cash") {
