@@ -88,7 +88,7 @@ const Payment = () => {
 
     // const submitHandler = async (e) => {
     //     e.preventDefault();
-    //     document.querySelector("#pay_btn").disabled = true;
+    //     document.querySelector("#back_btn").disabled = true;
 
     //     const paymentInfo = {
     //         type: paymentMethod === "gcash" ? "Gcash" : "Cash",
@@ -101,19 +101,41 @@ const Payment = () => {
     //         authorizationLetter,
     //     };
 
-    //     dispatch(createRequest(requestInfoWithPayment));
-    //     dispatch(clearRequest());
+    //     try {
+    //         // Dispatch createRequest action
+    //         await dispatch(createRequest(requestInfoWithPayment));
 
-    //     navigate("/request-success");
+    //         // Log before clearing the request
+    //         console.log("Request before clear:", request);
+
+    //         // Clear request after successful request creation
+    //         dispatch(clearRequest());
+
+    //         // Log after clearing the request
+    //         console.log("Request after clear:", request);
+
+    //         if (paymentMethod === "Cash") {
+    //             navigate("/request-success");
+    //         } else {
+    //             setCheckoutReady(true);
+    //         }
+    //     } catch (error) {
+    //         // Handle any errors here
+    //         console.error("Error:", error);
+    //     }
     // };
+
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
         document.querySelector("#back_btn").disabled = true;
 
-        const paymentInfo = {
-            type: paymentMethod === "gcash" ? "Gcash" : "Cash",
-        };
+        // const paymentInfo = {
+        //     type: paymentMethod === "gcash" ? "Gcash" : "Cash",
+        // };
+
+        const paymentInfo = paymentMethod === "gcash" ? "Gcash" : "Cash";
 
         const requestInfoWithPayment = {
             ...request,
