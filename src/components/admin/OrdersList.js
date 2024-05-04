@@ -128,8 +128,6 @@ const OrdersList = () => {
 
     const gradeFilteredOrders = selectedGrade
       ? productFilteredOrders.filter((order) => {
-        // Adjust the logic based on your data structure
-        // Replace order.grade with the correct path to the grade in your data
         const userGrade = parseInt(order.grade, 10);
         const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
@@ -138,7 +136,7 @@ const OrdersList = () => {
       : productFilteredOrders;
 
     const sortedFilteredOrders = [...gradeFilteredOrders].sort(
-      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
 
     sortedFilteredOrders.reverse();
