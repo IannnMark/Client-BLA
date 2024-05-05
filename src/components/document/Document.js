@@ -34,7 +34,7 @@ const Document = ({ document, backgroundImage }) => {
                 />
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">
-                        {/* <Link to={`document/${document._id}`}>{document.name}</Link> */}
+                        {document.name}
                     </h5>
                     <p className="card-text">₱{document.price}</p>
 

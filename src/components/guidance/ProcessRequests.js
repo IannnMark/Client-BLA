@@ -82,9 +82,6 @@ const ProcessRequest = () => {
         }
     };
 
-
-
-
     return (
         <Fragment>
             <MetaData title={`Process Request # ${request && request._id}`} />
@@ -101,15 +98,14 @@ const ProcessRequest = () => {
                         ) : (
                             <div className="row d-flex justify-content-around">
                                 <div className="col-12 col-lg-7 order-details">
-                                    <h2 className="my-5">Request # {request._id}</h2>
-
+                                    <hr />
                                     <p>
                                         <b>Amount:</b> ${totalPrice}
                                     </p>
 
                                     <hr />
 
-                                    <h4 className="my-4">Requested by: {user ? user._id : "Unknown"}</h4>
+                                    <h4 className="my-4">Requested by: {user ? user.lastname : "Unknown"}</h4>
 
                                     <h4 className="my-4">Payment</h4>
                                     {paymentInfo ? (

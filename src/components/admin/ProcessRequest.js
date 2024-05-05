@@ -35,6 +35,16 @@ const ProcessRequest = () => {
         setSelectedDate(date);
     };
 
+    const calculateTotal = () => {
+        let total = 0;
+        if (requestItems) {
+            requestItems.forEach((item) => {
+                total += item.price;
+            });
+        }
+        return total.toFixed(2);
+    };
+
     const errMsg = (message = "") =>
         toast.error(message, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -142,7 +152,7 @@ const ProcessRequest = () => {
                                     </div>
 
                                     {/* <p>
-                    <b>Amount:</b> ₱{totalPrice}
+                    <b>Amount:</b> â‚±{totalPrice}
                   </p> */}
 
                                     <hr />
@@ -157,28 +167,28 @@ const ProcessRequest = () => {
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
                                                 Requested by:{" "}
-                                                {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
+                                                {user
+                                                    ? `${user.firstname} ${user.lastname}`
+                                                    : "Unknown"}
                                             </p>
                                         </div>
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
-                                                Grade & Section: {" "}
-                                                {request.user?.grade || "N/A"}
+                                                Grade & Section: {request.user?.grade || "N/A"}
                                             </p>
                                         </div>
-                                        <div className="col-md-6">
-                                            <p className="my-4 student-name">
-                                                Purpose: {" "}
-                                                {request.purpose || "N/A"}
-                                            </p>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <p className="my-4 student-name">
-                                                Payment Info: {" "}
-                                                {paymentInfo ? paymentInfo.type : "N/A"}
-                                            </p>
-                                        </div>
-
+                                        {/* <div className="col-md-12 text-center"> 
+                      <p className="my-4 student-name">
+                       Purpose: {" "}
+                       {request.purpose || "N/A"}
+                      </p>
+                    </div> */}
+                                        {/* <div className="col-md-6">
+                      <p className="my-4 student-name">
+                       Payment Info: {" "}
+                       {paymentInfo ? paymentInfo.type : "N/A" }
+                      </p>
+                    </div> */}
                                     </div>
                                     <hr />
 
@@ -195,18 +205,81 @@ const ProcessRequest = () => {
                     </p>
                   )} */}
 
-                                    <h4 className="my-4">Request Status:</h4>
+                                    <h4 style={{ textAlign: "center" }}>Request Information</h4>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Purpose: {request.purpose || "N/A"}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Request Status:{" "}
+                                                <span
+                                                    className={
+                                                        requestStatus === "Received"
+                                                            ? "greenColor"
+                                                            : "redColor"
+                                                    }
+                                                >
+                                                    <b>{requestStatus}</b>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Payment Info: {request.paymentInfo?.type || "N/A"}{" "}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Total Amount to Pay:{" "}
+                                                <span>
 
-                                    <p
-                                        className={
-                                            requestStatus === "Received" ? "greenColor" : "redColor"
-                                        }
-                                    >
-                                        <b>{requestStatus}</b>
-                                    </p>
+                                                    {Number(calculateTotal()).toLocaleString("en-US", {
+                                                        minimumFractionDigits: 2,
+                                                    })}
+                                                </span>
+                                            </p>
+                                        </div>
 
-                                    <div className="col-12 col-lg-3 mt-5">
-                                        <h4 className="my-4">Date of Release:</h4>
+                                    </div>
+                                    <hr />
+
+                                    <h4 style={{ textAlign: "center" }}>Document Information</h4>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="my-4 students-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document}>
+                                                            <p>{item.name}</p>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="my-4 student-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document} className="my-4 student-namee">
+
+                                                            <p>Price: {item.price}</p>
+
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+
+                                    <div className="text-center">
+                                        <h4 className="my-4">Schedule a Date of Release:</h4>
+                                    </div>
+                                    <div style={{ textAlign: 'center' }}> {/* Set a minimum width for the DatePicker */}
                                         <DatePicker
                                             selected={selectedDate}
                                             onChange={handleDateChange}
@@ -216,36 +289,42 @@ const ProcessRequest = () => {
                                         />
                                     </div>
 
-                                    <h4 className="my-4">Request Items:</h4>
 
-                                    <hr />
 
-                                    <div className="cart-item my-1">
-                                        {requestItems &&
-                                            requestItems.map((item) => (
-                                                <div key={item.document} className="row my-5">
-                                                    <div className="col-4 col-lg-2">
-                                                        <img
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                            height="45"
-                                                            width="65"
-                                                        />
-                                                    </div>
 
-                                                    <div className="col-5 col-lg-5">
-                                                        <Link to={`/documents/${item.document}`}>
-                                                            {item.name}
-                                                        </Link>
-                                                    </div>
+                                    {/* <h4 className="my-4">Request Status:</h4>
 
-                                                    <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                        <p>${item.price}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                    <hr />
+                  <p
+                    className={
+                      requestStatus === "Received" ? "greenColor" : "redColor"
+                    }
+                  >
+                    <b>{requestStatus}</b>
+                  </p> */}
+
+                                    {/* <div className="col-12 col-lg-3 mt-5">
+                    <h4 className="my-4">Date of Release:</h4>
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={handleDateChange}
+                      dateFormat="MMMM dd, yyyy"
+                      className="form-control"
+                      popperClassName="datepicker-popper"
+                    />
+                  </div> */}
+
+                                    {/* <div className="cart-item my-1">
+                    {requestItems &&
+                      requestItems.map((item) => (
+                        <div key={item.document} className="row my-5">
+                          <div className="col-5 col-lg-5">{item.name}</div>
+
+                          <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                            <p>${item.price}</p>
+                          </div>
+                        </div>
+                      ))}
+                  </div> */}
                                 </div>
                             </div>
                         )}

@@ -23,10 +23,7 @@ const ProcessRequest = () => {
     const { requestItems, paymentInfo, user, totalPrice, requestStatus } = request;
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
-    const { balances } = useSelector((state) => state.balances);
-
-
-
+    const { balances } = useSelector((state) => state.balances); // Assuming balances are available in Redux state
 
     const errMsg = (message = "") =>
         toast.error(message, {
@@ -59,7 +56,6 @@ const ProcessRequest = () => {
         }
     }, [dispatch, error, isUpdated, status, requestId]);
 
-
     const updateStatusHandler = async (id) => {
         const formData = new FormData();
         formData.set("status", status);
@@ -86,6 +82,7 @@ const ProcessRequest = () => {
         }
     };
 
+
     return (
         <Fragment>
             <MetaData title={`Process Request # ${request && request._id}`} />
@@ -102,16 +99,25 @@ const ProcessRequest = () => {
                         ) : (
                             <div className="row d-flex justify-content-around">
                                 <div className="col-12 col-lg-7 order-details">
-                                    <h2 className="my-5">Request # {request._id}</h2>
-
+                                    {/* <h2 className="my-5">Request # {request._id}</h2> */}
+                                    <hr />
                                     <p>
                                         <b>Amount:</b> ${totalPrice}
                                     </p>
 
                                     <hr />
 
-                                    <h4 className="my-4">Requested by: {user ? user._id : 'Unknown'}</h4>
+                                    <h4 className="my-4">Requested by: {user ? user.lastname : 'Unknown'}</h4>
 
+                                    {/* <h4 className="my-4">Payment</h4>
+                                    <p
+                                        className={
+                                            request.paymentInfo &&
+                                            String(request.paymentInfo)
+                                        }
+                                    >
+                                        <b>{paymentInfo}</b>
+                                    </p> */}
                                     <h4 className="my-4">Payment</h4>
                                     {paymentInfo ? (
                                         <div>
@@ -190,5 +196,3 @@ const ProcessRequest = () => {
 };
 
 export default ProcessRequest;
-
-
