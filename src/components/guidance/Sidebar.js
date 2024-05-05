@@ -1,66 +1,128 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+// import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "./sidebar.css"; // Import CSS file for sidebar styles 
 
 const GuidanceSidebar = () => {
-    const user = useSelector((state) => state.auth.user);
+    const [open, setOpen] = useState(false);
+    const sidebarRef = useRef(null);
+
+    const toggleDrawer = () => {
+        setOpen(!open);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const toggleDropdown = (event) => {
+        event.preventDefault();
+        const dropdown = document.getElementById("documentDropdown");
+        dropdown.style.display =
+            dropdown.style.display === "none" ? "block" : "none";
+    };
+
+    const toggleDropdownn = (event) => {
+        event.preventDefault();
+        const dropdown = document.getElementById("productDropdown");
+        dropdown.style.display =
+            dropdown.style.display === "none" ? "block" : "none";
+    };
 
     return (
-        <div className="sidebar-wrapper">
-            <navv id="sidebar">
-                <ul className="list-unstyled components">
-                    {user && user.role === "guidance" && (
-                        <li>
-                            <Link to="/guidance/requests">
-                                <i className="fa fa-file"></i> Requests
-                            </Link>
-                        </li>
-                    )}
-
-                    <li>
-                        <a
-                            href="#documentSubmenu"
-                            data-toggle="collapse"
-                            aria-expanded="false"
-                            className="custom-toggle"
+        <>
+            <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}>
+                {!open && (
+                    <div
+                        className="sidebar-icon-button"
+                        onClick={toggleDrawer}
+                        style={{
+                            marginRight: "2px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        <FontAwesomeIcon
+                            icon={faBars}
+                            style={{
+                                marginRight: "5px",
+                                marginTop: "5px",
+                                fontSize: "3.5rem",
+                            }}
+                        />
+                        <p
+                            style={{ margin: "2px", fontWeight: "bold", fontSize: "2rem" }}
+                        ></p>
+                    </div>
+                )}
+                {open && (
+                    <>
+                        <div className="sidebar-backdrop" onClick={toggleDrawer}></div>
+                        <div
+                            className="custom-drawer"
+                            style={{
+                                backgroundColor: "#B1A078",
+                                marginTop: "-11px",
+                                zIndex: "1000",
+                            }}
+                            ref={sidebarRef}
                         >
-                            <i className="fa fa-file"></i> Violations
-                        </a>
+                            <div className="drawer-content">
+                                <ul className="list-unstyled components">
+                                    <li>
+                                        <a href="/guidance/requests">
+                                            <i class="fa-solid fa-envelope-open-text"></i> Requests
+                                        </a>
+                                    </li>
 
-                        <ul className="collapse list-unstyled" id="documentSubmenu">
-                            <li>
-                                <Link to="/guidance/violations">
-                                    <i className="fa fa-clipboard"></i> All
-                                </Link>
-                                <br />
-                                <Link to="/guidance/violation">
-                                    <i className="fa fa-plus"></i> Create
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
+                                    <li>
+                                        <a href="#" onClick={toggleDropdown}>
+                                            <i
+                                                className="fa fa-file"
+                                                style={{ marginBottom: "-0px" }}
+                                            ></i>{" "}
+                                            Violations
+                                        </a>
 
-                    <li>
-                        <a
-                            href="#clearanceSubmenu"
-                            data-toggle="collapse"
-                            aria-expanded="false"
-                            className="custom-toggle"
-                        >
-                            <i className="fa fa-file"></i> Clearance
-                        </a>
+                                        <ul
+                                            id="documentDropdown"
+                                            style={{ display: "none", marginTop: "15px" }}
+                                        >
+                                            <a href="/guidance/violations" className="document-link">
+                                                <i class="fa-solid fa-triangle-exclamation"></i> Violation
+                                                List
+                                            </a>
+                                            <br></br>
+                                            <br></br>
+                                            <a href="/guidance/violation">
+                                                <i class="fa-solid fa-folder-plus"></i> Add Record
+                                            </a>
+                                        </ul>
+                                    </li>
 
-                        <ul className="collapse list-unstyled" id="clearanceSubmenu">
-                            <li>
-                                <Link to="/guidance/clearance">
-                                    <i className="fa fa-clipboard"></i> All
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </navv>
-        </div>
+                                    <li>
+                                        <a href="/guidance/clearance">
+                                            <i class="fa-solid fa-warehouse"></i> Clearance
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
     );
 };
 
