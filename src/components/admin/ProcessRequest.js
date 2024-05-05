@@ -15,13 +15,17 @@ import {
 } from "../../actions/inquiriesActions";
 
 import { UPDATE_REQUEST_RESET } from "../../constants/inquiriesConstants";
+import "./admin.css";
 
 const ProcessRequest = () => {
     const [status, setStatus] = useState("");
     const dispatch = useDispatch();
     let { id } = useParams();
-    const { loading, request = {} } = useSelector((state) => state.requestDetails);
-    const { requestItems, paymentInfo, user, totalPrice, requestStatus } = request;
+    const { loading, request = {} } = useSelector(
+        (state) => state.requestDetails
+    );
+    const { requestItems, paymentInfo, user, totalPrice, requestStatus } =
+        request;
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
 
@@ -43,11 +47,11 @@ const ProcessRequest = () => {
 
     useEffect(() => {
         if (user) {
-            console.log('User:', user);
-            console.log('User Lastname:', user.lastname);
+            console.log("User:", user);
+            console.log("User Lastname:", user.lastname);
         }
         dispatch(getRequestDetails(requestId));
-        const savedStatus = localStorage.getItem('updatedStatus');
+        const savedStatus = localStorage.getItem("updatedStatus");
         if (savedStatus) {
             setStatus(savedStatus);
         }
@@ -73,7 +77,7 @@ const ProcessRequest = () => {
 
         try {
             await dispatch(updateRequest(requestId, formData));
-            localStorage.setItem('updatedStatus', status);
+            localStorage.setItem("updatedStatus", status);
             dispatch(getRequestDetails(requestId));
             successMsg(`Request updated successfully. New Status: ${status}`);
         } catch (error) {
@@ -90,35 +94,114 @@ const ProcessRequest = () => {
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10 custom-parent-div">
                     <Fragment>
                         {loading ? (
                             <Loader />
                         ) : (
-                            <div className="row d-flex justify-content-around">
-                                <div className="col-12 col-lg-7 order-details">
-                                    <h2 className="my-5">Request # {request._id}</h2>
+                            <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ minHeight: "100vh" }}
+                            >
+                                <div className="col-12 col-lg-8 order-details">
+                                    {/* <h2 className="my-5">Request  {request._id}</h2> */}
 
-                                    <p>
-                                        <b>Amount:</b> ₱{totalPrice}
-                                    </p>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 track-number">
+                                                Tracking Number:{" "}
+                                                <span className="underline">
+                                                    BLA-
+                                                    {request && request._id
+                                                        ? request._id.substring(0, 6)
+                                                        : ""}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-md-5">
+                                            <h4 className="statuss">Status</h4>
+                                            <div className="form-group">
+                                                <select
+                                                    className="form-control"
+                                                    name="status"
+                                                    value={status}
+                                                    onChange={(e) => setStatus(e.target.value)}
+                                                >
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Received">Received</option>
+                                                    {/* Add more options based on your requirements */}
+                                                </select>
+                                            </div>
+                                            <button
+                                                className="btn btn-primary btn-block"
+                                                onClick={updateStatusHandler}
+                                            >
+                                                Update Status
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* <p>
+                    <b>Amount:</b> ₱{totalPrice}
+                  </p> */}
 
                                     <hr />
 
-                                    <h4 className="my-4">Requested by: {user ? user._id : 'Unknown'}</h4>
+                                    {/* <h4 className="my-4">
+                    Requested by:{" "}
+                    {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
+                  </h4> */}
 
-                                    <h4 className="my-4">Payment</h4>
-                                    {paymentInfo ? (
-                                        <div>
-                                            <p><b>Type:</b> {paymentInfo.type}</p>
+                                    <h4 style={{ textAlign: "center" }}> Student Information</h4>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Requested by:{" "}
+                                                {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
+                                            </p>
                                         </div>
-                                    ) : (
-                                        <p><b>Payment Information:</b> N/A</p>
-                                    )}
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Grade & Section: {" "}
+                                                {request.user?.grade || "N/A"}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Purpose: {" "}
+                                                {request.purpose || "N/A"}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Payment Info: {" "}
+                                                {paymentInfo ? paymentInfo.type : "N/A"}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <hr />
+
+                                    {/* <h4 className="my-4">Payment</h4>
+                  {paymentInfo ? (
+                    <div>
+                      <p>
+                        <b>Type:</b> {paymentInfo.type}
+                      </p>
+                    </div>
+                  ) : (
+                    <p>
+                      <b>Payment Information:</b> N/A
+                    </p>
+                  )} */}
 
                                     <h4 className="my-4">Request Status:</h4>
 
-                                    <p className={requestStatus === "Received" ? "greenColor" : "redColor"}>
+                                    <p
+                                        className={
+                                            requestStatus === "Received" ? "greenColor" : "redColor"
+                                        }
+                                    >
                                         <b>{requestStatus}</b>
                                     </p>
 
@@ -163,27 +246,6 @@ const ProcessRequest = () => {
                                             ))}
                                     </div>
                                     <hr />
-                                </div>
-                                <div className="col-12 col-lg-3 mt-5">
-                                    <h4 className="my-4">Status</h4>
-                                    <div className="form-group">
-                                        <select
-                                            className="form-control"
-                                            name="status"
-                                            value={status}
-                                            onChange={(e) => setStatus(e.target.value)}
-                                        >
-                                            <option value="Approved">Approved</option>
-                                            <option value="Received">Received</option>
-                                            {/* Add more options based on your requirements */}
-                                        </select>
-                                    </div>
-                                    <button
-                                        className="btn btn-primary btn-block"
-                                        onClick={updateStatusHandler}
-                                    >
-                                        Update Status
-                                    </button>
                                 </div>
                             </div>
                         )}

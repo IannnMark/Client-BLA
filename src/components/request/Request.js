@@ -27,6 +27,8 @@ const DocumentRequest = () => {
     };
 
 
+
+
     return (
         <ErrorBoundary>
             <Fragment>
@@ -35,6 +37,11 @@ const DocumentRequest = () => {
                 {requestDocuments.length === 0 ? (
                     <h2 className="clas">
                         No Document Requested
+
+                        <button className="button-53" style={{}} onClick={addDocumentHandler}>
+                            Request Document
+                        </button>
+
                         <br></br>
                         <br></br>
                         <br></br>
@@ -55,6 +62,7 @@ const DocumentRequest = () => {
                             <div className="col-12 col-lg-8">
                                 {requestDocuments.map((document) => (
                                     <Fragment key={document.document}>
+                                        <br></br>
                                         <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />
 
 
@@ -109,7 +117,7 @@ const DocumentRequest = () => {
                                     <p>
                                         Est. total:{" "}
                                         <span className="order-summary-values">
-                                            â‚±
+                                            ₱
                                             {requestDocuments
                                                 .reduce(
                                                     (acc, item) => acc + item.quantity * item.price,

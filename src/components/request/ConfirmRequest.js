@@ -12,7 +12,6 @@ const ConfirmRequest = () => {
         navigate("/request");
     };
 
-
     let navigate = useNavigate();
 
     const itemsPrice = requestDocuments.reduce(
@@ -20,7 +19,7 @@ const ConfirmRequest = () => {
         0
     );
 
-    const totalPrice = (itemsPrice).toFixed(2);
+    const totalPrice = itemsPrice.toFixed(2);
 
     const processToPayment = () => {
         const data = {
@@ -50,19 +49,42 @@ const ConfirmRequest = () => {
             <RequestSteps confirmRequest />
             <div className="row d-flex justify-content-between">
                 <div className="col-12 col-lg-8 mt-5 order-confirm">
-                    <h4 className="mt-4" style={{ fontFamily: 'Arial', fontWeight: 'bold', fontSize: '18px', color: 'black' }}>Your Cart Items:</h4>
+                    <h4
+                        className="mt-4"
+                        style={{
+                            fontFamily: "Arial",
+                            fontWeight: "bold",
+                            fontSize: "18px",
+                            color: "black",
+                        }}
+                    >
+                        Your Cart Items:
+                    </h4>
 
                     {requestDocuments.map((document) => (
                         <Fragment key={document.document}>
-                            <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />
+                            <hr
+                                style={{
+                                    borderTop: "5px solid gray",
+                                    width: "100%",
+                                    fontWeight: "bold",
+                                }}
+                            />
                             <div className="cart-item my-1">
                                 <div className="row">
                                     <div className="col-4 col-lg-2">
-                                        <img src={document.image} alt="document" height="45" width="65" />
+                                        <img
+                                            src={document.image}
+                                            alt="document"
+                                            height="45"
+                                            width="65"
+                                        />
                                     </div>
 
                                     <div className="col-5 col-lg-6">
-                                        <Link to={`/document/${document.document}`}>{document.name}</Link>
+                                        <Link to={`/document/${document.document}`}>
+                                            {document.name}
+                                        </Link>
                                     </div>
 
                                     <div className="col-4 col-lg-4 mt-4 mt-lg-0">
@@ -74,47 +96,70 @@ const ConfirmRequest = () => {
                                 </div>
                             </div>
 
-                            <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />
+                            <hr
+                                style={{
+                                    borderTop: "5px solid gray",
+                                    width: "100%",
+                                    fontWeight: "bold",
+                                }}
+                            />
                         </Fragment>
                     ))}
                 </div>
 
-                <div className="col-12 col-lg-3 my-4" style={{ position: 'relative', left: '-20px' }}>
+                <div
+                    className="col-12 col-lg-3 my-4"
+                    style={{ position: "relative", left: "-20px" }}
+                >
                     <div id="order_summary">
                         <h4>Request Summary</h4>
 
-                        <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />
+                        <hr
+                            style={{
+                                borderTop: "5px solid gray",
+                                width: "100%",
+                                fontWeight: "bold",
+                            }}
+                        />
 
                         <p>
                             Subtotal:{" "}
-                            <span className="order-summary-values">â‚± {itemsPrice}</span>
+                            <span className="order-summary-values">₱ {itemsPrice}</span>
                         </p>
 
-                        <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />
+                        <hr
+                            style={{
+                                borderTop: "5px solid gray",
+                                width: "100%",
+                                fontWeight: "bold",
+                            }}
+                        />
 
                         <p>
-                            Total: <span className="order-summary-values">â‚± {totalPrice}</span>
+                            Total:{" "}
+                            <span className="order-summary-values">₱ {totalPrice}</span>
                         </p>
 
                         <hr />
 
-                        <button
-                            id="checkout_btn"
-                            className="btn btn-primary btn-block"
-                            onClick={processToPayment}
-                        >
-                            Proceed to Payment
-                        </button>
-                        <button
-                            id="adddocu_btn"
-                            className="btn btn-primary btn-block"
-                            onClick={backToCartHandler}
-                        >
-                            Back to Cart
-                        </button>
+                        <div className="button-container">
+                            <button
+                                id="checkout_btn"
+                                className="btn btn-primary btn-block"
+                                onClick={processToPayment}
+                            >
+                                Proceed to Payment
+                            </button>
+                            <button
+                                id="adddocu_btn"
+                                className="btn btn-primary btn-block"
+                                onClick={backToCartHandler}
+                            >
+                                Back to Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </div>
             <br></br>
             <br></br>
@@ -125,6 +170,6 @@ const ConfirmRequest = () => {
             <br></br>
         </Fragment>
     );
-}
+};
 
 export default ConfirmRequest;

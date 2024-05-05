@@ -53,13 +53,10 @@ body {
 }
 
 
-
-
-
 .navbar-brand img {
-  height: 60px;
+  height: 75px;
   width: 80px;
-  margin-left: 40px;
+  margin-left: 30px;
 
 
 }
@@ -67,7 +64,7 @@ body {
 /* css for blessed land academy text */
 .lg-3 {
   font-family: fantasy;
-  font-size: 25px;
+  font-size: 20px;
   color: black;
   font-weight: medium;
   transition: all 0.3s ease;
@@ -110,7 +107,7 @@ nav {
   background: rgb(156, 134, 92);
   background: linear-gradient(90deg, rgba(156, 134, 92, 1) 21%, rgba(238, 213, 108, 1) 47%, rgba(236, 211, 108, 1) 48%, rgba(156, 134, 92, 1) 80%);
   border-color: black;
-  height: 130px;
+  height: 120px;
   border: hidden;
 }
 
@@ -120,13 +117,14 @@ nav {
   /* Add more padding to the top */
   padding-bottom: 15px;
   /* Add more padding to the bottom */
+  padding-right: 35px !important;
 }
 
 /* css for login button in navbar */
 #login.login-nav {
   margin-right: 2%;
   font-family: fantasy;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: larger;
   color: black;
   display: inline-block;
@@ -148,7 +146,7 @@ nav {
 .navbar a.mx-3 {
   margin-right: 2%;
   font-family: fantasy;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: larger;
   color: black;
   display: inline-block;
@@ -171,7 +169,7 @@ nav {
   margin-right: 2%;
   font-family: fantasy;
   font-weight: larger;
-  font-size: 25px;
+  font-size: 20px;
   color: black;
   display: inline-block;
   padding: 8px 15px;
@@ -186,6 +184,18 @@ nav {
   border-radius: 30%;
   background-color: #EBDE70;
   font-size: 30px;
+}
+
+#request svg {
+  /* Change the fill color of the SVG icon */
+  fill: black;
+  /* Change this color to whatever you want */
+}
+
+#cart svg {
+  /* Change the fill color of the SVG icon */
+  fill: black;
+  /* Change this color to whatever you want */
 }
 
 /* Media query for responsiveness */
@@ -325,6 +335,8 @@ nav {
   font-size: 0.9rem;
 }
 
+
+
 #request_count {
   background-color: whitesmoke;
   padding: 0.2rem 0.5rem;
@@ -334,7 +346,7 @@ nav {
   font-size: 0.9rem;
 }
 
-
+x
 
 /* Home page */
 #products_heading {
@@ -530,6 +542,22 @@ footer {
   margin-top: 2rem;
   border-radius: 5rem;
 }
+
+#back_btn {
+  background-color: #fa9c23;
+  border-color: #fa9c23;
+  margin-top: 2rem;
+  border-radius: 5rem;
+}
+
+
+#adddocu_btn {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+  margin-top: 2rem;
+  border-radius: 5rem;
+}
+
 
 #view_order_details {
   background-color: #fa9c23;

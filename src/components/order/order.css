@@ -2,13 +2,204 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 240%;
     border-style: ridge;
-    border-width: 3px; 
-    width: 18%; 
-    margin: 0 auto; 
+    border-width: 3px;
+    width: 18%;
+    margin: 0 auto;
     border-radius: 75px 75px;
-    background: linear-gradient(90deg, rgba(255,222,89,1) 9%, rgba(252,161,104,1) 86%);
+    background: linear-gradient(90deg, rgba(255, 222, 89, 1) 9%, rgba(252, 161, 104, 1) 86%);
     border-color: orange;
     margin-top: 5%;
 
-} 
+}
 
+.container {
+    text-align: center;
+}
+
+.full-name {
+    display: flex;
+    align-items: center;
+    /* Vertically center align items */
+}
+
+.full-name h4 {
+    margin-right: 10px;
+    /* Adjust spacing between label and names */
+    margin-top: -10px;
+    font-size: 20px;
+    margin-left: 135px;
+
+
+}
+
+.centered-text {
+    margin: 0;
+    /* Optional, to remove default margins */
+}
+
+.logo {
+    max-width: 120%;
+    height: auto;
+    max-height: 200px;
+    margin-right: 65px;
+    margin-top: 10px;
+}
+
+.address {
+    margin-top: -150px;
+    margin-left: 170px;
+    margin-bottom: 70px;
+    font-family: Arial, sans-serif;
+}
+
+.addr {
+    margin-top: 10px;
+    margin-left: -240px;
+    margin-bottom: 70px;
+    font-family: Arial, sans-serif;
+}
+
+.addrr {
+    margin-top: -70px;
+    margin-left: -240px;
+    margin-bottom: 70px;
+    font-family: Arial, sans-serif;
+}
+
+
+.schoolname {
+    margin-top: 150px;
+    margin-right: 220px;
+    font-size: 25px;
+    font-weight: bolder;
+    /* Try specifying a fallback font family */
+    font-family: Arial, sans-serif;
+}
+
+.tracking-number {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns items to each end */
+    align-items: center;
+    /* Centers items vertically */
+    margin-top: 4rem;
+    font-size: 20px;
+    color: #71797E;
+    font-family: Arial, sans-serif;
+}
+
+.underline {
+    text-decoration: underline;
+    text-align: right;
+
+}
+
+
+.schol-doc {
+    font-size: 25px;
+    text-align: center;
+    color: red;
+    font-family: Arial, sans-serif;
+}
+
+
+.date-request {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns items to each end */
+    align-items: center;
+    /* Centers items vertically */
+    margin-top: 2rem;
+    /* Reduced margin-top */
+    font-size: 16px;
+    /* Smaller font size */
+    font-family: Arial, sans-serif;
+}
+
+.request-left,
+.request-right {
+    margin: 0;
+    /* Remove any margin */
+}
+
+.request-left {
+    text-align: left;
+}
+
+.request-right {
+    padding-left: 1rem;
+    /* Add padding for spacing */
+}
+
+/* Payor css */
+
+.full-name {
+    margin-top: 4rem;
+    /* Adjust the top margin as needed */
+    font-size: 20px;
+
+    margin-left: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.name {
+    margin-left: 369px;
+}
+
+/* Purpose css */
+
+/* Label styles */
+.label {
+    font-size: 20px;
+    color: #333;
+    /* Set the color to whatever you prefer */
+    font-family: Arial, sans-serif;
+    margin-bottom: 30px;
+}
+
+/* Value styles */
+
+.date-requestt {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns items to each end */
+    align-items: center;
+    /* Centers items vertically */
+    margin-top: 4rem;
+    font-weight: bolder !important;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.requestt {
+    text-align: right;
+    font-weight: bolder;
+}
+
+.date-requesttt {
+    margin-top: 4rem;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+/* document name and price csss */
+.date-requesttt-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.document-name {
+    flex: 1;
+    /* Allow the document name to grow to fill available space */
+}
+
+.container {
+    position: relative;
+}
+
+.download-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

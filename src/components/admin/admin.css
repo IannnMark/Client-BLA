@@ -1,0 +1,32 @@
+.track-number {
+    margin-top: -10px;
+}
+
+.track-number {
+    margin-top: 100px !important;
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    font-weight: bold !important;
+}
+
+
+.underline {
+    text-decoration: underline;
+}
+
+.statuss {
+    margin-top: 70px;
+    margin-left: 100px;
+}
+
+.student-name {
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.custom-parent-div {
+    margin-left: 80px;
+    /* Adjust this value as needed */
+
+}
