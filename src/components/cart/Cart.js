@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
+import "./cart.css";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,15 @@ const Cart = () => {
     navigate("/confirm");
   };
 
+  const addDocumentHandler = () => {
+    navigate("/");
+  };
+
+  const handleButtonClick = () => {
+    // Redirect to the desired page
+    navigate("/products");
+  };
+
   let navigate = useNavigate();
 
   return (
@@ -34,7 +44,20 @@ const Cart = () => {
       <MetaData title={"Your Cart"} />
 
       {cartItems.length === 0 ? (
-        <h2 className="mt-5">Your Cart is Empty</h2>
+        <h2 className="cartt">
+          Your Cart is Empty
+
+          <button className="button-533" style={{}} onClick={handleButtonClick}>
+            Buy Merch
+          </button>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+        </h2>
       ) : (
         <Fragment>
           <h2 className="mt-5">
@@ -52,16 +75,14 @@ const Cart = () => {
                       <div className="col-4 col-lg-3">
                         <img
                           src={item.image}
-                          alt={item.name}
+                          alt={item.productName}
                           height="90"
                           width="115"
                         />
                       </div>
 
                       <div className="col-5 col-lg-3">
-
-                        {item.name}
-
+                        {item.product.productName}
                       </div>
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
