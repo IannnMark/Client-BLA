@@ -1,12 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
-import "react-toastify/dist/ReactToastify.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,18 +13,18 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
-  // const redirect = location.search ? location.search.split("=")[1] : "";
+  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
   const redirect = new URLSearchParams(location.search).get("redirect");
+
   useEffect(() => {
     if (isAuthenticated && redirect === "shipping") {
       navigate(`/${redirect}`, { replace: true });
-    } else if (isAuthenticated) navigate("/");
-    if (error) {
-      // alert.error(error);
+    } else if (isAuthenticated) {
+      navigate("/");
+    }
 
+    if (error) {
+      toast.error("Invalid email or password");
       dispatch(clearErrors());
     }
   }, [dispatch, isAuthenticated, error, navigate, redirect]);
@@ -46,8 +45,6 @@ const Login = () => {
           <div
             className="row wrapper"
             style={{
-              // background:
-              //   "linear-gradient(90deg, rgba(255, 222, 89, 1) 9%, rgba(255, 145, 77, 1) 86%)",
               backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.svg)`,
               backgroundSize: "cover",
               minHeight: "70vh",
@@ -64,8 +61,8 @@ const Login = () => {
                 className="shadow-lg"
                 onSubmit={submitHandler}
                 style={{
-                  backgroundColor: "rgba(255, 222, 89, 0.20)", // Adjust the alpha value as needed
-                  padding: "37px", // Adjust padding as needed
+                  backgroundColor: "rgba(255, 222, 89, 0.20)",
+                  padding: "37px",
                 }}
               >
                 <h1 className="mb-3">Login</h1>
