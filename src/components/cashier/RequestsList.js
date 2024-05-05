@@ -46,11 +46,11 @@ const RequestsList = () => {
 
         const data = {
             columns: [
-                {
-                    label: "Request ID",
-                    field: "id",
-                    sort: "asc",
-                },
+                // {
+                //     label: "Request ID",
+                //     field: "id",
+                //     sort: "asc",
+                // },
                 {
                     label: "User Last Name",
                     field: "userLastName",
@@ -116,7 +116,7 @@ const RequestsList = () => {
                 request.requestItems.map((item) => item.name).join(", ");
 
             data.rows.push({
-                id: request._id,
+                // id: request._id,
                 userLastName: request.user?.lastname,
                 grade: request.user?.grade,
                 numofRequests: request.requestItems.length,

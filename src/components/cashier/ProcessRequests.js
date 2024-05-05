@@ -92,101 +92,265 @@ const ProcessRequest = () => {
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-10 custom-parent-div">
                     <Fragment>
                         {loading ? (
                             <Loader />
                         ) : (
-                            <div className="row d-flex justify-content-around">
-                                <div className="col-12 col-lg-7 order-details">
-                                    {/* <h2 className="my-5">Request # {request._id}</h2> */}
-                                    <hr />
-                                    <p>
-                                        <b>Amount:</b> ${totalPrice}
-                                    </p>
+                            <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ minHeight: "100vh" }}
+                            >
+                                <div className="col-12 col-lg-8 order-details">
+                                    {/* <h2 className="my-5">Request  {request._id}</h2> */}
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 track-number">
+                                                Tracking Number:{" "}
+                                                <span className="underline">
+                                                    BLA-
+                                                    {request && request._id
+                                                        ? request._id.substring(0, 6)
+                                                        : ""}
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-md-5">
+                                            <h4 className="statuss">Status</h4>
+                                            <div className="form-group">
+                                                <select
+                                                    className="form-control"
+                                                    name="status"
+                                                    value={status}
+                                                    onChange={(e) => setStatus(e.target.value)}
+                                                >
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Approved">Approved</option>
+                                                    <option value="Pending Balance">Attention: Pending Balance 🚨</option>
+                                                </select>
+                                            </div>
+                                            <button
+                                                className="btn btn-primary btn-block"
+                                                onClick={() => updateStatusHandler(request._id)}
+
+                                            >
+                                                Update Status
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* <p>
+                    <b>Amount:</b> ₱{totalPrice}
+                  </p> */}
 
                                     <hr />
 
-                                    <h4 className="my-4">Requested by: {user ? user.lastname : 'Unknown'}</h4>
+                                    {/* <h4 className="my-4">
+                    Requested by:{" "}
+                    {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
+                  </h4> */}
+
+                                    <h4 style={{ textAlign: "center" }}> Student Information</h4>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Requested by:{" "}
+                                                {user
+                                                    ? `${user.firstname} ${user.lastname}`
+                                                    : "Unknown"}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Grade & Section: {request.user?.grade || "N/A"}
+                                            </p>
+                                        </div>
+                                        {/* <div className="col-md-12 text-center"> 
+                      <p className="my-4 student-name">
+                       Purpose: {" "}
+                       {request.purpose || "N/A"}
+                      </p>
+                    </div> */}
+                                        {/* <div className="col-md-6">
+                      <p className="my-4 student-name">
+                       Payment Info: {" "}
+                       {paymentInfo ? paymentInfo.type : "N/A" }
+                      </p>
+                    </div> */}
+                                    </div>
+                                    <hr />
 
                                     {/* <h4 className="my-4">Payment</h4>
-                                    <p
-                                        className={
-                                            request.paymentInfo &&
-                                            String(request.paymentInfo)
-                                        }
-                                    >
-                                        <b>{paymentInfo}</b>
-                                    </p> */}
-                                    <h4 className="my-4">Payment</h4>
-                                    {paymentInfo ? (
-                                        <div>
-                                            <p><b>Type:</b> {paymentInfo.type}</p>
+                  {paymentInfo ? (
+                    <div>
+                      <p>
+                        <b>Type:</b> {paymentInfo.type}
+                      </p>
+                    </div>
+                  ) : (
+                    <p>
+                      <b>Payment Information:</b> N/A
+                    </p>
+                  )} */}
+
+                                    <h4 style={{ textAlign: "center" }}>Request Information</h4>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Purpose: {request.purpose || "N/A"}
+                                            </p>
                                         </div>
-                                    ) : (
-                                        <p><b>Payment Information:</b> N/A</p>
-                                    )}
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Request Status:{" "}
+                                                <span
+                                                    className={
+                                                        requestStatus === "Received"
+                                                            ? "greenColor"
+                                                            : "redColor"
+                                                    }
+                                                >
+                                                    <b>{requestStatus}</b>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Payment Info: {request.paymentInfo?.type || "N/A"}{" "}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Total Amount to Pay:{" "}
+                                                <span>
+                                                    ₱
+                                                    {totalPrice}
+                                                </span>
+                                            </p>
+                                        </div>
 
-
-                                    <h4 className="my-4">Request Status:</h4>
-
-                                    <p className={requestStatus === "Received" ? "greenColor" : "redColor"}>
-                                        <b>{requestStatus}</b>
-                                    </p>
-                                    <h4 className="my-4">Request Items:</h4>
-
-                                    <hr />
-
-                                    <div className="cart-item my-1">
-                                        {requestItems &&
-                                            requestItems.map((item) => (
-                                                <div key={item.document} className="row my-5">
-                                                    <div className="col-4 col-lg-2">
-                                                        <img
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                            height="45"
-                                                            width="65"
-                                                        />
-                                                    </div>
-
-                                                    <div className="col-5 col-lg-5">
-                                                        <Link to={`/documents/${item.document}`}>
-                                                            {item.name}
-                                                        </Link>
-                                                    </div>
-
-                                                    <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                        <p>${item.price}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
                                     </div>
                                     <hr />
-                                </div>
-                                <div className="col-12 col-lg-3 mt-5">
-                                    <h4 className="my-4">Status</h4>
-                                    <div className="form-group">
-                                        <select
-                                            className="form-control"
-                                            name="status"
-                                            value={status}
-                                            onChange={(e) => setStatus(e.target.value)}
-                                        >
-                                            <option value="Pending">Pending</option>
-                                            <option value="Approved">Approved</option>
-                                            <option value="Pending Balance">Attention: Pending Balance 🚨</option>
-                                        </select>
-                                    </div>
-                                    <button
-                                        className="btn btn-primary btn-block"
-                                        onClick={() => updateStatusHandler(request._id)}
-                                    >
-                                        Update Status
-                                    </button>
-                                </div>
 
+                                    <h4 style={{ textAlign: "center" }}>Document Information</h4>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="my-4 students-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document}>
+                                                            <p>{item.name}</p>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="my-4 student-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document} className="my-4 student-namee">
+
+                                                            <p>Price: ₱{item.price}</p>
+
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            // <div className="row d-flex justify-content-around">
+                            //                   <div className="col-12 col-lg-7 order-details">
+                            //                       {/* <h2 className="my-5">Request # {request._id}</h2> */}
+                            //                       <hr />
+                            //                       <p>
+                            //                           <b>Amount:</b> ${totalPrice}
+                            //                       </p>
+
+                            //                       <hr />
+
+                            //                       <h4 className="my-4">Requested by: {user ? user.lastname : 'Unknown'}</h4>
+
+                            //                       {/* <h4 className="my-4">Payment</h4>
+                            //                       <p
+                            //                           className={
+                            //                               request.paymentInfo &&
+                            //                               String(request.paymentInfo)
+                            //                           }
+                            //                       >
+                            //                           <b>{paymentInfo}</b>
+                            //                       </p> */}
+                            //                       <h4 className="my-4">Payment</h4>
+                            //                       {paymentInfo ? (
+                            //                           <div>
+                            //                               <p><b>Type:</b> {paymentInfo.type}</p>
+                            //                           </div>
+                            //                       ) : (
+                            //                           <p><b>Payment Information:</b> N/A</p>
+                            //                       )}
+
+
+                            //                       <h4 className="my-4">Request Status:</h4>
+
+                            //                       <p className={requestStatus === "Received" ? "greenColor" : "redColor"}>
+                            //                           <b>{requestStatus}</b>
+                            //                       </p>
+                            //                       <h4 className="my-4">Request Items:</h4>
+
+                            //                       <hr />
+
+                            //                       <div className="cart-item my-1">
+                            //                           {requestItems &&
+                            //                               requestItems.map((item) => (
+                            //                                   <div key={item.document} className="row my-5">
+                            //                                       <div className="col-4 col-lg-2">
+                            //                                           <img
+                            //                                               src={item.image}
+                            //                                               alt={item.name}
+                            //                                               height="45"
+                            //                                               width="65"
+                            //                                           />
+                            //                                       </div>
+
+                            //                                       <div className="col-5 col-lg-5">
+                            //                                           <Link to={`/documents/${item.document}`}>
+                            //                                               {item.name}
+                            //                                           </Link>
+                            //                                       </div>
+
+                            //                                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                            //                                           <p>${item.price}</p>
+                            //                                       </div>
+                            //                                   </div>
+                            //                               ))}
+                            //                       </div>
+                            //                       <hr />
+                            //                   </div>
+                            //                   <div className="col-12 col-lg-3 mt-5">
+                            //                       <h4 className="my-4">Status</h4>
+                            //                       <div className="form-group">
+                            //                           <select
+                            //                               className="form-control"
+                            //                               name="status"
+                            //                               value={status}
+                            //                               onChange={(e) => setStatus(e.target.value)}
+                            //                           >
+                            //                               <option value="Pending">Pending</option>
+                            //                               <option value="Approved">Approved</option>
+                            //                               <option value="Pending Balance">Attention: Pending Balance 🚨</option>
+                            //                           </select>
+                            //                       </div>
+                            //                       <button
+                            //                           className="btn btn-primary btn-block"
+                            //                           onClick={() => updateStatusHandler(request._id)}
+                            //                       >
+                            //                           Update Status
+                            //                       </button>
+                            //                   </div>
+
+                            //               </div>
                         )}
                     </Fragment>
                 </div>
@@ -196,3 +360,4 @@ const ProcessRequest = () => {
 };
 
 export default ProcessRequest;
+
