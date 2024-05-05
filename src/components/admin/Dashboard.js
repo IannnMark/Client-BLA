@@ -18,7 +18,6 @@ import { allRequests } from "../../actions/inquiriesActions";
 import { allUsers, userSales, userRequests } from "../../actions/userActions";
 import { monthlySalesChart, productSalesChart, monthlyRequestsChart, documentSalesChart } from "../../actions/chartActions";
 
-
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
@@ -56,7 +55,6 @@ const Dashboard = () => {
     dispatch(documentSalesChart());
     dispatch(userRequests());
   }, [dispatch]);
-
 
   return (
     <Fragment>
@@ -200,7 +198,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-
 
 
 
