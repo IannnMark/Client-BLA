@@ -189,25 +189,6 @@ const ProductDetails = () => {
                 </span>
               </p>
               <hr />
-              {user ? (
-                <button
-                  id="review_btn"
-                  type="button"
-                  className="btn btn-primary mt-4"
-                  data-toggle="modal"
-                  data-target="#ratingModal"
-                  onClick={setUserRatings}
-                >
-                  Submit Your Review
-                </button>
-              ) : (
-                <div className="alert alert-danger mt-5" type="alert">
-                  Login to post your review.
-                </div>
-              )}
-              {product.reviews && product.reviews.length > 0 && (
-                <ListReviews reviews={product.reviews} />
-              )}
 
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
