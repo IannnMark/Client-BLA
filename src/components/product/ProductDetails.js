@@ -142,17 +142,7 @@ const ProductDetails = () => {
 
               <hr />
 
-              <div className="rating-outer">
-                <div
-                  className="rating-inner"
-                  style={{ width: `${(product.ratings / 5) * 100}%` }}
-                ></div>
-              </div>
-              <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
-
-              <hr />
-
-              <p id="product_price">${product.price}</p>
+              <p id="product_price">₱{product.price}</p>
               <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus" onClick={decreaseQty}>
                   -
@@ -232,9 +222,6 @@ const ProductDetails = () => {
                     <div className="modal-dialog" role="document">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="ratingModalLabel">
-                            Submit Review
-                          </h5>
                           <button
                             type="button"
                             className="close"

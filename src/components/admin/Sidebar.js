@@ -184,18 +184,6 @@ const Sidebar = () => {
                     </ul>
                   </li>
 
-                  {/* <li>
-                    <a href="/admin/users">
-                      <i class="fa fa-users"></i> Users
-                    </a>
-                  </li> */}
-
-                  {/* <li>
-                    <a href="/admin/reviews">
-                      <i class="fa fa-star" ></i> Reviews
-                    </a>
-                  </li> */}
-
                   <li>
                     <a href="/admin/stock-history">
                       <i class="fa-solid fa-warehouse"></i> Stock History
