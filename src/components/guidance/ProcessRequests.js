@@ -14,6 +14,7 @@ import {
 } from "../../actions/inquiriesActions";
 
 import { UPDATE_REQUEST_RESET } from "../../constants/inquiriesConstants";
+import { getGuidanceViolation } from "../../actions/violationActions";
 
 const ProcessRequest = () => {
     const [status, setStatus] = useState("");
@@ -37,6 +38,7 @@ const ProcessRequest = () => {
 
     useEffect(() => {
         dispatch(getRequestDetails(requestId));
+        dispatch(getGuidanceViolation());
         const savedStatus = localStorage.getItem("updatedStatus");
         if (savedStatus) {
             setStatus(savedStatus);
