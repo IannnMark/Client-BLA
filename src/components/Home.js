@@ -28,7 +28,7 @@ const Home = () => {
   let { keyword } = useParams();
 
   const categories = [
-    { name: "All", id: "" }, // Add an "All" option with an empty ID
+    { name: "All", id: "" },
     { name: "Uniform", id: "66150c3d6bf9d53979e70b13" },
     { name: "PE", id: "66150c4d6bf9d53979e70b1d" },
     { name: "Grade 7 Books", id: "66150c9c6bf9d53979e70b28" },

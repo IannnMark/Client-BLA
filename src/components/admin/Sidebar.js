@@ -83,7 +83,7 @@ const Sidebar = () => {
               className="custom-drawer"
               style={{
                 backgroundColor: "#B1A078",
-                marginTop: "-1px",
+                marginTop: "-11px",
                 zIndex: "1000",
               }}
               ref={sidebarRef}
@@ -183,7 +183,6 @@ const Sidebar = () => {
                       </a>
                     </ul>
                   </li>
-
                   <li>
                     <a href="/admin/stock-history">
                       <i class="fa-solid fa-warehouse"></i> Stock History

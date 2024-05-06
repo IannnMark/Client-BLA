@@ -78,7 +78,7 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
-                        <br /> <b>${totalAmount && totalAmount.toFixed(2)}</b>
+                        <br /> <b>₱{totalAmount && totalAmount.toFixed(2)}</b>
                       </div>
                     </div>
                   </div>
