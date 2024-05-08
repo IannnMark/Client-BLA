@@ -24,7 +24,7 @@ const ProcessOrder = () => {
   let { id } = useParams();
 
   const { loading, order = {} } = useSelector((state) => state.orderDetails);
-  const { orderItems, totalPrice, orderStatus, user } = order;
+  const { orderItems, totalPrice, orderStatus, user, paymentInfo } = order;
   const { error, isUpdated } = useSelector((state) => state.order);
 
   const orderId = id;
@@ -109,7 +109,7 @@ const ProcessOrder = () => {
               //     <h2 className="my-5">Order # {order._id}</h2>
 
               //     <p>
-              //       <b>Amount:</b> â‚±{totalPrice}
+              //       <b>Amount:</b> ₱{totalPrice}
               //     </p>
 
               //     <hr />
@@ -292,7 +292,7 @@ const ProcessOrder = () => {
 
                     <div className="col-md-6">
                       <p className="my-4 student-name">
-                        Payment Info: {order.paymentInfo?.type || "N/A"}{" "}
+                        Payment Info: {order.paymentInfo || "N/A"}{" "}
                       </p>
                     </div>
                     <div className="col-md-6">
@@ -360,7 +360,7 @@ const ProcessOrder = () => {
                               key={item.product}
                               className="my-4 student-namee"
                             >
-                              <p>Price: â‚±{item.price}</p>
+                              <p>Price: ₱{item.price}</p>
                             </div>
                           ))}
                       </div>
