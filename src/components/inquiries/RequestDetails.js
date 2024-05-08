@@ -140,7 +140,7 @@ const RequestDetails = () => {
                     <p className="date-request">
                       Payment Info:{" "}
                       <span className="request-right">
-                        {request.paymentInfo?.type || "N/A"}{" "}
+                        {request.paymentInfo || "N/A"}{" "}
                         {/* Optional chaining */}
                       </span>
                     </p>

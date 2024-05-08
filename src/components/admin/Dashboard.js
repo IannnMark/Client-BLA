@@ -17,6 +17,8 @@ import { allOrders } from "../../actions/orderActions";
 import { allRequests } from "../../actions/inquiriesActions";
 import { allUsers, userSales, userRequests } from "../../actions/userActions";
 import { monthlySalesChart, productSalesChart, monthlyRequestsChart, documentSalesChart } from "../../actions/chartActions";
+import PaymentMethodChart from "./PaymentMethodChart";
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -253,6 +255,14 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">Product Sales</div>
                       <ProductSalesChart data={productSales} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card text-center card-font-size chart-card">
+                    <div className="card-body">
+                      <div className="text-center card-font-size">Request Payments</div>
+                      <PaymentMethodChart requests={requests} />
                     </div>
                   </div>
                 </div>
