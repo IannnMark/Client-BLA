@@ -228,7 +228,7 @@ const ProcessRequest = () => {
                                         </div>
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
-                                                Payment Info: {request.paymentInfo?.type || "N/A"}{" "}
+                                                Payment Info: {request.paymentInfo || "N/A"}{" "}
                                             </p>
                                         </div>
                                         <div className="col-md-6">
