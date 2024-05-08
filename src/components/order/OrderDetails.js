@@ -254,7 +254,7 @@ const OrderDetails = () => {
                     <p className="date-request">
                       Payment Info:{" "}
                       <span className="request-right">
-                        {order.paymentInfo?.type || "N/A"}{" "}
+                        {order.paymentInfo || "N/A"}{" "}
                         {/* Optional chaining */}
                       </span>
                     </p>
@@ -264,7 +264,7 @@ const OrderDetails = () => {
 
                   <div className="date-request-container">
                     <p className="my-4 date-requestt">
-                      Merchandise <span className="requestt">Total</span>
+                      Document <span className="requestt">Total</span>
                     </p>
                     <p className="my-4 date-requesttt">
                       {orderItems &&
