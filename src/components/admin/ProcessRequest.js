@@ -141,17 +141,6 @@ const ProcessRequest = () => {
                                         </div>
                                     </div>
 
-                                    {/* <p>
-                    <b>Amount:</b> ₱{totalPrice}
-                  </p> */}
-
-                                    <hr />
-
-                                    {/* <h4 className="my-4">
-                    Requested by:{" "}
-                    {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
-                  </h4> */}
-
                                     <h4 style={{ textAlign: "center" }}> Student Information</h4>
                                     <div className="row">
                                         <div className="col-md-6">
@@ -175,7 +164,7 @@ const ProcessRequest = () => {
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
                                                 Payment Info: {" "}
-                                                {paymentInfo ? paymentInfo.type : "N/A"}
+                                                {paymentInfo ? paymentInfo : "N/A"}
                                             </p>
                                         </div>
 
