@@ -104,8 +104,6 @@ const ProcessRequest = () => {
                                 style={{ minHeight: "100vh" }}
                             >
                                 <div className="col-12 col-lg-8 order-details">
-                                    {/* <h2 className="my-5">Request  {request._id}</h2> */}
-
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="my-4 track-number">
@@ -129,7 +127,6 @@ const ProcessRequest = () => {
                                                 >
                                                     <option value="Approved">Approved</option>
                                                     <option value="Received">Received</option>
-                                                    {/* Add more options based on your requirements */}
                                                 </select>
                                             </div>
                                             <button
@@ -170,20 +167,6 @@ const ProcessRequest = () => {
 
                                     </div>
                                     <hr />
-
-                                    {/* <h4 className="my-4">Payment</h4>
-                  {paymentInfo ? (
-                    <div>
-                      <p>
-                        <b>Type:</b> {paymentInfo.type}
-                      </p>
-                    </div>
-                  ) : (
-                    <p>
-                      <b>Payment Information:</b> N/A
-                    </p>
-                  )} */}
-
                                     <h4 className="my-4">Request Status:</h4>
 
                                     <p
@@ -202,6 +185,7 @@ const ProcessRequest = () => {
                                             dateFormat="MMMM dd, yyyy"
                                             className="form-control"
                                             popperClassName="datepicker-popper"
+                                            minDate={new Date()}
                                         />
                                     </div>
 

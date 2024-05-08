@@ -104,117 +104,11 @@ const ProcessOrder = () => {
             {loading ? (
               <Loader />
             ) : (
-              // <div className="row d-flex justify-content-around">
-              //   <div className="col-12 col-lg-7 order-details">
-              //     <h2 className="my-5">Order # {order._id}</h2>
-
-              //     <p>
-              //       <b>Amount:</b> ₱{totalPrice}
-              //     </p>
-
-              //     <hr />
-
-              //     <h4 className="my-4">Payment</h4>
-              //     {order.paymentInfo ? (
-              //       <div>
-              //         <p><b>Type:</b> {order.paymentInfo.type}</p>
-              //       </div>
-              //     ) : (
-              //       <p><b>Payment Information:</b> N/A</p>
-              //     )}
-
-              //     <h4 className="my-4">Order Status:</h4>
-              //     <p
-              //       className={
-              //         order.orderStatus &&
-              //           String(order.orderStatus).includes("Received")
-              //           ? "greenColor"
-              //           : "redColor"
-              //       }
-              //     >
-              //       <b>{orderStatus}</b>
-              //     </p>
-
-              //     <div className="col-12 col-lg-3 mt-5">
-              //       <h4 className="my-4">Date of Release:</h4>
-              //       <DatePicker
-              //         selected={selectedDate}
-              //         onChange={handleDateChange}
-              //         dateFormat="MMMM dd, yyyy"
-              //         className="form-control"
-              //         popperClassName="datepicker-popper"
-              //       />
-              //     </div>
-
-              //     <h4 className="my-4">Order Items:</h4>
-
-              //     <hr />
-
-              //     <div className="cart-item my-1">
-              //       {orderItems &&
-              //         orderItems.map((item) => (
-              //           <div key={item.product} className="row my-5">
-              //             <div className="col-4 col-lg-2">
-              //               <img
-              //                 src={item.image}
-              //                 alt={item.productName}
-              //                 height="45"
-              //                 width="65"
-              //               />
-              //             </div>
-
-              //             <div className="col-5 col-lg-5">
-              //               <Link to={`/products/${item.product}`}>
-              //                 {item.productName}
-              //               </Link>
-              //             </div>
-
-              //             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-              //               <p>${item.price}</p>
-              //             </div>
-
-              //             <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-              //               <p>{item.quantity} Piece(s)</p>
-              //             </div>
-              //           </div>
-              //         ))}
-              //     </div>
-
-              //     <hr />
-              //   </div>
-
-              //   <div className="col-12 col-lg-3 mt-5">
-              //     <h4 className="my-4">Status</h4>
-
-              //     <div className="form-group">
-              //       <select
-              //         className="form-control"
-              //         name="status"
-              //         value={status}
-              //         onChange={(e) => setStatus(e.target.value)}
-              //       >
-              //         <option value="Processing">Pending</option>
-              //         <option value="Approved">Approved</option>
-              //         <option value="Received">Received</option>
-              //       </select>
-              //     </div>
-
-              //     <button
-              //       className="btn btn-primary btn-block"
-              //       onClick={() => updateOrderHandler(order._id)}
-              //       disabled={loadingUpdate}
-              //     >
-              //       {loadingUpdate ? 'Updating...' : 'Update Status'}
-              //     </button>
-              //   </div>
-              // </div>
               <div
                 className="d-flex justify-content-center align-items-center"
                 style={{ minHeight: "100vh" }}
               >
                 <div className="col-12 col-lg-8 order-details">
-                  {/* <h2 className="my-5">Request  {request._id}</h2> */}
-
                   <div className="row">
                     <div className="col-md-6">
                       <p className="my-4 track-number">
@@ -328,45 +222,16 @@ const ProcessOrder = () => {
                   <div className="text-center">
                     <h4 className="my-4">Schedule a Date of Release:</h4>
                   </div>
-                  <div style={{ textAlign: 'center' }}> {/* Set a minimum width for the DatePicker */}
+                  <div style={{ textAlign: 'center' }}>
                     <DatePicker
                       selected={selectedDate}
                       onChange={handleDateChange}
                       dateFormat="MMMM dd, yyyy"
                       className="form-control"
                       popperClassName="datepicker-popper"
+                      minDate={new Date()}
                     />
                   </div>
-
-
-                  {/* <h4 style={{ textAlign: "center" }}>Product Information</h4>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="my-4 students-name">
-                        {orderItems &&
-                          orderItems.map((item) => (
-                            <div key={item.product}>
-                              <p>{item.productName}</p>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="my-4 student-name">
-                        {orderItems &&
-                          orderItems.map((item) => (
-                            <div
-                              key={item.product}
-                              className="my-4 student-namee"
-                            >
-                              <p>Price: ₱{item.price}</p>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  </div> */}
-
                   <hr />
                 </div>
               </div>
