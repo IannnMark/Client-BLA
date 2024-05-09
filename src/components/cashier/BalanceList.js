@@ -5,7 +5,7 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getCashierBalance, deleteBalance, clearErrors } from "../../actions/balanceActions";
+import { getCashierBalance, deleteBalance, getAllBalance, clearErrors } from "../../actions/balanceActions";
 import { DELETE_BALANCE_RESET } from "../../constants/balanceConstants";
 
 
@@ -13,9 +13,11 @@ const BalanceList = () => {
     const dispatch = useDispatch();
     const { loading, error, balances } = useSelector((state) => state.balances);
     const { error: deleteError, isDeleted } = useSelector((state) => state.balance || {});
+    const { allbalances } = useSelector((state) => state.allbalances);
 
     useEffect(() => {
         dispatch(getCashierBalance());
+        dispatch(getAllBalance());
 
         if (error) {
             dispatch(clearErrors());
@@ -29,29 +31,35 @@ const BalanceList = () => {
             dispatch({ type: DELETE_BALANCE_RESET });
         }
     }, [dispatch, error, deleteError, isDeleted]);
-
     const setBalances = () => {
         const data = {
             columns: [
-                { label: "No.", field: "index" }, // New column for sequential numbers
+                { label: "No.", field: "index" },
                 { label: "Student Last Name", field: "lastname", sort: "asc" },
                 { label: "Grade", field: "grade", sort: "asc" },
                 { label: "Specific Balance", field: "specificBalance", sort: "asc" },
                 { label: "Amount", field: "amount", sort: "asc" },
+                { label: "Status", field: "status", sort: "asc" },
                 { label: "Date Created", field: "createdAt", sort: "asc" },
                 { label: "Actions", field: "actions" },
-
             ],
             rows: [],
         };
 
         if (balances) {
-            balances.forEach((balance, index) => { // Add index to the map function
+            balances.forEach((balance, index) => {
+                // Find the latest balance log
+                const latestBalanceLog = balance.balanceLogs.length > 0 ? balance.balanceLogs[balance.balanceLogs.length - 1] : null;
+
+                // Extract status from the latest balance log
+                const status = latestBalanceLog ? latestBalanceLog.status : "Status Not Available";
+
                 data.rows.push({
                     lastname: balance.lastname,
                     grade: balance.grade,
                     specificBalance: balance.specificBalance,
                     amount: `₱${balance.amount}`,
+                    status: status,
                     createdAt: new Date(balance.createdAt).toLocaleDateString(),
                     actions: (
                         <Fragment>
@@ -59,19 +67,23 @@ const BalanceList = () => {
                                 <i className="fa fa-pencil"></i>
                             </Link>
                             {/* <button
-                                className="btn btn-danger py-1 px-2 ml-2"
-                                onClick={() => deleteBalanceHandler(balance._id)}
-                            >
-                                <i className="fa fa-trash"></i>
-                            </button> */}
+                            className="btn btn-danger py-1 px-2 ml-2"
+                            onClick={() => deleteBalanceHandler(balance._id)}
+                        >
+                            <i className="fa fa-trash"></i>
+                        </button> */}
                         </Fragment>
                     ),
-                    index: index + 1, // Add sequential number
+                    index: index + 1,
                 });
             });
         }
         return data;
     };
+
+
+
+
 
     const deleteBalanceHandler = (id) => {
         dispatch(deleteBalance(id));
