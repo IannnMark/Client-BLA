@@ -72,7 +72,7 @@ export const getAllBalance = () => async (dispatch) => {
         };
 
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/cashier/balanceLogs`,
+            `${process.env.REACT_APP_API}api/v1/cashier/balanceLogs`,
             config
         );
 
