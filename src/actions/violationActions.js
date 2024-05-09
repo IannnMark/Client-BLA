@@ -17,6 +17,9 @@ import {
     VIOLATION_DETAILS_REQUEST,
     VIOLATION_DETAILS_SUCCESS,
     VIOLATION_DETAILS_FAIL,
+    ALL_VIOLATION_REQUEST,
+    ALL_VIOLATION_SUCCESS,
+    ALL_VIOLATION_FAIL,
 } from "../constants/violationConstants";
 
 export const clearErrors = () => async (dispatch) => {
@@ -47,6 +50,32 @@ export const getGuidanceViolations = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: GUIDANCE_VIOLATIONS_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
+
+
+export const getAllViolation = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_VIOLATION_REQUEST });
+
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API}api/v1/guidance/violationLogs`,
+            config
+        );
+
+        dispatch({
+            type: ALL_VIOLATION_SUCCESS,
+            payload: data.violationLogs,
+        });
+    } catch (error) {
+        dispatch({
+            type: ALL_VIOLATION_FAIL,
             payload: error.response.data.message,
         });
     }

@@ -27,6 +27,7 @@ import {
   newViolationReducer,
   violationReducer,
   violationDetailsReducer,
+  allViolationsReducer,
 } from "./reducers/violationReducers";
 
 import {
@@ -119,6 +120,7 @@ const reducer = combineReducers({
   newViolation: newViolationReducer,
   violation: violationReducer,
   violationDetails: violationDetailsReducer,
+  allviolations: allViolationsReducer,
   requestsPerMonth: requestsPerMonthReducer,
   documentSales: documentSalesReducer,
   customerRequests: customerRequestsReducer,

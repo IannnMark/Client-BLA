@@ -50,6 +50,7 @@ const ViolationsList = () => {
                 { label: "Grade Level", field: "grade", sort: "asc" },
                 { label: "Violation Type", field: "type", sort: "asc" },
                 { label: "Description", field: "description", sort: "asc" },
+                { label: "Status", field: "status", sort: "asc" },
                 { label: "Date", field: "date", sort: "asc" },
                 { label: "Actions", field: "actions" },
             ],
@@ -62,21 +63,24 @@ const ViolationsList = () => {
                 grade: violation.grade,
                 type: violation.type,
                 description: violation.description,
+                status: violation.status,
                 date: new Date(violation.date).toLocaleDateString(),
                 actions: (
                     <Fragment>
                         <Link
                             to={`/guidance/violation/${violation._id}`}
                             className="btn btn-primary py-1 px-2"
+                            style={{ marginLeft: "7.5px", marginBottom: "5px" }}
                         >
                             <i className="fa fa-pencil"></i>
                         </Link>
-                        <button
-                            className="btn btn-danger py-1 px-2 ml-2"
+                        {/* <button
+                            className="btn btn-danger py-1 px-2"
                             onClick={() => deleteViolationHandler(violation._id)}
+                            style={{ marginLeft: "9.5px" }}
                         >
                             <i className="fa fa-trash"></i>
-                        </button>
+                        </button> */}
                     </Fragment>
                 ),
             });

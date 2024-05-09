@@ -116,6 +116,14 @@ const GuidanceSidebar = () => {
                                             <i class="fa-solid fa-warehouse"></i> Clearance
                                         </a>
                                     </li>
+
+
+                                    <li>
+                                        <a href="/guidance/violation-logs">
+                                            <i class="fa fa-history"></i> Violation Logs
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>

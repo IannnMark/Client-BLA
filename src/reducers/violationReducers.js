@@ -18,6 +18,9 @@ import {
     VIOLATION_DETAILS_REQUEST,
     VIOLATION_DETAILS_SUCCESS,
     VIOLATION_DETAILS_FAIL,
+    ALL_VIOLATION_REQUEST,
+    ALL_VIOLATION_SUCCESS,
+    ALL_VIOLATION_FAIL,
 } from "../constants/violationConstants";
 
 const initialState = {
@@ -45,6 +48,34 @@ export const violationsReducer = (state = { loading: false, error: null, violati
                 ...state,
                 loading: false,
                 violations: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+export const allViolationsReducer = (state = { loading: false, error: null, allviolations: [] }, action) => {
+    switch (action.type) {
+        case ALL_VIOLATION_REQUEST:
+            return {
+                loading: true,
+                allviolations: [],
+            };
+        case ALL_VIOLATION_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case ALL_VIOLATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                allviolations: action.payload,
             };
         case CLEAR_ERRORS:
             return {

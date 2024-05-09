@@ -9,19 +9,15 @@ import { updateViolation, clearErrors, getViolationDetails } from "../../actions
 import { UPDATE_VIOLATION_RESET } from "../../constants/violationConstants";
 
 const UpdateViolation = () => {
-    const [type, setType] = useState("");
-    const [description, setDescription] = useState("");
+    const [status, setStatus] = useState("");
 
     const dispatch = useDispatch();
-    const violationState = useSelector((state) => state.violation);
-    // const { error, violation } = useSelector((state) => state.violation);
-    const { error, violation } = useSelector((state) => state.violationDetails); // Use the correct selector
+    const { error, violation } = useSelector((state) => state.violationDetails);
     const { loading, error: updateError, isUpdated } = useSelector(
         (state) => state.violation
     );
 
     let { id } = useParams();
-    console.log('ID:', id);// Add this line to check the value of id
     let navigate = useNavigate();
 
     const errMsg = (message = "") =>
@@ -38,7 +34,6 @@ const UpdateViolation = () => {
         const fetchData = async () => {
             try {
                 await dispatch(getViolationDetails(id));
-                console.log('Redux State After Fetch:', violationState);
             } catch (error) {
                 errMsg(`Error fetching violation details: ${error.message}`);
                 dispatch(clearErrors());
@@ -46,7 +41,6 @@ const UpdateViolation = () => {
         };
 
         fetchData();
-
 
         if (error) {
             errMsg(error);
@@ -65,36 +59,20 @@ const UpdateViolation = () => {
         }
     }, [dispatch, id, error, updateError, isUpdated, navigate]);
 
-
-
     const submitHandler = (e) => {
         e.preventDefault();
 
-        console.log('ID in submitHandler:', id);
-        console.log('Violation in submitHandler:', violation);
-        console.log('Type in submitHandler:', type);
-        console.log('Description in submitHandler:', description);
-
-        // Check if violation and id are available
         if (!violation || !id) {
             console.error('Violation or ID is undefined');
             return;
         }
 
-        // Check if type and description are available
-        if (!type || !description) {
-            console.error('Type or description is undefined');
-            return;
-        }
-
         const formData = {
-            type,
-            description,
+            status,
         };
 
         dispatch(updateViolation(violation._id, formData));
     };
-
 
     return (
         <Fragment>
@@ -114,24 +92,17 @@ const UpdateViolation = () => {
                                 <h1 className="mb-4">Update Violation</h1>
 
                                 <div className="form-group">
-                                    <label htmlFor="type_field">Type</label>
-                                    <input
-                                        type="text"
-                                        id="type_field"
+                                    <label htmlFor="status_field">Status</label>
+                                    <select
+                                        id="status_field"
                                         className="form-control"
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="description_field">Description</label>
-                                    <textarea
-                                        id="description_field"
-                                        className="form-control"
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
+                                        value={status}
+                                        onChange={(e) => setStatus(e.target.value)}
+                                    >
+                                        <option value="">Select Status</option>
+                                        <option value="No Violation">No Violation</option>
+                                        <option value="Violation">Violation</option>
+                                    </select>
                                 </div>
 
                                 <button

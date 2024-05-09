@@ -131,7 +131,7 @@ const CashierSidebar = () => {
 
                                 <li>
                                     <a href="/cashier/balance-logs">
-                                        <i class="fa-solid fa-warehouse"></i> Balance Logs
+                                        <i class="fa fa-history"></i> Balance Logs
                                     </a>
                                 </li>
 
