@@ -9,8 +9,8 @@ import { updateBalance, clearErrors, getBalanceDetails } from "../../actions/bal
 import { UPDATE_BALANCE_RESET } from "../../constants/balanceConstants";
 
 const UpdateBalance = () => {
-    const [specificBalance, setSpecificBalance] = useState("");
-    const [amount, setAmount] = useState("");
+    const [amountPaid, setAmountPaid] = useState(""); // State for amountPaid
+    const [status, setStatus] = useState("Unsettled"); // State for status
 
     const dispatch = useDispatch();
     const { error, balance } = useSelector((state) => state.balanceDetails);
@@ -68,14 +68,14 @@ const UpdateBalance = () => {
             return;
         }
 
-        if (!specificBalance || !amount) {
-            console.error('Specific Balance or Amount is undefined');
+        if (!amountPaid) { // Check if amountPaid is undefined
+            console.error('Amount Paid is undefined');
             return;
         }
 
         const formData = {
-            specificBalance,
-            amount,
+            amountPaid, // Include amountPaid in the form data
+            status, // Include status in the form data
         };
 
         dispatch(updateBalance(balance._id, formData));
@@ -99,29 +99,27 @@ const UpdateBalance = () => {
                                 <h1 className="mb-4">Update Balance</h1>
 
                                 <div className="form-group">
-                                    <label htmlFor="specific_balance_field">Specific Balance</label>
-                                    <select
-                                        id="specific_balance_field"
+                                    <label htmlFor="amountPaid">Amount Paid</label>
+                                    <input
+                                        type="number"
+                                        id="amountPaid"
                                         className="form-control"
-                                        value={specificBalance}
-                                        onChange={(e) => setSpecificBalance(e.target.value)}
-                                    >
-                                        <option value="" disabled>Select Specific Balance</option>
-                                        <option value="Tuition">Tuition</option>
-                                        <option value="Library_fines">Library Fines</option>
-                                        <option value="Cafeteria">Cafeteria</option>
-                                    </select>
+                                        value={amountPaid}
+                                        onChange={(e) => setAmountPaid(e.target.value)}
+                                    />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="amount_field">Amount</label>
-                                    <input
-                                        type="text"
-                                        id="amount_field"
+                                    <label htmlFor="status">Status</label>
+                                    <select
+                                        id="status"
                                         className="form-control"
-                                        value={amount}
-                                        onChange={(e) => setAmount(e.target.value)}
-                                    />
+                                        value={status}
+                                        onChange={(e) => setStatus(e.target.value)}
+                                    >
+                                        <option value="Unsettled">Unsettled</option>
+                                        <option value="Settled">Settled</option>
+                                    </select>
                                 </div>
 
                                 <button
@@ -142,3 +140,7 @@ const UpdateBalance = () => {
 };
 
 export default UpdateBalance;
+
+
+
+
