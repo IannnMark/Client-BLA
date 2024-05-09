@@ -75,6 +75,8 @@ const GuidanceSidebar = () => {
                                 backgroundColor: "#B1A078",
                                 marginTop: "-11px",
                                 zIndex: "1000",
+                                position: "sticky",
+                                height: "1000px",
                             }}
                             ref={sidebarRef}
                         >

@@ -43,22 +43,6 @@ const CashierSidebar = () => {
             dropdown.style.display === "none" ? "block" : "none";
     };
 
-    // const toggleDrawer = (open) => (event) => {
-    //     if (
-    //         event.type === 'keydown' &&
-    //         (event.key === 'Tab' || event.key === 'Shift')
-    //     ) {
-    //         return;
-    //     }
-
-    //     setOpen(open);
-    // };
-
-    // const [openBalances, setOpenBalances] = useState(false);
-
-    // const handleBalancesClick = () => {
-    //     setOpenBalances(!openBalances);
-    // };
 
     return (
         <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}>
@@ -93,6 +77,8 @@ const CashierSidebar = () => {
                             backgroundColor: "#B1A078",
                             marginTop: "-11px",
                             zIndex: "1000",
+                            position: "sticky",
+                            height: "1000px",
                         }}
                         ref={sidebarRef}
                     >
