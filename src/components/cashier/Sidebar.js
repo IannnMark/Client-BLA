@@ -127,6 +127,14 @@ const CashierSidebar = () => {
                                         </a>
                                     </ul>
                                 </li>
+
+
+                                <li>
+                                    <a href="/cashier/balance-logs">
+                                        <i class="fa-solid fa-warehouse"></i> Balance Logs
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -141,3 +149,4 @@ const CashierSidebar = () => {
 };
 
 export default CashierSidebar;
+

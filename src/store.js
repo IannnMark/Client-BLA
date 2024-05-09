@@ -34,6 +34,7 @@ import {
   newBalanceReducer,
   balanceReducer,
   balanceDetailsReducer,
+  allBalancesReducer,
 } from "./reducers/balanceReducers";
 
 import {
@@ -125,6 +126,7 @@ const reducer = combineReducers({
   newBalance: newBalanceReducer,
   balance: balanceReducer,
   balanceDetails: balanceDetailsReducer,
+  allbalances: allBalancesReducer,
   clearances: clearancesReducer,
   newClearance: newClearanceReducer,
   clearance: clearanceReducer,

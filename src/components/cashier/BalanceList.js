@@ -55,12 +55,12 @@ const BalanceList = () => {
                             <Link to={`/cashier/balance/${balance._id}`} className="btn btn-primary py-1 px-2">
                                 <i className="fa fa-pencil"></i>
                             </Link>
-                            <button
+                            {/* <button
                                 className="btn btn-danger py-1 px-2 ml-2"
                                 onClick={() => deleteBalanceHandler(balance._id)}
                             >
                                 <i className="fa fa-trash"></i>
-                            </button>
+                            </button> */}
                         </Fragment>
                     ),
                 });

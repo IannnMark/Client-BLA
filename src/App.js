@@ -61,6 +61,7 @@ import ClearanceList from "./components/guidance/ClearanceList";
 import ClearanceLists from "./components/user/ClearanceList";
 import StockHistory from "./components/admin/StockHistory";
 import Guest from "./components/user/Guest";
+import BalanceLogs from "./components/cashier/BalanceLogs";
 
 
 
@@ -462,6 +463,15 @@ function App() {
           element={
             <ProtectedRoute isAdmin={true}>
               <StockHistory />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cashier/balance-logs"
+          element={
+            <ProtectedRoute isCashier={true}>
+              <BalanceLogs />
             </ProtectedRoute>
           }
         />

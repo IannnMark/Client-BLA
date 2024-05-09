@@ -24,6 +24,10 @@ import {
     BALANCE_DETAILS_SUCCESS,
     BALANCE_DETAILS_FAIL,
 
+    ALL_BALANCE_REQUEST,
+    ALL_BALANCE_SUCCESS,
+    ALL_BALANCE_FAIL,
+
 } from "../constants/balanceConstants";
 
 const initialState = {
@@ -52,6 +56,35 @@ export const balancesReducer = (state = { loading: false, error: null, balances:
                 ...state,
                 loading: false,
                 balances: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+
+export const allBalancesReducer = (state = { loading: false, error: null, allbalances: [] }, action) => {
+    switch (action.type) {
+        case ALL_BALANCE_REQUEST:
+            return {
+                loading: true,
+                allbalances: [],
+            };
+        case ALL_BALANCE_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case ALL_BALANCE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                allbalances: action.payload,
             };
         case CLEAR_ERRORS:
             return {

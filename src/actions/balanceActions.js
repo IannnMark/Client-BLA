@@ -23,6 +23,10 @@ import {
     BALANCE_DETAILS_SUCCESS,
     BALANCE_DETAILS_FAIL,
 
+    ALL_BALANCE_REQUEST,
+    ALL_BALANCE_SUCCESS,
+    ALL_BALANCE_FAIL,
+
 } from "../constants/balanceConstants";
 
 
@@ -53,6 +57,32 @@ export const getCashierBalance = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CASHIER_BALANCE_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
+
+
+export const getAllBalance = () => async (dispatch) => {
+    try {
+        dispatch({ type: ALL_BALANCE_REQUEST });
+
+        const config = {
+            withCredentials: true,
+        };
+
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API}/api/v1/cashier/balanceLogs`,
+            config
+        );
+
+        dispatch({
+            type: ALL_BALANCE_SUCCESS,
+            payload: data.balanceLogs,
+        });
+    } catch (error) {
+        dispatch({
+            type: ALL_BALANCE_FAIL,
             payload: error.response.data.message,
         });
     }
