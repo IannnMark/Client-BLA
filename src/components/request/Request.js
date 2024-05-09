@@ -80,10 +80,13 @@ const DocumentRequest = () => {
                                                 <div className="col-5 col-lg-3">{document.name}</div>
 
                                                 <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                    <p>Price: ${document.price}</p>
+                                                    <p>Price: ₱{document.price.toLocaleString(undefined, {
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2,
+                                                    })}</p>
                                                 </div>
 
-                                                <div className="col-4 col-lg-1 mt-4 mt-lg-0">
+                                                <div className="col-8 col-lg-1 mt-4 ml-4 mt-lg-0">
                                                     <div className="actionButtons">
                                                         <i
                                                             className="fa fa-trash btn btn-danger"
@@ -123,7 +126,10 @@ const DocumentRequest = () => {
                                                     (acc, item) => acc + item.quantity * item.price,
                                                     0
                                                 )
-                                                .toFixed(2)}
+                                                .toLocaleString(undefined, {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })}
                                         </span>
                                     </p>
                                     <hr style={{ borderTop: '5px solid gray', width: '100%', fontWeight: 'bold' }} />

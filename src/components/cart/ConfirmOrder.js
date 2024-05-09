@@ -53,13 +53,16 @@ const ConfirmOrder = () => {
                   </div>
 
                   <div className="col-5 col-lg-6">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.productName}</Link>
                   </div>
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                     <p>
-                      {item.quantity} x ${item.price} ={" "}
-                      <b>${(item.quantity * item.price).toFixed(2)}</b>
+                      {item.quantity} x ₱{item.price} ={" "}
+                      <b>₱{(item.quantity * item.price).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}</b>
                     </p>
                   </div>
                 </div>
@@ -78,13 +81,20 @@ const ConfirmOrder = () => {
 
             <p>
               Subtotal:{" "}
-              <span className="order-summary-values">${itemsPrice}</span>
+              <span className="order-summary-values">₱{itemsPrice.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</span>
             </p>
 
             <hr />
 
             <p>
-              Total: <span className="order-summary-values">${totalPrice}</span>
+              Total: <span className="order-summary-values">₱{(parseFloat(totalPrice) || 0).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+              </span>
             </p>
 
             <hr />

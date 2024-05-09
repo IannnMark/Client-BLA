@@ -14,7 +14,9 @@ import {
 } from "../../actions/orderActions";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import "./admin.css";
 
 const OrdersList = () => {
   const dispatch = useDispatch();
@@ -33,15 +35,85 @@ const OrdersList = () => {
   const [showGradeFilter, setShowGradeFilter] = useState(false);
   const [showStatusFilter, setShowStatusFilter] = useState(false);
 
-  const pdfExportComponent = useRef(null);
-  const contentArea = useRef(null);
+  const generatePDF = () => {
+    const dataTableContent = document.querySelector(
+      ".custom-mdb-datatable .dataTable"
+    );
 
-  const handleExportWithComponent = () => {
-    pdfExportComponent.current.save();
-  };
+    const loggedInUser = "Jonara De Jesus";
 
-  const handleExportWithMethod = () => {
-    savePDF(contentArea.current, { paperSize: "A4" });
+    if (dataTableContent) {
+      // Get logo image data
+      const logoImg = new Image();
+      logoImg.src = "/images/school_logo.png"; // Replace 'path_to_your_logo_image.png' with the actual path to your logo image
+
+      // Fetch current date
+      const currentDate = new Date().toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+
+      // Assume you have the name of the logged-in user in a variable named loggedInUser
+      const printedBy = "Printed by: " + loggedInUser;
+
+      html2canvas(dataTableContent, { scale: 0.9 }).then((canvas) => {
+        const pdf = new jsPDF();
+        const imgData = canvas.toDataURL("image/png");
+        const imgWidth = pdf.internal.pageSize.getWidth() * 0.9; // Adjust the scale factor as needed
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const marginTop = 70; // Adjust the top margin as needed
+        const title = "Blessed Land Academy of Taguig";
+        const additionalText = "Reports for Order List";
+        const datePrintedText = "Date Printed: " + currentDate; // Format the date printed
+
+        // Calculate the x-coordinate to center the title horizontally
+        const textWidth =
+          pdf.getStringUnitWidth(title) * pdf.internal.getFontSize();
+        const centerX = (pdf.internal.pageSize.getWidth() - textWidth) / 2 + 80; // Adjust the left margin as needed
+        const texttWidth =
+          pdf.getStringUnitWidth(additionalText) * pdf.internal.getFontSize();
+        const centterX =
+          (pdf.internal.pageSize.getWidth() - texttWidth) / 5 + 68; // Adjust the left margin as needed
+        const datePrintedWidth =
+          pdf.getStringUnitWidth(datePrintedText) * pdf.internal.getFontSize();
+        const datePrintedX =
+          (pdf.internal.pageSize.getWidth() - datePrintedWidth) / 5 + 145; // Center the date printed horizontally
+        const printedByWidth =
+          pdf.getStringUnitWidth(printedBy) * pdf.internal.getFontSize();
+        const printedByX =
+          (pdf.internal.pageSize.getWidth() - printedByWidth) / 1 + 2; // Center the printed by horizontally
+
+        // Set font style
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(12); // Set font size
+
+        // Add logo to the PDF
+        pdf.addImage(logoImg, "PNG", 85, 5, 25, 25); // Adjust position and size as needed
+
+        // Add title to the PDF
+        pdf.text(title, centerX, 35); // Adjust Y coordinate to move the title down
+
+        // Add additional text to the PDF
+        pdf.text(additionalText, centterX, 45); // Adjust Y coordinate to move the additional text down
+
+        // Set font size for date printed text
+        pdf.setFontSize(10);
+
+        // Add date printed to the PDF
+        pdf.text(datePrintedText, datePrintedX, 60); // Adjust Y coordinate to move the date printed down
+
+        // Add printed by to the PDF
+        pdf.text(printedBy, printedByX, 60); // Adjust Y coordinate to move the printed by text down
+
+        // Move the image down by adding a margin
+        pdf.addImage(imgData, "PNG", 10, marginTop, imgWidth, imgHeight);
+        pdf.save("Order_List.pdf");
+      });
+    } else {
+      console.error("Data table content element not found.");
+    }
   };
 
   const errMsg = (message = "") =>
@@ -128,6 +200,8 @@ const OrdersList = () => {
 
     const gradeFilteredOrders = selectedGrade
       ? productFilteredOrders.filter((order) => {
+        // Adjust the logic based on your data structure
+        // Replace order.grade with the correct path to the grade in your data
         const userGrade = parseInt(order.grade, 10);
         const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
@@ -148,6 +222,11 @@ const OrdersList = () => {
         //   field: "id",
         //   sort: "asc",
         // },
+        {
+          label: "No.", // Add a label for the counter column
+          field: "index", // Use a field name for the counter column
+          sort: "asc", // Sort the counter column in ascending order
+        },
         {
           label: "User Last Name",
           field: "userLastName",
@@ -174,7 +253,7 @@ const OrdersList = () => {
           sort: "asc",
         },
         {
-          label: "Release of Order",
+          label: "Release Date",
           field: "dateRelease",
           sort: "asc",
         },
@@ -191,7 +270,7 @@ const OrdersList = () => {
       rows: [],
     };
 
-    sortedFilteredOrders.forEach((order) => {
+    sortedFilteredOrders.forEach((order, index) => {
       const formattedCreatedDate = order.createdAt
         ? new Date(order.createdAt).toLocaleDateString()
         : "N/A";
@@ -221,21 +300,38 @@ const OrdersList = () => {
             <p style={{ color: "red" }}>{order.orderStatus}</p>
           ),
         actions: (
+          // <Fragment>
+          //   <Link
+          //     to={`/admin/order/${order._id}`}
+          //     className="btn btn-primary py-1 px-2"
+          //   >
+          //     <i className="fa fa-eye"></i>
+          //   </Link>
+          //   <button
+          //     className="btn btn-danger py-1 px-2 ml-2"
+          //     onClick={() => deleteOrderHandler(order._id)}
+          //   >
+          //     <i className="fa fa-trash"></i>
+          //   </button>
+          // </Fragment>
           <Fragment>
             <Link
               to={`/admin/order/${order._id}`}
               className="btn btn-primary py-1 px-2"
+              style={{ marginLeft: "7.5px", marginBottom: "5px" }}
             >
               <i className="fa fa-eye"></i>
             </Link>
             <button
-              className="btn btn-danger py-1 px-2 ml-2"
+              className="btn btn-danger py-1 px-2"
               onClick={() => deleteOrderHandler(order._id)}
+              style={{ marginLeft: "9.5px" }}
             >
-              <i className="fa fa-trash"></i>
+              <i className="fa fa-trash-o"></i>
             </button>
           </Fragment>
         ),
+        index: index + 1, // New field to hold the sequential number
       });
     });
 
@@ -263,15 +359,16 @@ const OrdersList = () => {
                 <br />
                 <br />
                 {showDateFilter && (
-                  <div className="date-input-section" style={{ marginLeft: '30px', fontWeight: "bold" }}>
+                  <div
+                    className="date-input-section"
+                    style={{ marginLeft: "30px", fontWeight: "bold" }}
+                  >
                     <div>
                       <label style={{ marginRight: "5px" }}>Start Date: </label>
                       <input
                         style={{ fontWeight: "bold" }}
                         type="date"
-                        onChange={(e) =>
-                          setStartDate(new Date(e.target.value))
-                        }
+                        onChange={(e) => setStartDate(new Date(e.target.value))}
                       />
                     </div>
                     <div className="mt-3">
@@ -287,22 +384,20 @@ const OrdersList = () => {
               </div>
 
               <div className="col-md-3">
-                <button
-                  className="toggle-button"
-                  onClick={toggleProductFilter}
-                >
+                <button className="toggle-button" onClick={toggleProductFilter}>
                   Filtered by Products
                 </button>
                 <br />
                 <br />
                 {showProductFilter && (
-                  <div className="product-input-section" style={{ marginLeft: '80px', fontWeight: "bold" }}>
+                  <div
+                    className="product-input-section"
+                    style={{ marginLeft: "80px", fontWeight: "bold" }}
+                  >
                     <label style={{ marginRight: "10px" }}>Product: </label>
                     <select
                       style={{ fontWeight: "bold" }}
-                      onChange={(e) =>
-                        setSelectedProduct(e.target.value)
-                      }
+                      onChange={(e) => setSelectedProduct(e.target.value)}
                       value={selectedProduct}
                     >
                       <option value="">All</option>
@@ -323,7 +418,10 @@ const OrdersList = () => {
                 <br />
                 <br />
                 {showGradeFilter && (
-                  <div className="grade-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
+                  <div
+                    className="grade-input-section"
+                    style={{ marginLeft: "70px", fontWeight: "bold" }}
+                  >
                     <label style={{ marginRight: "10px" }}>Grade: </label>
                     <select
                       style={{ fontWeight: "bold" }}
@@ -342,24 +440,21 @@ const OrdersList = () => {
                 )}
               </div>
 
-
               <div className="col-md-3">
-                <button
-                  className="toggle-button"
-                  onClick={toggleStatusFilter}
-                >
+                <button className="toggle-button" onClick={toggleStatusFilter}>
                   Filtered by Status
                 </button>
                 <br />
                 <br />
                 {showStatusFilter && (
-                  <div className="status-input-section" style={{ marginLeft: '70px', fontWeight: "bold" }}>
+                  <div
+                    className="status-input-section"
+                    style={{ marginLeft: "70px", fontWeight: "bold" }}
+                  >
                     <label style={{ marginRight: "5px" }}>Status: </label>
                     <select
                       style={{ fontWeight: "bold" }}
-                      onChange={(e) =>
-                        setSelectedStatus(e.target.value)
-                      }
+                      onChange={(e) => setSelectedStatus(e.target.value)}
                       value={selectedStatus}
                     >
                       <option value="">All</option>
@@ -371,50 +466,52 @@ const OrdersList = () => {
                 )}
               </div>
             </div>
-
-            <button onClick={handleExportWithMethod}>Download Reports</button>
-
-            <PDFExport ref={pdfExportComponent}>
-              <div ref={contentArea}>
-                {loading ? (
-                  <Loader />
-                ) : (
-                  <MDBDataTable
-                    data={setOrders()}
-                    className="px-3 custom-mdb-datatable"
-                    bordered
-                    striped
-                    hover
-                    noBottomColumns
-                    responsive
-                    searching={false}
-                    entriesLabel="Show entries"
-                    entriesOptions={[10, 20, 30, 40, 50, 100, 200, 300]}
-                    infoLabel={["Showing", "to", "of", "entries"]}
-                    paginationLabel={["Previous", "Next"]}
-                    responsiveSm
-                    responsiveMd
-                    responsiveLg
-                    responsiveXl
-                    noRecordsFoundLabel="No records found"
-                    paginationRowsPerPageOptions={[10, 20, 30]}
-                    pagingTop
-                    pagingBottom
-                    paginationLabels={["Previous", "Next"]}
-                    style={{
-                      fontSize: "16px",
-                      fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
-                    }}
-                    tbodyTextBlack
-                    tbodyBorderY
-                    tbodyBorderX
-                    tbodyBorderBottom
-                    tbodyBorderTop
-                  />
-                )}
+            <div class="row ml-4">
+              <div class="col-6 col-sm-3">
+                <button onClick={generatePDF} class="button-28">
+                  Generate PDF
+                </button>
               </div>
-            </PDFExport>
+            </div>
 
+            {loading ? (
+              <Loader />
+            ) : (
+              <MDBDataTable
+                data={setOrders()}
+                className="px-3 custom-mdb-datatable"
+                bordered
+                striped
+                hover
+                noBottomColumns
+                responsive
+                searching={true} // Enable searching
+                searchLabel="Search..." // Customize search input placeholder
+                entriesLabel="Show entries"
+                entriesOptions={[10, 20, 30, 40, 50, 100, 200, 300]}
+                infoLabel={["Showing", "to", "of", "entries"]}
+                paginationLabel={["Previous", "Next"]}
+                responsiveSm
+                responsiveMd
+                responsiveLg
+                responsiveXl
+                noRecordsFoundLabel="No records found"
+                paginationRowsPerPageOptions={[10, 20, 30]}
+                pagingTop
+                pagingBottom
+                paginationLabels={["Previous", "Next"]}
+                style={{
+                  fontSize: "16px",
+                  fontFamily:
+                    "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                }}
+                tbodyTextBlack
+                tbodyBorderY
+                tbodyBorderX
+                tbodyBorderBottom
+                tbodyBorderTop
+              />
+            )}
           </Fragment>
         </div>
       </div>
@@ -423,3 +520,4 @@ const OrdersList = () => {
 };
 
 export default OrdersList;
+

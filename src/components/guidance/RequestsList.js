@@ -36,8 +36,6 @@ const RequestsList = () => {
         }
     }, [dispatch, error, navigate, isDeleted]);
 
-
-
     const setRequests = () => {
         const sortedRequests = [...requests].sort(
             (a, b) => new Date(b.dateofRequest) - new Date(a.dateofRequest)
@@ -47,11 +45,11 @@ const RequestsList = () => {
 
         const data = {
             columns: [
-                // {
-                //     label: "Tracking ID",
-                //     field: "id",
-                //     sort: "asc",
-                // },
+                {
+                    label: "No.", // Sequential number column
+                    field: "index",
+                    sort: "asc",
+                },
                 {
                     label: "User Last Name",
                     field: "userLastName",
@@ -77,15 +75,13 @@ const RequestsList = () => {
                     field: "requestedDocuments",
                     sort: "asc",
                 },
-
                 {
                     label: "Date Requested",
                     field: "dateofRequest",
                     sort: "asc",
                 },
-
                 {
-                    label: "Date Releasing",
+                    label: "Date Release",
                     field: "dateRelease",
                     sort: "asc",
                 },
@@ -102,7 +98,7 @@ const RequestsList = () => {
             rows: [],
         };
 
-        sortedRequests.forEach((request) => {
+        sortedRequests.forEach((request, index) => {
             const formattedCreatedDate = request.dateofRequest
                 ? new Date(request.dateofRequest).toLocaleDateString()
                 : "N/A";
@@ -117,11 +113,11 @@ const RequestsList = () => {
                 request.requestItems.map((item) => item.name).join(", ");
 
             data.rows.push({
-                // id: request._id,
+                index: index + 1, // Add sequential number
                 userLastName: request.user?.lastname,
                 grade: request.user?.grade,
                 numofRequests: request.requestItems.length,
-                amount: `$${request.totalPrice}`,
+                amount: `₱${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
@@ -163,8 +159,8 @@ const RequestsList = () => {
                         {loading ? (
                             <Loader />
                         ) : (
-                            <MDBDataTable data={
-                                setRequests()}
+                            <MDBDataTable
+                                data={setRequests()}
                                 className="px-4"
                                 bordered
                                 striped
@@ -174,7 +170,8 @@ const RequestsList = () => {
                                 hover
                                 noBottomColumns
                                 responsive
-                                searching={false}
+                                searching={true} // Enable searching
+                                searchLabel="Search..." // Customize search input placeholder
                                 entriesLabel="Show entries"
                                 entriesOptions={[10, 20, 30]}
                                 infoLabel={["Showing", "to", "of", "entries"]}
@@ -198,7 +195,8 @@ const RequestsList = () => {
                                 tbodyBorderY
                                 tbodyBorderX
                                 tbodyBorderBottom
-                                tbodyBorderTop />
+                                tbodyBorderTop
+                            />
                         )}
                     </Fragment>
                 </div>

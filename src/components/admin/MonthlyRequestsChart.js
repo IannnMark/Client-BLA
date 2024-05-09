@@ -18,19 +18,15 @@ export default function MonthlyRequestsChart({ data }) {
         }
         return "";
     };
+
     return (
         <ResponsiveContainer width="90%" height={300}>
-            <LineChart
-                width={600}
-                height={300}
-                data={data}
-                margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-            >
-                <Line type="monotone" dataKey="total" stroke="#8884d8" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="month" />
-                <YAxis />
+            <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <CartesianGrid stroke="#d0d0d0" strokeDasharray="3 3" />
+                <XAxis dataKey="month" axisLine={{ stroke: "#8884d8" }} />
+                <YAxis axisLine={{ stroke: "#8884d8" }} />
                 <Tooltip />
+                <Line type="monotone" dataKey="total" stroke="#8884d8" />
             </LineChart>
         </ResponsiveContainer>
     );

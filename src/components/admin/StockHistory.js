@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAdminProducts, clearErrors } from "../../actions/productActions";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import "./admin.css";
 
 const ProductsList = () => {
     const dispatch = useDispatch();
@@ -122,26 +123,76 @@ const ProductsList = () => {
     // };
 
     const generatePDF = () => {
-        const dataTableContent = document.querySelector(".custom-mdb-datatable .dataTable");
+        const dataTableContent = document.querySelector(
+            ".custom-mdb-datatable .dataTable"
+        );
+
+        const loggedInUser = "Jonara De Jesus";
 
         if (dataTableContent) {
+            // Get logo image data
+            const logoImg = new Image();
+            logoImg.src = "/images/school_logo.png"; // Replace 'path_to_your_logo_image.png' with the actual path to your logo image
+
+            // Fetch current date
+            const currentDate = new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+
+            // Assume you have the name of the logged-in user in a variable named loggedInUser
+            const printedBy = "Printed by: " + loggedInUser;
+
             html2canvas(dataTableContent, { scale: 0.9 }).then((canvas) => {
                 const pdf = new jsPDF();
                 const imgData = canvas.toDataURL("image/png");
                 const imgWidth = pdf.internal.pageSize.getWidth() * 0.9; // Adjust the scale factor as needed
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                const marginTop = 20; // Adjust the top margin as needed
-                const title = "Your Title Here";
+                const marginTop = 70; // Adjust the top margin as needed
+                const title = "Blessed Land Academy of Taguig";
+                const additionalText = "Reports for Products Log";
+                const datePrintedText = "Date Printed: " + currentDate; // Format the date printed
 
                 // Calculate the x-coordinate to center the title horizontally
-                const textWidth = pdf.getStringUnitWidth(title) * pdf.internal.getFontSize();
-                const centerX = (pdf.internal.pageSize.getWidth() - textWidth) / 2;
+                const textWidth =
+                    pdf.getStringUnitWidth(title) * pdf.internal.getFontSize();
+                const centerX = (pdf.internal.pageSize.getWidth() - textWidth) / 2 + 80; // Adjust the left margin as needed
+                const texttWidth =
+                    pdf.getStringUnitWidth(additionalText) * pdf.internal.getFontSize();
+                const centterX =
+                    (pdf.internal.pageSize.getWidth() - texttWidth) / 5 + 68; // Adjust the left margin as needed
+                const datePrintedWidth =
+                    pdf.getStringUnitWidth(datePrintedText) * pdf.internal.getFontSize();
+                const datePrintedX =
+                    (pdf.internal.pageSize.getWidth() - datePrintedWidth) / 5 + 145; // Center the date printed horizontally
+                const printedByWidth =
+                    pdf.getStringUnitWidth(printedBy) * pdf.internal.getFontSize();
+                const printedByX =
+                    (pdf.internal.pageSize.getWidth() - printedByWidth) / 1 + 2; // Center the printed by horizontally
+
+                // Set font style
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(12); // Set font size
+
+                // Add logo to the PDF
+                pdf.addImage(logoImg, "PNG", 85, 5, 25, 25); // Adjust position and size as needed
 
                 // Add title to the PDF
-                pdf.text(title, centerX, 10);
+                pdf.text(title, centerX, 35); // Adjust Y coordinate to move the title down
 
-                // Add text to the PDF
-                pdf.text("Product Stock History", 10, 35); // Adjust the position accordingly
+                // Add additional text to the PDF
+                pdf.text(additionalText, centterX, 45); // Adjust Y coordinate to move the additional text down
+
+                // Set font size for date printed text
+                pdf.setFontSize(10);
+
+                // Add date printed to the PDF
+                pdf.text(datePrintedText, datePrintedX, 60); // Adjust Y coordinate to move the date printed down
+
+                // Add printed by to the PDF
+                pdf.text(printedBy, printedByX, 60); // Adjust Y coordinate to move the printed by text down
 
                 // Move the image down by adding a margin
                 pdf.addImage(imgData, "PNG", 10, marginTop, imgWidth, imgHeight);
@@ -151,10 +202,6 @@ const ProductsList = () => {
             console.error("Data table content element not found.");
         }
     };
-
-
-
-
 
     return (
         <Fragment>
@@ -167,13 +214,29 @@ const ProductsList = () => {
                     <Fragment>
                         <h1 className="my-5">Merch Stock History</h1>
                         <div className="mb-4">
-                            <label htmlFor="statusFilter" style={{ fontWeight: "bold", fontSize: "14px", marginRight: "10px", display: "block", margin: "0 auto", textAlign: "center" }}>Filter by Status</label>
+                            <label
+                                htmlFor="statusFilter"
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: "14px",
+                                    marginRight: "10px",
+                                    display: "block",
+                                    margin: "0 auto",
+                                    textAlign: "center",
+                                }}
+                            >
+                                Filter by Status
+                            </label>
                             <select
                                 id="statusFilter"
                                 className="form-control"
                                 value={selectedStatus}
                                 onChange={handleStatusChange}
-                                style={{ width: "500px", margin: "0 auto", textAlign: "center" }}
+                                style={{
+                                    width: "500px",
+                                    margin: "0 auto",
+                                    textAlign: "center",
+                                }}
                             >
                                 <option value="">All</option>
                                 <option value="Pending">Pending</option>
@@ -181,7 +244,12 @@ const ProductsList = () => {
                                 <option value="Received">Received</option>
                             </select>
                         </div>
-                        <button onClick={generatePDF}>Generate PDF</button>
+                        <div class="col align-self-center">
+                            <button onClick={generatePDF} class="button-28">
+                                Generate PDF
+                            </button>
+                        </div>
+
                         <div className="custom-mdb-datatable">
                             {loading ? (
                                 <Loader />
@@ -194,9 +262,10 @@ const ProductsList = () => {
                                     hover
                                     noBottomColumns
                                     responsive
-                                    searching={false}
+                                    searching={true} // Enable searching
+                                    searchLabel="Search..." // Customize search input placeholder00
                                     entriesLabel="Show entries"
-                                    entriesOptions={[10, 20, 30]}
+                                    entriesOptions={[10, 20, 30, 40]}
                                     infoLabel={["Showing", "to", "of", "entries"]}
                                     paginationLabel={["Previous", "Next"]}
                                     responsiveSm

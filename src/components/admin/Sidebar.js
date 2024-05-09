@@ -53,7 +53,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}>
+      <div className={`sidebar-container ${open ? "sidebar-open" : ""}`}  >
         {!open && (
           <div
             className="sidebar-icon-button"
@@ -83,8 +83,10 @@ const Sidebar = () => {
               className="custom-drawer"
               style={{
                 backgroundColor: "#B1A078",
-                marginTop: "-11px",
+                marginTop: "1px",
                 zIndex: "1000",
+                position: "sticky",
+                height: "1000px", // Adjust this value as needed
               }}
               ref={sidebarRef}
             >

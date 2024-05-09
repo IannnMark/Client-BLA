@@ -16,9 +16,13 @@ import { getAdminDocuments } from "../../actions/documentActions";
 import { allOrders } from "../../actions/orderActions";
 import { allRequests } from "../../actions/inquiriesActions";
 import { allUsers, userSales, userRequests } from "../../actions/userActions";
-import { monthlySalesChart, productSalesChart, monthlyRequestsChart, documentSalesChart } from "../../actions/chartActions";
+import {
+  monthlySalesChart,
+  productSalesChart,
+  monthlyRequestsChart,
+  documentSalesChart,
+} from "../../actions/chartActions";
 import PaymentMethodChart from "./PaymentMethodChart";
-
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -26,11 +30,13 @@ const Dashboard = () => {
   const { users } = useSelector((state) => state.allUsers);
   const { documents } = useSelector((state) => state.documents);
   const { requests, totalARequest } = useSelector((state) => state.allRequests);
-  const { orders, totalAmount, loading } = useSelector((state) => state.allOrders);
+  const { orders, totalAmount, loading } = useSelector(
+    (state) => state.allOrders
+  );
   const { customerSales } = useSelector((state) => state.customerSales);
   const { salesPerMonth } = useSelector((state) => state.salesPerMonth);
   const { productSales } = useSelector((state) => state.productSales);
-  const { requestsPerMonth } = useSelector((state) => state.requestsPerMonth)
+  const { requestsPerMonth } = useSelector((state) => state.requestsPerMonth);
   const { documentSales } = useSelector((state) => state.documentSales);
   const { customerRequests } = useSelector((state) => state.customerRequests);
   let outOfStock = 0;
@@ -42,7 +48,6 @@ const Dashboard = () => {
       }
     });
   }
-
 
   useEffect(() => {
     dispatch(getAdminProducts());
@@ -60,7 +65,7 @@ const Dashboard = () => {
 
   return (
     <Fragment>
-      <div className="row" style={{ backgroundColor: '#D3D3D3' }}>
+      <div className="row" style={{ backgroundColor: "#D3D3D3" }}>
         <div className="col-md-1">
           <Sidebar />
         </div>
@@ -74,23 +79,25 @@ const Dashboard = () => {
             <Fragment>
               <MetaData title={"Admin Dashboard"} />
 
-              <div className="row pr-4">
+              <div className="row pr-0">
                 <div className="col-xl-12 col-sm-12 mb-3">
                   <div className="card text-white bg-brown o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
-                        <br /> <b>₱{totalAmount && totalAmount.toFixed(2)}</b>
+                        <br /> <b>₱ {totalAmount && totalAmount.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}</b>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="row pr-4">
-
+              <div className="row pr-0">
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-redd o-hidden h-100">
+                  <div className="card text-black bg-redd o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Documents
@@ -118,7 +125,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <Link
-                      className="card-footer text-black clearfix small z-1"
+                      className="card-footer text-white clearfix small z-1"
                       to="/admin/requests"
                     >
                       <span className="float-left">View Details</span>
@@ -130,7 +137,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-darkbrownn o-hidden h-100">
+                  <div className="card text-black bg-darkbrownn o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Products
@@ -150,7 +157,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-xl-3 col-sm-6 mb-3">
-                  <div className="card text-white bg-lightt o-hidden h-100">
+                  <div className="card text-black bg-lightt o-hidden h-100">
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Orders
@@ -201,74 +208,69 @@ const Dashboard = () => {
                 </div>
               </div>
 
+              <div className="row">
+                <div className="col">
+                  <div
+                    className="card text-center card-font-size chart-card"
+                    style={{ height: "500px" }}
+                  >
+                    <div className="card-body">
+                      <div className="text-center card-font-size">
+                        Top Users for Document Requests
+                      </div>
+                      <br></br>
+                      <br></br>
+                      <UserRequestsChart data={customerRequests} />
+                    </div>
+                  </div>
+                </div>
 
+                <div className="col">
+                  <div
+                    className="card text-center card-font-size chart-card"
+                    style={{ height: "500px" }}
+                  >
+                    <div className="card-body">
+                      <div className="text-center card-font-size">
+                        Percentage Per Document
+                      </div>
+                      <DocumentSalesChart data={documentSales} />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div className="row">
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
+                <div className="col">
+                  <div
+                    className="card text-center card-font-size chart-card"
+                    style={{ height: "500px" }}
+                  >
                     <div className="card-body">
-                      <div className="text-center card-font-size">Monthly Requests</div>
+                      <div className="text-center card-font-size">
+                        Monthly Request Sales
+                      </div>
+                      <br></br>
+                      <br></br>
                       <MonthlyRequestsChart data={requestsPerMonth} />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
+                <div className="col">
+                  <div
+                    className="card text-center card-font-size chart-card"
+                    style={{ height: "500px" }}
+                  >
                     <div className="card-body">
-                      <div className="text-center card-font-size">Document Requests</div>
-                      <DocumentSalesChart data={documentSales} />
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">Users Requests</div>
-                      <UserRequestsChart data={customerRequests} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">Customer Sales</div>
-                      <UserSalesChart data={customerSales} />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">Monthly Sales</div>
-                      <MonthlySalesChart data={salesPerMonth} />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">Product Sales</div>
-                      <ProductSalesChart data={productSales} />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="card text-center card-font-size chart-card">
-                    <div className="card-body">
-                      <div className="text-center card-font-size">Request Payments</div>
+                      <div className="text-center card-font-size">
+                        Percentage Per Payment Method
+                      </div>
                       <PaymentMethodChart requests={requests} />
                     </div>
                   </div>
                 </div>
               </div>
-
-
             </Fragment>
           )}
         </div>

@@ -37,6 +37,10 @@ const Cart = () => {
     navigate("/products");
   };
 
+  const addProductHandler = () => {
+    navigate("/products");
+  };
+
   let navigate = useNavigate();
 
   return (
@@ -46,7 +50,6 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <h2 className="cartt">
           Your Cart is Empty
-
           <button className="button-533" style={{}} onClick={handleButtonClick}>
             Buy Merch
           </button>
@@ -56,21 +59,30 @@ const Cart = () => {
           <br></br>
           <br></br>
           <br></br>
-
         </h2>
       ) : (
         <Fragment>
-          <h2 className="mt-5">
-            Your Cart: <b>{cartItems.length} items</b>
+          <h2 className="titlee">
+            Merch List:&nbsp;
+            <b>
+              {cartItems.length}&nbsp;
+              {cartItems.length === 1 ? "item" : "items"}
+            </b>
           </h2>
-
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8">
               {cartItems.map((item) => (
                 <Fragment key={item.product}>
-                  <hr />
+                  <br></br>
+                  <hr
+                    style={{
+                      borderTop: "5px solid gray",
+                      width: "100%",
+                      fontWeight: "bold",
+                    }}
+                  />
 
-                  <div className="cart-item">
+                  <div className="document-item">
                     <div className="row">
                       <div className="col-4 col-lg-3">
                         <img
@@ -79,14 +91,6 @@ const Cart = () => {
                           height="90"
                           width="115"
                         />
-                      </div>
-
-                      <div className="col-5 col-lg-3">
-                        {item.product.productName}
-                      </div>
-
-                      <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p id="card_item_price">${item.price}</p>
                       </div>
 
                       <div className="col-4 col-lg-3 mt-4 mt-lg-0">
@@ -122,48 +126,86 @@ const Cart = () => {
                         </div>
                       </div>
 
+                      <div className="col-5 col-lg-3">
+                        {item.product.productName}
+                      </div>
+
+                      <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                        <p>Price: ₱{item.price.toFixed(2)}</p>
+                      </div>
+
                       <div className="col-4 col-lg-1 mt-4 mt-lg-0">
-                        <i
-                          id="delete_cart_item"
-                          className="fa fa-trash btn btn-danger"
-                          onClick={() => removeCartItemHandler(item.product)}
-                        ></i>
+                        <div className="actionButtons">
+                          <i
+                            className="fa fa-trash btn btn-danger"
+                            onClick={() => removeCartItemHandler(item.product)}
+                          ></i>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <hr />
+                  <hr
+                    style={{
+                      borderTop: "5px solid gray",
+                      width: "100%",
+                      fontWeight: "bold",
+                    }}
+                  />
                 </Fragment>
               ))}
             </div>
 
-            <div className="col-12 col-lg-3 my-4">
+            <div
+              className="col-12 col-lg-3 my-4"
+              style={{ position: "relative", left: "-20px" }}
+            >
               <div id="order_summary">
                 <h4>Order Summary</h4>
-                <hr />
+                <hr
+                  style={{
+                    borderTop: "5px solid gray",
+                    width: "100%",
+                    fontWeight: "bold",
+                  }}
+                />
                 <p>
-                  Subtotal:{" "}
+                  Number of purchase:{" "}
                   <span className="order-summary-values">
-                    {cartItems.reduce(
-                      (acc, item) => acc + Number(item.quantity),
-                      0
-                    )}{" "}
-                    (Units)
+                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}{" "}
                   </span>
                 </p>
                 <p>
                   Est. total:{" "}
+                  {/* <span className="order-summary-values">
+                        ₱
+                        {cartItems
+                            .reduce(
+                            (acc, item) => acc + item.quantity * item.price,
+                            0
+                            )
+                            .toFixed(2)}
+                        </span> */}
                   <span className="order-summary-values">
-                    $
+                    ₱
                     {cartItems
                       .reduce(
                         (acc, item) => acc + item.quantity * item.price,
                         0
                       )
-                      .toFixed(2)}
+                      .toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                   </span>
                 </p>
-                <hr />
+                <hr
+                  style={{
+                    borderTop: "5px solid gray",
+                    width: "100%",
+                    fontWeight: "bold",
+                  }}
+                />
                 <button
                   id="checkout_btn"
                   className="btn btn-primary btn-block"
@@ -171,9 +213,23 @@ const Cart = () => {
                 >
                   Check out
                 </button>
+
+                <button
+                  id="adddocu_btn"
+                  className="btn btn-primary btn-block"
+                  onClick={addProductHandler}
+                >
+                  Add Merch
+                </button>
               </div>
             </div>
           </div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
         </Fragment>
       )}
     </Fragment>

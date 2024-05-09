@@ -12,13 +12,21 @@ import {
 } from "recharts";
 
 export default function UserRequestsChart({ data }) {
-    const barColors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#a02c2c"];
+    const barColors = ["#FFCBCB", "#FFBB70", "#BED7DC", "#9195F6", "#535C91", "#C68484", "#40A2E3", "#DCFFB7"];
     return (
-        <ResponsiveContainer width="90%" height={300}>
+        <ResponsiveContainer width="80%" height={360}> {/* Increase the height */}
             <BarChart data={data}>
                 <CartesianGrid strokeDasharray="2 2" />
-                <XAxis dataKey="userDetails.name" />
-                <YAxis />
+                <XAxis dataKey="userDetails.firstname" tick={{ fontSize: 12 }} />
+                <YAxis
+                    label={{
+                        value: '',
+                        angle: -90,
+                        position: 'insideLeft'
+                    }}
+                    tick={{ fontSize: 15, fill: 'black' }}
+                    axisLine={false}
+                />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="total" stroke="#000000" strokeWidth={5}>

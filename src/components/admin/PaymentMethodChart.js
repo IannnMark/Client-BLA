@@ -27,7 +27,7 @@ export default function RequestPaymentMethodChart({ requests }) {
     };
 
     // Set colors for the pie chart
-    const pieColors = ["#1D2B53", "#FF6868", "#FFBB64", "#FFEAA7", "#FF33FF"];
+    const pieColors = ["#4F709C", "#99627A", "#FFBB64", "#FFEAA7", "#FF33FF"];
 
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({
@@ -56,17 +56,21 @@ export default function RequestPaymentMethodChart({ requests }) {
         );
     };
 
+    const chartSize = 425; // Set the size of the pie chart
+
     return (
-        <div style={{ width: "100%", height: "500px", textAlign: "center" }}>
-            <ResponsiveContainer>
+        <div style={{ width: "100%", height: chartSize }}>
+            <ResponsiveContainer width="100%" height={chartSize}>
                 <PieChart>
                     <Pie
                         dataKey="value"
                         nameKey="name"
+                        isAnimationActive={true}
                         data={data}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={150} // Adjust outerRadius to make the pie smaller
+                        cx="48%"
+                        cy="55%"
+                        outerRadius="80%"
+                        innerRadius={0} // Setting innerRadius to 0 creates a pie chart instead of a doughnut chart
                         fill="#8884d8"
                         label={renderCustomizedLabel}
                         labelLine={false}
@@ -81,40 +85,23 @@ export default function RequestPaymentMethodChart({ requests }) {
                     <Tooltip />
                     <Legend
                         layout="vertical"
-                        verticalAlign="middle" // Adjust verticalAlign to your preference
+                        verticalAlign="top"
                         align="right"
                         content={(props) => {
                             const { payload } = props;
                             return (
-                                <ul
-                                    className="legend"
-                                    style={{
-                                        listStyle: "none",
-                                        padding: 0,
-                                        fontSize: legendStyle.fontSize,
-                                    }}
-                                >
+                                <ul className="legend" style={{ listStyle: "none", padding: 10, fontSize: legendStyle.fontSize, textAlign: "left", textIndent: "-10px", fontWeight: "bold", marginRight: "115px", marginTop: "150px" }}>
                                     {payload.map((entry, index) => (
-                                        <li
-                                            key={`legend-${index}`}
-                                            style={{ color: legendStyle.color }}
-                                        >
-                                            <span
-                                                style={{
-                                                    backgroundColor: entry.color,
-                                                    width: "12px",
-                                                    height: "12px",
-                                                    display: "inline-block",
-                                                    marginRight: "4px",
-                                                }}
-                                            />
+                                        <li key={`legend-${index}`} style={{ color: legendStyle.color }}>
+                                            <span style={{ backgroundColor: entry.color, width: "12px", height: "12px", display: "inline-block", marginRight: "10px" }} />
                                             {entry.value}
                                         </li>
                                     ))}
                                 </ul>
                             );
                         }}
-                    />
+                    >
+                    </Legend>
                 </PieChart>
             </ResponsiveContainer>
         </div>

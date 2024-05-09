@@ -15,7 +15,6 @@ const NewBalance = () => {
     const [amount, setAmount] = useState("");
     // const [users, setUsers] = useState([]);
 
-
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
@@ -84,10 +83,13 @@ const NewBalance = () => {
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
+                <div className="col-12 col-md-8" style={{ marginTop: "50px" }}>
                     <Fragment>
                         <div className="wrapper my-5">
-                            <form className="shadow-lg" onSubmit={submitHandler}>
+                            <form
+                                style={{ backgroundColor: "#f0dc9c" }}
+                                className="shadow-lg"
+                                onSubmit={submitHandler}>
                                 <h1 className="mb-4">New Balance</h1>
 
                                 <div className="form-group">
@@ -112,7 +114,7 @@ const NewBalance = () => {
                                     </select>
                                 </div>
 
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label htmlFor="specificBalance_field">Specific Balance</label>
                                     <select
                                         id="specificBalance_field"
@@ -127,6 +129,19 @@ const NewBalance = () => {
                                             </option>
                                         ))}
                                     </select>
+                                </div> */}
+                                <div className="form-group">
+                                    <label htmlFor="specificBalance_field">
+                                        Specific Balance
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="specificBalance_field"
+                                        className="form-control"
+                                        value={specificBalance}
+                                        onChange={(e) => setSpecificBalance(e.target.value)}
+                                        placeholder="Enter specific balance"
+                                    />
                                 </div>
 
                                 <div className="form-group">
@@ -142,7 +157,7 @@ const NewBalance = () => {
 
                                 <button
                                     type="submit"
-                                    className="btn btn-block py-3"
+                                    className="btn btn-block py-2"
                                     disabled={loading ? true : false}
                                 >
                                     Record Balance

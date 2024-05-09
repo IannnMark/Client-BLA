@@ -14,8 +14,9 @@ import {
 } from "../../actions/inquiriesActions";
 import { DELETE_REQUEST_RESET } from "../../constants/inquiriesConstants";
 import "./RequestList.css";
-
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import "./admin.css";
 
 const RequestsList = () => {
     const dispatch = useDispatch();
@@ -34,19 +35,86 @@ const RequestsList = () => {
     const [showStatusFilter, setShowStatusFilter] = useState(false);
     const [showGradeFilter, setShowGradeFilter] = useState(false);
 
+    const generatePDF = () => {
+        const dataTableContent = document.querySelector(
+            ".custom-mdb-datatable .dataTable"
+        );
 
-    const pdfExportComponent = useRef(null);
-    const contentArea = useRef(null);
+        const loggedInUser = "Jonara De Jesus";
 
-    const handleExportWithComponent = () => {
-        pdfExportComponent.current.save();
+        if (dataTableContent) {
+            // Get logo image data
+            const logoImg = new Image();
+            logoImg.src = "/images/school_logo.png"; // Replace 'path_to_your_logo_image.png' with the actual path to your logo image
+
+            // Fetch current date
+            const currentDate = new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+
+            // Assume you have the name of the logged-in user in a variable named loggedInUser
+            const printedBy = "Printed by: " + loggedInUser;
+
+            html2canvas(dataTableContent, { scale: 0.9 }).then((canvas) => {
+                const pdf = new jsPDF();
+                const imgData = canvas.toDataURL("image/png");
+                const imgWidth = pdf.internal.pageSize.getWidth() * 0.9; // Adjust the scale factor as needed
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                const marginTop = 70; // Adjust the top margin as needed
+                const title = "Blessed Land Academy of Taguig";
+                const additionalText = "Reports for Request List";
+                const datePrintedText = "Date Printed: " + currentDate; // Format the date printed
+
+                // Calculate the x-coordinate to center the title horizontally
+                const textWidth =
+                    pdf.getStringUnitWidth(title) * pdf.internal.getFontSize();
+                const centerX = (pdf.internal.pageSize.getWidth() - textWidth) / 2 + 80; // Adjust the left margin as needed
+                const texttWidth =
+                    pdf.getStringUnitWidth(additionalText) * pdf.internal.getFontSize();
+                const centterX =
+                    (pdf.internal.pageSize.getWidth() - texttWidth) / 5 + 68; // Adjust the left margin as needed
+                const datePrintedWidth =
+                    pdf.getStringUnitWidth(datePrintedText) * pdf.internal.getFontSize();
+                const datePrintedX =
+                    (pdf.internal.pageSize.getWidth() - datePrintedWidth) / 5 + 145; // Center the date printed horizontally
+                const printedByWidth =
+                    pdf.getStringUnitWidth(printedBy) * pdf.internal.getFontSize();
+                const printedByX =
+                    (pdf.internal.pageSize.getWidth() - printedByWidth) / 1 + 2; // Center the printed by horizontally
+
+                // Set font style
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(12); // Set font size
+
+                // Add logo to the PDF
+                pdf.addImage(logoImg, "PNG", 85, 5, 25, 25); // Adjust position and size as needed
+
+                // Add title to the PDF
+                pdf.text(title, centerX, 35); // Adjust Y coordinate to move the title down
+
+                // Add additional text to the PDF
+                pdf.text(additionalText, centterX, 45); // Adjust Y coordinate to move the additional text down
+
+                // Set font size for date printed text
+                pdf.setFontSize(10);
+
+                // Add date printed to the PDF
+                pdf.text(datePrintedText, datePrintedX, 60); // Adjust Y coordinate to move the date printed down
+
+                // Add printed by to the PDF
+                pdf.text(printedBy, printedByX, 60); // Adjust Y coordinate to move the printed by text down
+
+                // Move the image down by adding a margin
+                pdf.addImage(imgData, "PNG", 10, marginTop, imgWidth, imgHeight);
+                pdf.save("Request_List.pdf");
+            });
+        } else {
+            console.error("Data table content element not found.");
+        }
     };
-
-    const handleExportWithMethod = () => {
-        savePDF(contentArea.current, { paperSize: "A4" });
-    };
-
-
 
     useEffect(() => {
         dispatch(allRequests());
@@ -131,8 +199,8 @@ const RequestsList = () => {
             : statusFilteredRequests;
 
         const gradeFilteredRequests = selectedGrade
-            ? documentFilteredRequests.filter((request) =>
-                request.user && request.user.grade === selectedGrade
+            ? documentFilteredRequests.filter(
+                (request) => request.user && request.user.grade === selectedGrade
             )
             : documentFilteredRequests;
 
@@ -142,11 +210,11 @@ const RequestsList = () => {
 
         const data = {
             columns: [
-                // {
-                //     label: "Tracking   ID",
-                //     field: "id",
-                //     sort: "asc",
-                // },
+                {
+                    label: "No.",
+                    field: "index",
+                    sort: "asc",
+                },
                 {
                     label: "User Last Name",
                     field: "userLastName",
@@ -200,7 +268,7 @@ const RequestsList = () => {
             rows: [],
         };
 
-        sortedFilteredRequests.forEach((request) => {
+        sortedFilteredRequests.forEach((request, index) => {
             const formattedCreatedDate = request.dateofRequest
                 ? new Date(request.dateofRequest).toLocaleDateString()
                 : "N/A";
@@ -250,7 +318,7 @@ const RequestsList = () => {
                     </p>
                 ) : null,
                 actions: (
-                    <Fragment >
+                    <Fragment>
                         <Link
                             to={`/admin/request/${request._id}`}
                             className="btn btn-primary py-1 px-2"
@@ -267,9 +335,9 @@ const RequestsList = () => {
                         </button>
                     </Fragment>
                 ),
+                index: index + 1,
             });
         });
-
         return data;
     };
 
@@ -297,7 +365,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showDateFilter && (
-                                    <div className="date-input-section" style={{ marginLeft: '30px', fontWeight: "bold" }}>
+                                    <div
+                                        className="date-input-section"
+                                        style={{ marginLeft: "30px", fontWeight: "bold" }}
+                                    >
                                         <div>
                                             <label style={{ marginRight: "5px" }}>Start Date: </label>
                                             <input
@@ -328,7 +399,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showDocumentFilter && (
-                                    <div className="document-input-section" style={{ marginLeft: '60px', fontWeight: "bold" }}>
+                                    <div
+                                        className="document-input-section"
+                                        style={{ marginLeft: "60px", fontWeight: "bold" }}
+                                    >
                                         <label style={{ marginRight: "10px" }}>Document: </label>
                                         <select
                                             style={{ fontWeight: "bold" }}
@@ -356,7 +430,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showStatusFilter && (
-                                    <div className="status-input-section" style={{ marginLeft: '40px', fontWeight: "bold" }}>
+                                    <div
+                                        className="status-input-section"
+                                        style={{ marginLeft: "40px", fontWeight: "bold" }}
+                                    >
                                         <label style={{ marginRight: "5px" }}>Status: </label>
                                         <select
                                             style={{ fontWeight: "bold" }}
@@ -386,7 +463,10 @@ const RequestsList = () => {
                                 <br />
                                 <br />
                                 {showGradeFilter && (
-                                    <div className="grade-input-section" style={{ marginLeft: '50px', fontWeight: "bold" }}>
+                                    <div
+                                        className="grade-input-section"
+                                        style={{ marginLeft: "50px", fontWeight: "bold" }}
+                                    >
                                         <label style={{ marginRight: "5px" }}>Grade: </label>
                                         <select
                                             style={{ fontWeight: "bold" }}
@@ -403,53 +483,53 @@ const RequestsList = () => {
                                     </div>
                                 )}
                             </div>
-
+                            <div class="row ml-4">
+                                <div class="col-6 col-sm-3">
+                                    <button onClick={generatePDF} class="button-28">
+                                        Generate PDF
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <button onClick={handleExportWithMethod}>Download Reports</button>
-                        <PDFExport ref={pdfExportComponent}>
-                            <div ref={contentArea}>
-                                {loading ? (
-                                    <Loader />
-                                ) : (
-                                    <MDBDataTable
-                                        data={setRequests()}
-                                        className="px-3 custom-mdb-datatable" // Add custom class here
-                                        bordered
-                                        striped
-                                        hover
-                                        noBottomColumns
-                                        responsive
-                                        searching={false}
-                                        entriesLabel="Show entries"
-                                        entriesOptions={[10, 20, 30]}
-                                        infoLabel={["Showing", "to", "of", "entries"]}
-                                        paginationLabel={["Previous", "Next"]}
-                                        responsiveSm
-                                        responsiveMd
-                                        responsiveLg
-                                        responsiveXl
-                                        noRecordsFoundLabel="No records found"
-                                        paginationRowsPerPageOptions={[10, 20, 30]}
-                                        pagingTop
-                                        pagingBottom
-                                        paginationLabels={["Previous", "Next"]}
-                                        style={{
-                                            fontSize: "16px",
-                                            fontFamily:
-                                                "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
-                                        }}
-                                        // Add custom styling for cells based on request status
-                                        tbodyTextBlack
-                                        tbodyBorderY
-                                        tbodyBorderX
-                                        tbodyBorderBottom
-                                        tbodyBorderTop
-                                    />
-                                )}
-
-                            </div>
-                        </PDFExport>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <MDBDataTable
+                                data={setRequests()}
+                                className="px-3 custom-mdb-datatable"
+                                bordered
+                                striped
+                                hover
+                                noBottomColumns
+                                responsive
+                                searching={true}
+                                searchLabel="Search..."
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30, 40, 50]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "16px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop
+                            />
+                        )}
                     </Fragment>
                 </div>
             </div>

@@ -90,7 +90,15 @@ const ConfirmRequest = () => {
                                     <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                                         <p>
                                             {document.quantity} x {document.price} ={" "}
-                                            <b>{(document.quantity * document.price).toFixed(2)}</b>
+                                            <b>
+                                                {(document.quantity * document.price).toLocaleString(
+                                                    undefined,
+                                                    {
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2,
+                                                    }
+                                                )}
+                                            </b>
                                         </p>
                                     </div>
                                 </div>
@@ -124,7 +132,13 @@ const ConfirmRequest = () => {
 
                         <p>
                             Subtotal:{" "}
-                            <span className="order-summary-values">₱ {itemsPrice}</span>
+                            <span className="order-summary-values">
+                                ₱{" "}
+                                {itemsPrice.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                })}
+                            </span>
                         </p>
 
                         <hr
@@ -135,9 +149,19 @@ const ConfirmRequest = () => {
                             }}
                         />
 
+                        {/* <p>
+              Total:{" "}
+              <span className="order-summary-values">₱ {totalPrice}</span>
+            </p> */}
                         <p>
                             Total:{" "}
-                            <span className="order-summary-values">₱ {totalPrice}</span>
+                            <span className="order-summary-values">
+                                ₱{" "}
+                                {itemsPrice.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                })}
+                            </span>
                         </p>
 
                         <hr />

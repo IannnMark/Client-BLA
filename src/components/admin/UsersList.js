@@ -67,6 +67,11 @@ const UsersList = () => {
     const data = {
       columns: [
         {
+          label: "No.", // Add a label for the counter column
+          field: "index", // Use a field name for the counter column
+          sort: "asc", // Sort the counter column in ascending order
+        },
+        {
           label: "User ID",
 
           field: "id",
@@ -75,9 +80,16 @@ const UsersList = () => {
         },
 
         {
-          label: "Name",
+          label: "First Name",
 
-          field: "name",
+          field: "firstname",
+
+          sort: "asc",
+        },
+        {
+          label: "Last Name",
+
+          field: "lastname",
 
           sort: "asc",
         },
@@ -116,24 +128,26 @@ const UsersList = () => {
       rows: [],
     };
 
-    users.forEach((user) => {
+    users.forEach((user, index) => {
       data.rows.push({
         id: user._id,
 
-        name: user.firstname,
+        firstname: user.firstname,
+
+        lastname: user.lastname,
 
         email: user.email,
 
         role: user.role,
 
-        avatar: (
+        avatar: user.avatar ? (
           <img
-            src={user.avatar.url} // Assuming that the first image is the main image
+            src={user.avatar.url}
             alt={user.fname}
-            className="product-image"
+            className="avatar-image"
             style={{ width: "80px", height: "80px" }}
           />
-        ),
+        ) : null,
 
         actions: (
           <Fragment>
@@ -158,6 +172,7 @@ const UsersList = () => {
                     </button>*/}
           </Fragment>
         ),
+        index: index + 1, // New field to hold the sequential number
       });
     });
 
@@ -169,7 +184,7 @@ const UsersList = () => {
       <MetaData title={"All Users"} />
 
       <div className="row">
-        <div className="col-12 col-md-2">
+        <div className="col-12 col-md-1">
           <Sidebar />
         </div>
 
@@ -182,10 +197,38 @@ const UsersList = () => {
             ) : (
               <MDBDataTable
                 data={setUsers()}
-                className="px-3"
+                className="px-3 custom-mdb-datatable" // Add custom class here
                 bordered
                 striped
                 hover
+                noBottomColumns
+                responsive
+                searching={true} // Enable searching
+                searchLabel="Search..." // Customize search input placeholder
+                entriesLabel="Show entries"
+                entriesOptions={[10, 20, 30]}
+                infoLabel={["Showing", "to", "of", "entries"]}
+                paginationLabel={["Previous", "Next"]}
+                responsiveSm
+                responsiveMd
+                responsiveLg
+                responsiveXl
+                noRecordsFoundLabel="No records found"
+                paginationRowsPerPageOptions={[10, 20, 30]}
+                pagingTop
+                pagingBottom
+                paginationLabels={["Previous", "Next"]}
+                style={{
+                  fontSize: "16px",
+                  fontFamily:
+                    "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                }}
+                // Add custom styling for cells based on request status
+                tbodyTextBlack
+                tbodyBorderY
+                tbodyBorderX
+                tbodyBorderBottom
+                tbodyBorderTop
               />
             )}
           </Fragment>

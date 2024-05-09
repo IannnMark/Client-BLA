@@ -10,30 +10,32 @@ import {
 
 export default function DocumentSalesChart({ data }) {
     const pieColors = [
-        "#FF6633",
-        "#FFB399",
-        "#FF33FF",
-        "#00B3E6",
-        "#E6B333",
-        "#3366E6",
-        "#999966",
-        "#809980",
-        "#1AFF33",
-        "#999933",
-        "#FF3380",
-        "#CCCC00",
-        "#66E64D",
-        "#4D80CC",
-        "#FF4D4D",
-        "#99E6E6",
-        "#6666FF",
+        "#CAF4FF",
+        "#A5DD9B",
+        "#8C6A5D",
+        "#EEE4B1",
+        "#FFAB73",
+        "#FFD384",
+        "#FFF9B0",
+        "#FFAEC0",
+        "#E2BFB3",
+        "#F7DED0",
+        "#944E63",
+        "#B47B84",
+        "#E1AFD1",
+        "#AD88C6",
+        "#AD88C6",
+        "#7469B6",
+        "#AFC8AD",
     ];
 
-    const chartSize = 350; // Set the size of the pie chart
+    const chartSize = 420; // Set the size of the pie chart
 
     const labelStyle = {
         fontSize: "10px",
         fill: "white",
+        fontWeight: "bold", // Add fontWeight for bold text
+
     };
 
     const legendStyle = {
@@ -50,7 +52,7 @@ export default function DocumentSalesChart({ data }) {
                         nameKey="name"
                         isAnimationActive={true}
                         data={data}
-                        cx="50%"
+                        cx="45%"
                         cy="50%"
                         outerRadius="80%"
                         innerRadius={0} // Setting innerRadius to 0 creates a pie chart instead of a doughnut chart
@@ -64,8 +66,9 @@ export default function DocumentSalesChart({ data }) {
                                 <text
                                     x={x}
                                     y={y}
-                                    fill={labelStyle.fill}
+                                    fill="black" // Change fill color to black
                                     fontSize={labelStyle.fontSize}
+                                    fontWeight={labelStyle.fontWeight} //
                                     textAnchor={x > cx ? "start" : "end"}
                                     dominantBaseline="central"
                                 >
@@ -86,7 +89,7 @@ export default function DocumentSalesChart({ data }) {
                         content={(props) => {
                             const { payload } = props;
                             return (
-                                <ul className="legend" style={{ listStyle: "none", padding: 0, fontSize: legendStyle.fontSize }}>
+                                <ul className="legend" style={{ listStyle: "none", padding: 10, fontSize: legendStyle.fontSize, textAlign: "left", textIndent: "-10px", fontWeight: "bold" }}>
                                     {payload.map((entry, index) => (
                                         <li key={`legend-${index}`} style={{ color: legendStyle.color }}>
                                             <span style={{ backgroundColor: entry.color, width: "12px", height: "12px", display: "inline-block", marginRight: "4px" }} />

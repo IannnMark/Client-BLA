@@ -46,11 +46,10 @@ const RequestsList = () => {
 
         const data = {
             columns: [
-                // {
-                //     label: "Request ID",
-                //     field: "id",
-                //     sort: "asc",
-                // },
+                {
+                    label: "No.",
+                    field: "index",
+                }, // New column
                 {
                     label: "User Last Name",
                     field: "userLastName",
@@ -62,7 +61,7 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
-                    label: "No of Requests",
+                    label: "No. of Requests",
                     field: "numofRequests",
                     sort: "asc",
                 },
@@ -84,7 +83,7 @@ const RequestsList = () => {
                 },
 
                 {
-                    label: "Release of Request",
+                    label: "Date Release",
                     field: "dateRelease",
                     sort: "asc",
                 },
@@ -97,11 +96,12 @@ const RequestsList = () => {
                     label: "Actions",
                     field: "actions",
                 },
+
             ],
             rows: [],
         };
 
-        sortedRequests.forEach((request) => {
+        sortedRequests.forEach((request, index) => { // Add index to the map function
             const formattedCreatedDate = request.dateofRequest
                 ? new Date(request.dateofRequest).toLocaleDateString()
                 : "N/A";
@@ -116,11 +116,11 @@ const RequestsList = () => {
                 request.requestItems.map((item) => item.name).join(", ");
 
             data.rows.push({
-                // id: request._id,
+                id: request._id,
                 userLastName: request.user?.lastname,
                 grade: request.user?.grade,
                 numofRequests: request.requestItems.length,
-                amount: `$${request.totalPrice}`,
+                amount: `₱${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
@@ -140,6 +140,7 @@ const RequestsList = () => {
                         </Link>
                     </Fragment>
                 ),
+                index: index + 1, // New field to hold the sequential number
             });
         });
 
@@ -151,7 +152,7 @@ const RequestsList = () => {
             <MetaData title={"All Requests"} />
 
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-1">
                     <Sidebar />
                 </div>
 
@@ -162,7 +163,38 @@ const RequestsList = () => {
                         {loading ? (
                             <Loader />
                         ) : (
-                            <MDBDataTable data={setRequests()} className="px-3" bordered striped hover />
+                            <MDBDataTable data={setRequests()} className="px-3" bordered
+                                striped
+                                classNamee="px-3 custom-mdb-datatable" // Add custom class here
+                                hover
+                                noBottomColumns
+                                responsive
+                                searching={true} // Enable searching
+                                searchLabel="Search..." // Customize search input placeholder
+                                entriesLabel="Show entries"
+                                entriesOptions={[10, 20, 30]}
+                                infoLabel={["Showing", "to", "of", "entries"]}
+                                paginationLabel={["Previous", "Next"]}
+                                responsiveSm
+                                responsiveMd
+                                responsiveLg
+                                responsiveXl
+                                noRecordsFoundLabel="No records found"
+                                paginationRowsPerPageOptions={[10, 20, 30]}
+                                pagingTop
+                                pagingBottom
+                                paginationLabels={["Previous", "Next"]}
+                                style={{
+                                    fontSize: "18px",
+                                    fontFamily:
+                                        "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+                                }}
+                                // Add custom styling for cells based on request status
+                                tbodyTextBlack
+                                tbodyBorderY
+                                tbodyBorderX
+                                tbodyBorderBottom
+                                tbodyBorderTop />
                         )}
                     </Fragment>
                 </div>
@@ -172,4 +204,3 @@ const RequestsList = () => {
 };
 
 export default RequestsList;
-

@@ -25,15 +25,14 @@ const ListOrders = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
-
   const setOrders = () => {
     const sortedOrders = [...orders].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
     );
     const data = {
       columns: [
         {
-          label: "Ordered Merchandise",
+          label: "Product Name",
           field: "orderedMerch",
           sort: "asc",
         },
@@ -101,7 +100,7 @@ const ListOrders = () => {
       data.rows.push({
         orderedMerch: orderedMerch,
         numOfItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `₱ ${order.totalPrice}`,
         dateofOrder: formattedCreatedDate,
         releaseDate: formattedReleaseDate,
         status:
@@ -122,17 +121,18 @@ const ListOrders = () => {
 
     return data;
   };
-
   return (
-    // <div style={{backgroundImage: `url(${process.env.PUBLIC_URL}/images/login.svg)`,
-    // backgroundSize: "cover",marginTop: "-47px",  }}>
     <Fragment>
       <MetaData title={"My Orders"} />
 
       <h1 className="my-55">My Orders</h1>
 
       <div className="d-flex justify-content-center">
-        <Link to="/products" className="btn btn-warning" style={{ marginTop: "20px" }}>
+        <Link
+          to="/products"
+          className="btn btn-warning"
+          style={{ marginTop: "20px" }}
+        >
           <i className="fa-regular fa-file" style={{ marginRight: "5px" }}></i>{" "}
           View Merch
         </Link>
@@ -146,13 +146,12 @@ const ListOrders = () => {
           className="px-4"
           bordered
           striped
-          classNamee="px-3 custom-mdb-datatable" // Add custom class here
-          borderedd
-          stripedd
+          classNamee="px-3 custom-mdb-datatable"
           hover
           noBottomColumns
           responsive
-          searching={false}
+          searching={true}
+          searchLabel="Search..."
           entriesLabel="Show entries"
           entriesOptions={[10, 20, 30]}
           infoLabel={["Showing", "to", "of", "entries"]}
@@ -171,7 +170,6 @@ const ListOrders = () => {
             fontFamily:
               "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
           }}
-          // Add custom styling for cells based on request status
           tbodyTextBlack
           tbodyBorderY
           tbodyBorderX
@@ -179,8 +177,9 @@ const ListOrders = () => {
           tbodyBorderTop
         />
       )}
+      <br></br>
+      <br></br>
     </Fragment>
-    // </div>
   );
 };
 
