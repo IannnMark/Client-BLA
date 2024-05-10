@@ -75,7 +75,7 @@ const CashierSidebar = () => {
                         className="custom-drawer"
                         style={{
                             backgroundColor: "#B1A078",
-                            marginTop: "-11px",
+                            marginTop: "1px",
                             zIndex: "1000",
                             position: "sticky",
                             height: "1000px",
