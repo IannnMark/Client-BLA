@@ -95,8 +95,9 @@ const ViolationHistory = () => {
                                 onChange={handleStatusChange}
                             >
                                 <option value="">All</option>
-                                <option value="Violation">Violation</option>
-                                <option value="No Violation">No Violation</option>
+                                <option value="Community Service">Community Service</option>
+                                <option value="Parent Meeting">Parent Meeting</option>
+                                <option value="With Violation">With Violation</option>
                             </select>
                         </div>
                         <div className="custom-mdb-datatable">
