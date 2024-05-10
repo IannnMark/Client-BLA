@@ -241,6 +241,11 @@ const RequestsList = () => {
                     sort: "asc",
                 },
                 {
+                    label: "Purpose",
+                    field: "purpose",
+                    sort: "asc",
+                },
+                {
                     label: "Date of Request",
                     field: "dateofRequest",
                     sort: "asc",
@@ -289,6 +294,7 @@ const RequestsList = () => {
                 numofRequests: request.requestItems.length,
                 amount: `₱${request.totalPrice}`,
                 requestedDocuments: requestedDocuments || "N/A",
+                purpose: request.purpose,
                 dateofRequest: formattedCreatedDate,
                 dateRelease: formattedReleaseDate,
                 authorizationLetter: request.authorizationLetter &&
