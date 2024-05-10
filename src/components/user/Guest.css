@@ -1,20 +1,24 @@
-/* html,
-body {
-    background-color: #EBDE70;
+.guest-header {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 50px;
+
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
+
+.container-bg {
+    background-color: #e8db6e;
+    height: 100%;
+    margin-top: -40px;
 }
 
-.header {
+.text-guest {
+    padding: 80px;
+    text-align: justify;
+
+}
+
+.contact-options {
     text-align: center;
-}
-
-.text {
     margin-top: 20px;
-    font-size: 18px;
-    line-height: 1.6;
-} */
+}

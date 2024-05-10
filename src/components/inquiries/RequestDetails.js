@@ -196,7 +196,7 @@ const RequestDetails = () => {
 
                   <div className="date-request-container">
                     <p className="my-4 date-requestt">
-                      Document <span className="requestt">Total</span>
+                      Document <span className="requestt">Price</span>
                     </p>
                     <p className="my-4 date-requesttt">
                       {requestItems &&
