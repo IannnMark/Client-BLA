@@ -36,6 +36,7 @@ const ClearanceList = () => {
         const data = {
             columns: [
                 { label: "User Last Name", field: "userLastName", sort: "asc" },
+                { label: "Grade", field: "grade", sort: "asc" },
                 { label: "Clearance Images", field: "clearanceImages", sort: "asc" },
                 { label: "Uploaded At", field: "uploadedAt", sort: "asc" },
                 { label: "Actions", field: "actions" },
@@ -46,6 +47,7 @@ const ClearanceList = () => {
             clearances.forEach((clearance) => {
                 data.rows.push({
                     userLastName: clearance.user.lastname,
+                    grade: clearance.user.grade,
                     clearanceImages: (
                         clearance.clearanceImages && clearance.clearanceImages.length > 0 ? (
                             <a href={clearance.clearanceImages[0].url} target="_blank" rel="noopener noreferrer">
