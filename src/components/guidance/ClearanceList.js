@@ -111,7 +111,7 @@ const ClearanceList = () => {
                                 className="px-4"
                                 bordered
                                 striped
-                                classNamee="px-3 custom-mdb-datatable" // Add custom class here
+                                classNamee="px-3 custom-mdb-datatable" // Add custom class heree
                                 borderedd
                                 stripedd
                                 hover
