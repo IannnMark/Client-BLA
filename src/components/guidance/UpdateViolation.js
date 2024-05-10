@@ -100,8 +100,9 @@ const UpdateViolation = () => {
                                         onChange={(e) => setStatus(e.target.value)}
                                     >
                                         <option value="">Select Status</option>
-                                        <option value="No Violation">No Violation</option>
-                                        <option value="Violation">Violation</option>
+                                        <option value="Community Service">Community Service</option>
+                                        <option value="Parent Meeting">Parent Meeting</option>
+                                        <option value="With Violation">With Violation</option>
                                     </select>
                                 </div>
 

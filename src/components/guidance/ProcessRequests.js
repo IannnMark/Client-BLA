@@ -60,21 +60,21 @@ const ProcessRequest = () => {
 
     const updateStatusHandler = async (id) => {
         try {
-            // Check if the user has a violation with status "Violation"
+            // Check if the user has a violation with status "With Violation"
             const studentHasViolation = violations.some(
-                (violation) => violation.user._id === user._id && violation.status === "Violation"
+                (violation) => violation.user._id === user._id && violation.status === "With Violation"
             );
 
-            if (studentHasViolation) {
+            // If student has a violation with status "With Violation" and the selected status is not "Pending Violation" or "Pending Clearance", show error message and return
+            if (studentHasViolation && status !== "Pending Violation" && status !== "Pending Clearance") {
                 toast.error(
                     `Attention: Student ${user.firstname} ${user.lastname} has a Violation.`,
-                    {
-                        position: toast.POSITION.BOTTOM_CENTER,
-                    }
+                    { position: toast.POSITION.BOTTOM_CENTER }
                 );
                 return;
             }
 
+            // Update the request if there's no violation with status "With Violation"
             const formData = new FormData();
             formData.set("status", status);
 
@@ -86,6 +86,7 @@ const ProcessRequest = () => {
             console.error("Update request failed:", error);
         }
     };
+
 
 
     return (
@@ -132,10 +133,9 @@ const ProcessRequest = () => {
                                                     onChange={(e) => setStatus(e.target.value)}
                                                 >
                                                     <option value="Pending">Pending</option>
-                                                    <option value="Approved">Approved</option>
+                                                    <option value="Approved by Guidance">Approved by Guidance</option>
                                                     <option value="Pending Violation">Attention: Pending Violation 🚨</option>
-
-                                                    {/* Add more options based on your requirements */}
+                                                    <option value="Pending Clearance">Attention: Pending Clearance 🚨</option>
                                                 </select>
                                             </div>
                                             <button
