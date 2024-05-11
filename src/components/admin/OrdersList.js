@@ -295,25 +295,14 @@ const OrdersList = () => {
         status:
           order.orderStatus &&
             String(order.orderStatus).includes("Received") ? (
+            <p style={{ color: "blue" }}>{order.orderStatus}</p>
+          ) : order.orderStatus &&
+            String(order.orderStatus).includes("Approved") ? (
             <p style={{ color: "green" }}>{order.orderStatus}</p>
           ) : (
             <p style={{ color: "red" }}>{order.orderStatus}</p>
           ),
         actions: (
-          // <Fragment>
-          //   <Link
-          //     to={`/admin/order/${order._id}`}
-          //     className="btn btn-primary py-1 px-2"
-          //   >
-          //     <i className="fa fa-eye"></i>
-          //   </Link>
-          //   <button
-          //     className="btn btn-danger py-1 px-2 ml-2"
-          //     onClick={() => deleteOrderHandler(order._id)}
-          //   >
-          //     <i className="fa fa-trash"></i>
-          //   </button>
-          // </Fragment>
           <Fragment>
             <Link
               to={`/admin/order/${order._id}`}
@@ -331,7 +320,7 @@ const OrdersList = () => {
             </button>
           </Fragment>
         ),
-        index: index + 1, // New field to hold the sequential number
+        index: index + 1,
       });
     });
 
@@ -485,8 +474,8 @@ const OrdersList = () => {
                 hover
                 noBottomColumns
                 responsive
-                searching={true} // Enable searching
-                searchLabel="Search..." // Customize search input placeholder
+                searching={true}
+                searchLabel="Search..."
                 entriesLabel="Show entries"
                 entriesOptions={[10, 20, 30, 40, 50, 100, 200, 300]}
                 infoLabel={["Showing", "to", "of", "entries"]}

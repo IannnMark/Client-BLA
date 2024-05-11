@@ -90,6 +90,20 @@ const ProcessOrder = () => {
     }
   };
 
+
+  const getStatusColorClass = (status) => {
+    switch (status) {
+      case "Received":
+        return "blueColor";
+      case "Approved":
+        return "greenColor";
+      case "Pending":
+        return "redColor";
+      default:
+        return "";
+    }
+  };
+
   return (
     <Fragment>
       <MetaData title={`Process Order # ${order && order._id}`} />
@@ -170,14 +184,7 @@ const ProcessOrder = () => {
                       <p className="my-4 student-name">
                         Order Status:{" "}
                         <span>
-                          <b
-                            className={
-                              orderStatus &&
-                                String(orderStatus).includes("Received")
-                                ? "greenColor"
-                                : "redColor"
-                            }
-                          >
+                          <b className={getStatusColorClass(orderStatus)}>
                             {orderStatus}
                           </b>
                         </span>

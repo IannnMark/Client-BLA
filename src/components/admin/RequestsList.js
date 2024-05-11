@@ -316,8 +316,10 @@ const RequestsList = () => {
                     <p
                         style={{
                             color: request.requestStatus.includes("Received")
-                                ? "green"
-                                : "red",
+                                ? "blue"
+                                : request.requestStatus.includes("Approved")
+                                    ? "green"
+                                    : "red",
                         }}
                     >
                         {request.requestStatus}

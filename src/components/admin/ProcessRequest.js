@@ -96,6 +96,20 @@ const ProcessRequest = () => {
         }
     };
 
+
+    const getStatusColorClass = (status) => {
+        switch (status) {
+            case "Received":
+                return "blueColor";
+            case "Approved":
+                return "greenColor";
+            case "Pending":
+                return "redColor";
+            default:
+                return "";
+        }
+    };
+
     return (
         <Fragment>
             <MetaData title={`Process Request # ${request && request._id}`} />
@@ -186,14 +200,10 @@ const ProcessRequest = () => {
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
                                                 Request Status:{" "}
-                                                <span
-                                                    className={
-                                                        requestStatus === "Received"
-                                                            ? "greenColor"
-                                                            : "redColor"
-                                                    }
-                                                >
-                                                    <b>{requestStatus}</b>
+                                                <span>
+                                                    <b className={getStatusColorClass(requestStatus)}>
+                                                        {requestStatus}
+                                                    </b>
                                                 </span>
                                             </p>
                                         </div>
