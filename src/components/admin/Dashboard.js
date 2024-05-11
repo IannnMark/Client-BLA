@@ -29,7 +29,7 @@ const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
   const { users } = useSelector((state) => state.allUsers);
   const { documents } = useSelector((state) => state.documents);
-  const { requests, totalARequest } = useSelector((state) => state.allRequests);
+  const { requests, totalRequests } = useSelector((state) => state.allRequests);
   const { orders, totalAmount, loading } = useSelector(
     (state) => state.allOrders
   );
@@ -85,7 +85,7 @@ const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Total Amount
-                        <br /> <b>₱ {totalAmount && totalAmount.toLocaleString(undefined, {
+                        <br /> <b>₱ {totalRequests && totalRequests.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}</b>

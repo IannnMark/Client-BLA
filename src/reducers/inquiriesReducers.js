@@ -132,7 +132,7 @@ export const allRequestsReducer = (state = { requests: [] }, action) => {
                 ...state,
                 loading: false,
                 requests: action.payload.requests,
-                totalAmount: action.payload.totalAmount,
+                totalRequests: action.payload.totalRequests,
             };
         case ALL_REQUESTS_FAIL:
             return {
