@@ -138,7 +138,7 @@ const ProcessRequest = () => {
                                                 >
                                                     <option value="Pending">Pending</option>
                                                     <option value="Approved by Cashier">Approved by Cashier</option>
-                                                    <option value="Pending Balance">Attention: Pending Balance 🚨</option>
+                                                    <option value="Settle your Balance">Settle your Balance</option>
                                                 </select>
                                             </div>
                                             <button
