@@ -1,3 +1,4 @@
+
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
@@ -33,6 +34,16 @@ const ProcessRequest = () => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
+    };
+
+    const calculateTotal = () => {
+        let total = 0;
+        if (requestItems) {
+            requestItems.forEach((item) => {
+                total += item.price;
+            });
+        }
+        return total.toFixed(2);
     };
 
     const errMsg = (message = "") =>
@@ -104,6 +115,8 @@ const ProcessRequest = () => {
                                 style={{ minHeight: "100vh" }}
                             >
                                 <div className="col-12 col-lg-8 order-details">
+
+
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="my-4 track-number">
@@ -127,6 +140,7 @@ const ProcessRequest = () => {
                                                 >
                                                     <option value="Approved">Approved</option>
                                                     <option value="Received">Received</option>
+
                                                 </select>
                                             </div>
                                             <button
@@ -138,47 +152,105 @@ const ProcessRequest = () => {
                                         </div>
                                     </div>
 
+
+                                    <hr />
+
+
                                     <h4 style={{ textAlign: "center" }}> Student Information</h4>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
                                                 Requested by:{" "}
-                                                {user ? `${user.firstname} ${user.lastname}` : "Unknown"}
+                                                {user
+                                                    ? `${user.firstname} ${user.lastname}`
+                                                    : "Unknown"}
                                             </p>
                                         </div>
                                         <div className="col-md-6">
                                             <p className="my-4 student-name">
-                                                Grade & Section: {" "}
-                                                {request.user?.grade || "N/A"}
-                                            </p>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <p className="my-4 student-name">
-                                                Purpose: {" "}
-                                                {request.purpose || "N/A"}
-                                            </p>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <p className="my-4 student-name">
-                                                Payment Info: {" "}
-                                                {paymentInfo ? paymentInfo : "N/A"}
+                                                Grade & Section: {request.user?.grade || "N/A"}
                                             </p>
                                         </div>
 
                                     </div>
                                     <hr />
-                                    <h4 className="my-4">Request Status:</h4>
 
-                                    <p
-                                        className={
-                                            requestStatus === "Received" ? "greenColor" : "redColor"
-                                        }
-                                    >
-                                        <b>{requestStatus}</b>
-                                    </p>
 
-                                    <div className="col-12 col-lg-3 mt-5">
-                                        <h4 className="my-4">Date of Release:</h4>
+                                    <h4 style={{ textAlign: "center" }}>Request Information</h4>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Purpose: {request.purpose || "N/A"}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Request Status:{" "}
+                                                <span
+                                                    className={
+                                                        requestStatus === "Received"
+                                                            ? "greenColor"
+                                                            : "redColor"
+                                                    }
+                                                >
+                                                    <b>{requestStatus}</b>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Payment Info: {request.paymentInfo || "N/A"}{" "}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="my-4 student-name">
+                                                Total Amount to Pay:{" "}
+                                                <span>
+                                                    ₱
+                                                    {Number(calculateTotal()).toLocaleString("en-US", {
+                                                        minimumFractionDigits: 2,
+                                                    })}
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <hr />
+
+                                    <h4 style={{ textAlign: "center" }}>Document Information</h4>
+
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="my-4 students-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document}>
+                                                            <p>{item.name}</p>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="my-4 student-name">
+                                                {requestItems &&
+                                                    requestItems.map((item) => (
+                                                        <div key={item.document} className="my-4 student-namee">
+
+                                                            <p>Price: ₱{item.price}</p>
+
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+
+                                    <div className="text-center">
+                                        <h4 className="my-4">Schedule a Date of Release:</h4>
+                                    </div>
+                                    <div style={{ textAlign: 'center' }}>
                                         <DatePicker
                                             selected={selectedDate}
                                             onChange={handleDateChange}
@@ -188,37 +260,6 @@ const ProcessRequest = () => {
                                             minDate={new Date()}
                                         />
                                     </div>
-
-                                    <h4 className="my-4">Request Items:</h4>
-
-                                    <hr />
-
-                                    <div className="cart-item my-1">
-                                        {requestItems &&
-                                            requestItems.map((item) => (
-                                                <div key={item.document} className="row my-5">
-                                                    <div className="col-4 col-lg-2">
-                                                        <img
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                            height="45"
-                                                            width="65"
-                                                        />
-                                                    </div>
-
-                                                    <div className="col-5 col-lg-5">
-                                                        <Link to={`/documents/${item.document}`}>
-                                                            {item.name}
-                                                        </Link>
-                                                    </div>
-
-                                                    <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                        <p>${item.price}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                    </div>
-                                    <hr />
                                 </div>
                             </div>
                         )}
