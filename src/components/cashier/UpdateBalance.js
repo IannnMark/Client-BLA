@@ -9,8 +9,8 @@ import { updateBalance, clearErrors, getBalanceDetails } from "../../actions/bal
 import { UPDATE_BALANCE_RESET } from "../../constants/balanceConstants";
 
 const UpdateBalance = () => {
-    const [amountPaid, setAmountPaid] = useState(""); // State for amountPaid
-    const [status, setStatus] = useState("Unsettled"); // State for status
+    const [amountPaid, setAmountPaid] = useState("");
+    const [status, setStatus] = useState("Unsettled");
 
     const dispatch = useDispatch();
     const { error, balance } = useSelector((state) => state.balanceDetails);
@@ -22,14 +22,10 @@ const UpdateBalance = () => {
     let navigate = useNavigate();
 
     const errMsg = (message = "") =>
-        toast.error(message, {
-            position: toast.POSITION.BOTTOM_CENTER,
-        });
+        toast.error(message, { position: toast.POSITION.BOTTOM_CENTER });
 
     const successMsg = (message = "") =>
-        toast.success(message, {
-            position: toast.POSITION.BOTTOM_CENTER,
-        });
+        toast.success(message, { position: toast.POSITION.BOTTOM_CENTER });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,13 +39,8 @@ const UpdateBalance = () => {
 
         fetchData();
 
-        if (error) {
-            errMsg(error);
-            dispatch(clearErrors());
-        }
-
-        if (updateError) {
-            errMsg(updateError);
+        if (error || updateError) {
+            errMsg(error || updateError);
             dispatch(clearErrors());
         }
 
@@ -63,22 +54,17 @@ const UpdateBalance = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        if (!balance || !id) {
-            console.error('Balance or ID is undefined');
-            return;
-        }
-
-        if (!amountPaid) { // Check if amountPaid is undefined
-            console.error('Amount Paid is undefined');
+        if (!balance || !id || !amountPaid) {
+            console.error('Invalid input data');
             return;
         }
 
         const formData = {
-            amountPaid, // Include amountPaid in the form data
-            status, // Include status in the form data
+            amountPaid,
+            status,
         };
 
-        dispatch(updateBalance(balance._id, formData));
+        dispatch(updateBalance(id, formData));
     };
 
     return (
@@ -92,10 +78,7 @@ const UpdateBalance = () => {
                 <div className="col-12 col-md-10">
                     <Fragment>
                         <div className="wrapper my-5">
-                            <form
-                                className="shadow-lg"
-                                onSubmit={submitHandler}
-                            >
+                            <form className="shadow-lg" onSubmit={submitHandler}>
                                 <h1 className="mb-4">Update Balance</h1>
 
                                 <div className="form-group">
@@ -140,7 +123,3 @@ const UpdateBalance = () => {
 };
 
 export default UpdateBalance;
-
-
-
-

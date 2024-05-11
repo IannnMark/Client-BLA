@@ -31,6 +31,7 @@ const BalanceList = () => {
             dispatch({ type: DELETE_BALANCE_RESET });
         }
     }, [dispatch, error, deleteError, isDeleted]);
+
     const setBalances = () => {
         const data = {
             columns: [
@@ -42,24 +43,19 @@ const BalanceList = () => {
                 { label: "Status", field: "status", sort: "asc" },
                 { label: "Date Created", field: "createdAt", sort: "asc" },
                 { label: "Actions", field: "actions" },
+
             ],
             rows: [],
         };
 
         if (balances) {
             balances.forEach((balance, index) => {
-                // Find the latest balance log
-                const latestBalanceLog = balance.balanceLogs.length > 0 ? balance.balanceLogs[balance.balanceLogs.length - 1] : null;
-
-                // Extract status from the latest balance log
-                const status = latestBalanceLog ? latestBalanceLog.status : "Status Not Available";
-
                 data.rows.push({
                     lastname: balance.lastname,
                     grade: balance.grade,
                     specificBalance: balance.specificBalance,
                     amount: `₱${balance.amount}`,
-                    status: status,
+                    status: balance.status,
                     createdAt: new Date(balance.createdAt).toLocaleDateString(),
                     actions: (
                         <Fragment>
@@ -67,11 +63,11 @@ const BalanceList = () => {
                                 <i className="fa fa-pencil"></i>
                             </Link>
                             {/* <button
-                            className="btn btn-danger py-1 px-2 ml-2"
-                            onClick={() => deleteBalanceHandler(balance._id)}
-                        >
-                            <i className="fa fa-trash"></i>
-                        </button> */}
+                                className="btn btn-danger py-1 px-2 ml-2"
+                                onClick={() => deleteBalanceHandler(balance._id)}
+                            >
+                                <i className="fa fa-trash"></i>
+                            </button> */}
                         </Fragment>
                     ),
                     index: index + 1,
