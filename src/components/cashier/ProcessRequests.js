@@ -69,27 +69,29 @@ const ProcessRequest = () => {
                 (balance) => balance.user._id === user._id && balance.amount !== 0
             );
 
-            if (studentHasBalance) {
+            // If student has a balance, prevent updating to "Approved by Cashier"
+            if (studentHasBalance && status === "Approved by Cashier") {
                 toast.error(
                     `Attention: Student ${user.firstname} ${user.lastname} has a balance.`,
-                    {
-                        position: toast.POSITION.BOTTOM_CENTER,
-                    }
+                    { position: toast.POSITION.BOTTOM_CENTER }
                 );
                 return;
             }
 
+            // Update the request if there's no balance
             const formData = new FormData();
             formData.set("status", status);
 
             await dispatch(updateCashierRequest(id, formData));
             localStorage.setItem("updatedStatus", status);
             dispatch(getRequestDetails(requestId));
+
             successMsg(`Request updated successfully. New Status: ${status}`);
         } catch (error) {
             console.error("Update request failed:", error);
         }
     };
+
 
 
 
