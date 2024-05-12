@@ -90,21 +90,27 @@ export const register = (userData) => async (dispatch) => {
       withCredentials: true,
     };
 
-    // const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/register`, userData, config);
-
-    const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/admin/register`, userData, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/admin/register`, userData, config);
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
-    });
+    if (error.response && error.response.status === 409) {
+      dispatch({
+        type: REGISTER_USER_FAIL,
+        payload: "Email already exists",
+      });
+    } else {
+      dispatch({
+        type: REGISTER_USER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
   }
 };
+
 
 
 // Load user

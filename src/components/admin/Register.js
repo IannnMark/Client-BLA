@@ -1,8 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
-import { useDispatch } from "react-redux";
-import { register } from "../../actions/userActions";
+import Sidebar from "./Sidebar";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { register, clearErrors } from "../../actions/userActions";
+import { REGISTER_USER_RESET } from "../../constants/userConstants";
+import "./Register.css";
 
 const Register = () => {
     const [user, setUser] = useState({
@@ -24,11 +29,27 @@ const Register = () => {
     const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
+    const { loading, error, success } = useSelector((state) => state.newUser);
 
+    const message = (message = "") =>
+        toast.success(message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+        });
 
-    const submitHandler = (e) => {
+    useEffect(() => {
+        if (error) {
+            dispatch(clearErrors());
+        }
+
+        if (success) {
+            navigate("/admin/users");
+            message("User created successfully");
+        }
+    }, [dispatch, error, success, navigate]);
+
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -45,9 +66,6 @@ const Register = () => {
         formData.set("role", role); // Include role in form data
 
         dispatch(register(formData));
-
-
-
     };
 
     const onChange = (e) => {
@@ -71,152 +89,101 @@ const Register = () => {
         <Fragment>
             <MetaData title={"Register User"} />
             <div className="row">
-                <div className="col-12 col-md-8 offset-md-2">
+                <div className="col-12 col-md-2">
+                    <Sidebar />
+                </div>
+                <div className="col-12 col-md-8">
                     <div className="wrapper my-5">
-                        <form className="shadow-lg" onSubmit={submitHandler} encType="multipart/form-data">
-                            <h1 className="mb-4">Register</h1>
+                        <form className="shadow-lg custom-form" onSubmit={submitHandler} encType="multipart/form-data">
+                            <h1 className="mb-4">Register User</h1>
 
-                            <div className="form-group">
-                                <label htmlFor="firstname_field">First Name</label>
+                            <div className="custom-input-group">
                                 <input
                                     type="text"
-                                    id="firstname_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="First Name"
                                     name="firstname"
                                     value={firstname}
                                     onChange={onChange}
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="lastname_field">Last Name</label>
                                 <input
                                     type="text"
-                                    id="lastname_field"
-                                    className="form-control"
-                                    name="lastname"
-                                    value={lastname}
-                                    onChange={onChange}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="middlename_field">Middle Name</label>
-                                <input
-                                    type="text"
-                                    id="middlename_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="Middle Name"
                                     name="middlename"
                                     value={middlename}
                                     onChange={onChange}
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="phone_field">Phone</label>
+                            <div className="custom-input-group">
                                 <input
                                     type="text"
-                                    id="phone_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="Last Name"
+                                    name="lastname"
+                                    value={lastname}
+                                    onChange={onChange}
+                                />
+                                <input
+                                    type="text"
+                                    className="custom-input"
+                                    placeholder="Phone"
                                     name="phone"
                                     value={phone}
                                     onChange={onChange}
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="schoolId_field">School ID</label>
+                            <div className="custom-input-group">
                                 <input
                                     type="text"
-                                    id="schoolId_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="School ID"
                                     name="schoolId"
                                     value={schoolId}
                                     onChange={onChange}
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="grade_field">Grade</label>
                                 <input
                                     type="text"
-                                    id="grade_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="Grade"
                                     name="grade"
                                     value={grade}
                                     onChange={onChange}
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="schoolYear_field">School Year</label>
+                            <div className="custom-input-group">
                                 <input
                                     type="text"
-                                    id="schoolYear_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="School Year"
                                     name="schoolYear"
                                     value={schoolYear}
                                     onChange={onChange}
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="email_field">Email</label>
                                 <input
                                     type="email"
-                                    id="email_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="Email"
                                     name="email"
                                     value={email}
                                     onChange={onChange}
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="password_field">Password</label>
+                            <div className="custom-input-group">
                                 <input
                                     type="password"
-                                    id="password_field"
-                                    className="form-control"
+                                    className="custom-input"
+                                    placeholder="Password"
                                     name="password"
                                     value={password}
                                     onChange={onChange}
                                 />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="avatar_upload">Avatar</label>
-                                <div className="d-flex align-items-center">
-                                    <div>
-                                        <figure className="avatar mr-3 item-rtl">
-                                            <img
-                                                src={avatarPreview}
-                                                className="rounded-circle"
-                                                alt="Avatar Preview"
-                                            />
-                                        </figure>
-                                    </div>
-                                    <div className="custom-file">
-                                        <input
-                                            type="file"
-                                            name="avatar"
-                                            className="custom-file-input"
-                                            id="customFile"
-                                            accept="images/*"
-                                            onChange={onChange}
-                                        />
-                                        <label className="custom-file-label" htmlFor="customFile">
-                                            Choose Avatar
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="role_field">Role</label>
                                 <select
-                                    id="role_field"
-                                    className="form-control"
+                                    className="custom-input"
                                     name="role"
                                     value={role}
                                     onChange={(e) => setUser({ ...user, role: e.target.value })}
@@ -229,7 +196,32 @@ const Register = () => {
                                 </select>
                             </div>
 
-                            <button type="submit" className="btn btn-block py-3">
+                            <div className="custom-input-group">
+                                <div className="avatar-preview">
+                                    <img
+                                        src={avatarPreview}
+                                        className="rounded-circle"
+                                        alt="Avatar Preview"
+                                    />
+                                </div>
+                                <div className="custom-file">
+                                    <input
+                                        type="file"
+                                        name="avatar"
+                                        className="custom-file-input"
+                                        id="customFile"
+                                        accept="images/*"
+                                        onChange={onChange}
+                                    />
+                                    <label
+                                        className="custom-file-label"
+                                        htmlFor="customFile"
+                                    >
+                                        Choose Avatar
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" className="btn btn-block py-3 custom-btn">
                                 REGISTER
                             </button>
                         </form>
