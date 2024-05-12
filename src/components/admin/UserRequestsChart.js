@@ -14,10 +14,15 @@ import {
 export default function UserRequestsChart({ data }) {
     const barColors = ["#FFCBCB", "#FFBB70", "#BED7DC", "#9195F6", "#535C91", "#C68484", "#40A2E3", "#DCFFB7"];
     return (
-        <ResponsiveContainer width="80%" height={360}> {/* Increase the height */}
-            <BarChart data={data}>
-                <CartesianGrid strokeDasharray="2 2" />
-                <XAxis dataKey="userDetails.firstname" tick={{ fontSize: 12 }} />
+        <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <XAxis
+                    dataKey="userDetails.firstname"
+                    angle={-45}
+                    textAnchor="end"
+                    interval={0}
+                    tick={{ fontSize: 12 }}
+                />
                 <YAxis
                     label={{
                         value: '',
@@ -38,4 +43,3 @@ export default function UserRequestsChart({ data }) {
         </ResponsiveContainer>
     );
 }
-
