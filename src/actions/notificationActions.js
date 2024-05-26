@@ -29,7 +29,7 @@ export const getNotificationDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: NOTIFICATION_DETAILS_REQUEST });
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/notification/${id}`
+            `${process.env.REACT_APP_API}api/v1/notification/${id}`
         );
         dispatch({
             type: NOTIFICATION_DETAILS_SUCCESS,
@@ -48,7 +48,7 @@ export const getNotifications = () => async (dispatch) => {
         dispatch({ type: ADMIN_NOTIFICATIONS_REQUEST });
         console.log("Fetching notifications...");
         const { data } = await axios.get(
-            `${process.env.REACT_APP_API}/api/v1/notifications`,
+            `${process.env.REACT_APP_API}api/v1/notifications`,
             {
                 withCredentials: true,
             }
@@ -77,7 +77,7 @@ export const newNotification = (notificationData) => async (dispatch) => {
             withCredentials: true,
         };
         const { data } = await axios.post(
-            `${process.env.REACT_APP_API}/api/v1/admin/notification/new`,
+            `${process.env.REACT_APP_API}api/v1/admin/notification/new`,
             notificationData,
             config
         );
@@ -97,7 +97,7 @@ export const deleteNotification = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_NOTIFICATION_REQUEST });
         const { data } = await axios.delete(
-            `${process.env.REACT_APP_API}/api/v1/admin/notification/${id}`,
+            `${process.env.REACT_APP_API}api/v1/admin/notification/${id}`,
             {
                 withCredentials: true,
             }
@@ -125,7 +125,7 @@ export const updateNotification =
                 withCredentials: true,
             };
             const { data } = await axios.put(
-                `${process.env.REACT_APP_API}/api/v1/admin/notification/${id}`,
+                `${process.env.REACT_APP_API}api/v1/admin/notification/${id}`,
                 notificationData,
                 config
             );
@@ -148,7 +148,7 @@ export const markNotificationAsRead = (id) => async (dispatch) => {
             withCredentials: true,
         };
         const { data } = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/notification/${id}/markAsRead`,
+            `${process.env.REACT_APP_API}api/v1/notification/${id}/markAsRead`,
             null,
             config
         );
@@ -172,7 +172,7 @@ export const markAllNotificationsAsRead = () => async (dispatch) => {
             withCredentials: true,
         };
         const { data } = await axios.put(
-            `${process.env.REACT_APP_API}/api/v1/notifications/markAllAsRead`,
+            `${process.env.REACT_APP_API}api/v1/notifications/markAllAsRead`,
             null,
             config
         );
