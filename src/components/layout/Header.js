@@ -5,20 +5,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart, FaBell } from "react-icons/fa";
 import { logout } from "../../actions/userActions";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  IconButton, Badge, Popover, List, ListItem, ListItemText, Box, Typography, Divider
+} from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { getNotifications, markAllNotificationsAsRead } from "../../actions/notificationActions";
+
 const Header = () => {
   const [isSticky, setSticky] = useState(false);
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+  const notificationOpen = Boolean(notificationAnchorEl);
+
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const { requestDocuments } = useSelector((state) => state.request);
+  const { notifications } = useSelector((state) => state.notifications);
+
+  const notify = (error = "") => toast.error(error, { position: toast.POSITION.BOTTOM_CENTER });
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
+  const handleNotificationClick = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
+    dispatch(markAllNotificationsAsRead());
+  };
+
+  const handleNotificationClose = () => {
+    dispatch(getNotifications());
+    setNotificationAnchorEl(null);
+  };
+
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch]);
+
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scrolling...', window.scrollY);
       setSticky(window.scrollY > 0);
     };
 
@@ -30,13 +57,11 @@ const Header = () => {
   }, []);
 
   const navbarClass = isSticky ? "navbar row sticky-navbar" : "navbar row";
-
   const iconStyle = { fontSize: "1.5rem", color: "#9C865C" };
   const productsLinkStyle = { color: "black", fontFamily: "Arial" };
 
   return (
     <Fragment>
-
       <nav className={navbarClass}>
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
@@ -92,7 +117,6 @@ const Header = () => {
             </span>
           </Link>
 
-
           <Link to="/announcement">
             <span id="announcement" className="ml-3">
               Announcement
@@ -103,6 +127,73 @@ const Header = () => {
             About
           </Link>
 
+          <IconButton
+            aria-label="notifications"
+            style={{ color: "black", cursor: "pointer" }}
+            onClick={handleNotificationClick}
+          >
+            <Badge
+              badgeContent={
+                notifications ? notifications.filter(notification => notification.status === "unread").length : 0
+              }
+              color="error"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+
+          <Popover
+            open={notificationOpen}
+            anchorEl={notificationAnchorEl}
+            onClose={handleNotificationClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <Box style={{ width: 300 }}>
+              {notifications && notifications.length > 0 ? (
+                <div style={{ maxHeight: 300, overflowY: "auto" }}>
+                  <List>
+                    <Typography
+                      variant="subtitle1"
+                      align="center"
+                      style={{ fontWeight: "bold", marginBottom: "10px" }}
+                    >
+                      Latest Notifications
+                    </Typography>
+                    {notifications
+                      .slice()
+                      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                      .map((notification) => (
+                        <ListItem key={notification.id} style={{ cursor: "pointer" }}>
+                          <Divider style={{ margin: "5px 0" }} />
+                          <ListItemText
+                            primary={
+                              <>
+                                <span
+                                  style={{ color: "black" }}
+                                  onMouseEnter={(e) => (e.target.style.color = "blue")}
+                                  onMouseLeave={(e) => (e.target.style.color = "black")}
+                                  dangerouslySetInnerHTML={{ __html: notification.message }}
+                                />
+                                <span style={{ marginLeft: "10px", fontSize: "10px" }}>
+                                  {new Date(notification.createdAt).toLocaleDateString()}
+                                </span>
+                              </>
+                            }
+                          />
+                        </ListItem>
+                      ))}
+                  </List>
+                </div>
+              ) : (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Typography style={{ padding: "10px", color: "gray" }}>
+                    Inbox is Empty
+                  </Typography>
+                </div>
+              )}
+            </Box>
+          </Popover>
 
           {user ? (
             <div className="ml-4 dropdown d-inline">
@@ -114,7 +205,6 @@ const Header = () => {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-
               >
                 <figure className="avatar avatar-nav">
                   <img

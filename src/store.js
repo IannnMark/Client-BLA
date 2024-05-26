@@ -85,6 +85,15 @@ import {
   requestReducer
 } from "./reducers/requestReducers"
 
+import {
+  notificationsReducer,
+  notificationDetailsReducer,
+  newNotificationReducer,
+  notificationReducer,
+  markNotificationAsReadReducer,
+  markAllNotificationsAsReadReducer,
+} from "./reducers/notificationReducers";
+
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -135,6 +144,12 @@ const reducer = combineReducers({
   newClearance: newClearanceReducer,
   clearance: clearanceReducer,
   clearanceDetails: clearanceDetailsReducer,
+  notifications: notificationsReducer,
+  notificationDetails: notificationDetailsReducer,
+  newNotification: newNotificationReducer,
+  notification: notificationReducer,
+  markNotificationAsRead: markNotificationAsReadReducer,
+  markAllNotificationsAsRead: markAllNotificationsAsReadReducer,
 
 
 });
