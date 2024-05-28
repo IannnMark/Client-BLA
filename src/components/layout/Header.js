@@ -127,21 +127,22 @@ const Header = () => {
             About
           </Link>
 
-          <IconButton
-            aria-label="notifications"
-            style={{ color: "black", cursor: "pointer" }}
-            onClick={handleNotificationClick}
-          >
-            <Badge
-              badgeContent={
-                notifications ? notifications.filter(notification => notification.status === "unread").length : 0
-              }
-              color="error"
+          {user && (
+            <IconButton
+              aria-label="notifications"
+              style={{ color: "black", cursor: "pointer" }}
+              onClick={handleNotificationClick}
             >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-
+              <Badge
+                badgeContent={
+                  notifications ? notifications.filter(notification => notification.status === "unread").length : 0
+                }
+                color="error"
+              >
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          )}
           <Popover
             open={notificationOpen}
             anchorEl={notificationAnchorEl}
