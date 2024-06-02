@@ -1,4 +1,3 @@
-
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
@@ -14,7 +13,6 @@ import {
     updateRequest,
     clearErrors,
 } from "../../actions/inquiriesActions";
-
 import { UPDATE_REQUEST_RESET } from "../../constants/inquiriesConstants";
 import "./admin.css";
 
@@ -25,16 +23,16 @@ const ProcessRequest = () => {
     const { loading, request = {} } = useSelector(
         (state) => state.requestDetails
     );
-    const { requestItems, paymentInfo, user, totalPrice, requestStatus } =
-        request;
+    const { requestItems, paymentInfo, user, totalPrice, requestStatus } = request;
     const { error, isUpdated } = useSelector((state) => state.request);
     const requestId = id;
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
+
 
     const calculateTotal = () => {
         let total = 0;
@@ -84,7 +82,11 @@ const ProcessRequest = () => {
     const updateStatusHandler = async () => {
         const formData = new FormData();
         formData.set("status", status);
-        formData.set("dateRelease", selectedDate.toISOString());
+
+        // Only set the dateRelease if a date is selected
+        if (selectedDate) {
+            formData.set("dateRelease", selectedDate.toISOString());
+        }
 
         try {
             await dispatch(updateRequest(requestId, formData));
@@ -95,7 +97,6 @@ const ProcessRequest = () => {
             console.error("Update request failed:", error);
         }
     };
-
 
     const getStatusColorClass = (status) => {
         switch (status) {
@@ -113,12 +114,10 @@ const ProcessRequest = () => {
     return (
         <Fragment>
             <MetaData title={`Process Request # ${request && request._id}`} />
-
             <div className="row">
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
-
                 <div className="col-12 col-md-10 custom-parent-div">
                     <Fragment>
                         {loading ? (
@@ -129,8 +128,6 @@ const ProcessRequest = () => {
                                 style={{ minHeight: "100vh" }}
                             >
                                 <div className="col-12 col-lg-8 order-details">
-
-
                                     <div className="row">
                                         <div className="col-md-6">
                                             <p className="my-4 track-number">
@@ -152,9 +149,14 @@ const ProcessRequest = () => {
                                                     value={status}
                                                     onChange={(e) => setStatus(e.target.value)}
                                                 >
-                                                    <option value="Approved">Approved</option>
+                                                    <option value="Approved by Registrar">Approved by Registrar</option>
+                                                    <option value="Certificate of 4p's is processing">Certificate of 4p's is processing</option>
+                                                    <option value="Certificate of Grades is processing">Certificate of Grades is processing</option>
+                                                    <option value="Certificate of Enrollment is processing">Certificate of Enrollment is processing</option>
+                                                    <option value="Certificate of Good Moral is processing">Certificate of Good Moral is processing</option>
+                                                    <option value="Certificate of Honor is processing">Certificate of Honor is processing</option>
+                                                    <option value="Both of your request is processing">Both of you request is processing</option>
                                                     <option value="Received">Received</option>
-
                                                 </select>
                                             </div>
                                             <button
@@ -165,11 +167,7 @@ const ProcessRequest = () => {
                                             </button>
                                         </div>
                                     </div>
-
-
                                     <hr />
-
-
                                     <h4 style={{ textAlign: "center" }}> Student Information</h4>
                                     <div className="row">
                                         <div className="col-md-6">
@@ -185,11 +183,8 @@ const ProcessRequest = () => {
                                                 Grade & Section: {request.user?.grade || "N/A"}
                                             </p>
                                         </div>
-
                                     </div>
                                     <hr />
-
-
                                     <h4 style={{ textAlign: "center" }}>Request Information</h4>
                                     <div className="row">
                                         <div className="col-md-6">
@@ -223,12 +218,9 @@ const ProcessRequest = () => {
                                                 </span>
                                             </p>
                                         </div>
-
                                     </div>
                                     <hr />
-
                                     <h4 style={{ textAlign: "center" }}>Document Information</h4>
-
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="my-4 students-name">
@@ -245,29 +237,25 @@ const ProcessRequest = () => {
                                                 {requestItems &&
                                                     requestItems.map((item) => (
                                                         <div key={item.document} className="my-4 student-namee">
-
                                                             <p>Price: ₱{item.price}</p>
-
                                                         </div>
                                                     ))}
                                             </div>
                                         </div>
                                     </div>
-
                                     <hr />
-
-
                                     <div className="text-center">
                                         <h4 className="my-4">Schedule a Date of Release:</h4>
                                     </div>
-                                    <div style={{ textAlign: 'center' }}>
+                                    <div style={{ textAlign: "center" }}>
                                         <DatePicker
                                             selected={selectedDate}
                                             onChange={handleDateChange}
-                                            dateFormat="MMMM dd, yyyy"
+                                            dateFormat="MMMM dd, yyyy h:mm aa"
                                             className="form-control"
                                             popperClassName="datepicker-popper"
                                             minDate={new Date()}
+                                            showTimeInput
                                         />
                                     </div>
                                 </div>
