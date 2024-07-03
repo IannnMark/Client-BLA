@@ -45,7 +45,7 @@ const OrdersList = () => {
     if (dataTableContent) {
       // Get logo image data
       const logoImg = new Image();
-      logoImg.src = "/images/school_logo.png"; // Replace 'path_to_your_logo_image.png' with the actual path to your logo image
+      logoImg.src = "/images/school_logo.png";
 
       // Fetch current date
       const currentDate = new Date().toLocaleDateString("en-US", {
@@ -159,6 +159,18 @@ const OrdersList = () => {
     return Array.from(uniqueProducts);
   };
 
+  const getUniqueGrades = () => {
+    const uniqueGrades = new Set();
+
+    orders.forEach((order) => {
+      if (order.user && order.user.grade) {
+        uniqueGrades.add(order.user.grade);
+      }
+    });
+
+    return Array.from(uniqueGrades);
+  };
+
   const toggleDateFilter = () => {
     setShowDateFilter(!showDateFilter);
   };
@@ -194,42 +206,39 @@ const OrdersList = () => {
 
     const productFilteredOrders = selectedProduct
       ? statusFilteredOrders.filter((order) =>
-        order.orderItems.some((item) => item.name === selectedProduct)
+        order.orderItems.some((item) => item.productName === selectedProduct)
       )
       : statusFilteredOrders;
 
-    const gradeFilteredOrders = selectedGrade
-      ? productFilteredOrders.filter((order) => {
-        // Adjust the logic based on your data structure
-        // Replace order.grade with the correct path to the grade in your data
-        const userGrade = parseInt(order.grade, 10);
-        const selectedGradeNum = parseInt(selectedGrade, 10) || 0;
 
-        return userGrade >= selectedGradeNum;
-      })
+    const gradeFilteredOrders = selectedGrade
+      ? productFilteredOrders.filter(
+        (order) => order.user && order.user.grade === selectedGrade
+      )
       : productFilteredOrders;
 
     const sortedFilteredOrders = [...gradeFilteredOrders].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
 
+
     sortedFilteredOrders.reverse();
 
     const data = {
       columns: [
-        // {
-        //   label: "Order ID",
-        //   field: "id",
-        //   sort: "asc",
-        // },
         {
-          label: "No.", // Add a label for the counter column
-          field: "index", // Use a field name for the counter column
-          sort: "asc", // Sort the counter column in ascending order
+          label: "No.",
+          field: "index",
+          sort: "asc",
         },
         {
           label: "User Last Name",
           field: "userLastName",
+          sort: "asc",
+        },
+        {
+          label: "Grade",
+          field: "grade",
           sort: "asc",
         },
         {
@@ -285,8 +294,8 @@ const OrdersList = () => {
         : "N/A";
 
       data.rows.push({
-        // id: order._id,
         userLastName: order.user?.lastname,
+        grade: parseInt(order.user ? order.user.grade : 0, 10),
         numofItems: order.orderItems.length,
         orderedMerch: orderedMerch || "N/A",
         amount: `₱${order.totalPrice}`,
@@ -326,6 +335,7 @@ const OrdersList = () => {
 
     return data;
   };
+
 
   return (
     <Fragment>
@@ -401,32 +411,33 @@ const OrdersList = () => {
               </div>
 
               <div className="col-md-3">
-                <button className="toggle-button" onClick={toggleGradeFilter}>
+                <button
+                  className="toggle-button grade-filter"
+                  onClick={() => setShowGradeFilter(!showGradeFilter)}
+                >
                   Filtered by Grade
                 </button>
                 <br />
                 <br />
                 {showGradeFilter && (
-                  <div
-                    className="grade-input-section"
-                    style={{ marginLeft: "70px", fontWeight: "bold" }}
-                  >
-                    <label style={{ marginRight: "10px" }}>Grade: </label>
+                  <div className="form-group">
+                    <label htmlFor="grade_filter">Select Grade</label>
                     <select
-                      style={{ fontWeight: "bold" }}
-                      onChange={(e) => setSelectedGrade(e.target.value)}
+                      id="grade_filter"
+                      className="form-control"
                       value={selectedGrade}
+                      onChange={(e) => setSelectedGrade(e.target.value)}
                     >
                       <option value="">All</option>
-                      <option value="7">Grade 7</option>
-                      <option value="8">Grade 8</option>
-                      <option value="9">Grade 9</option>
-                      <option value="10">Grade 10</option>
-                      <option value="11">Grade 11</option>
-                      <option value="12">Grade 12</option>
+                      {getUniqueGrades().map((grade) => (
+                        <option key={grade} value={grade}>
+                          {grade}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 )}
+
               </div>
 
               <div className="col-md-3">
