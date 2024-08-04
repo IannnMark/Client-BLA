@@ -27,6 +27,14 @@ const SchoolDocuments = () => {
         ))}
       </ul>
 
+      <br />
+      <div className="mobile-app-link">
+        <p>Download our mobile application:</p>
+        <a href="https://drive.google.com/drive/u/0/folders/1kWa0DdjrGui-8RsA6d9x8NtrcjIEu2I1?fbclid=IwZXh0bgNhZW0CMTEAAR06u1FkzugDQxIKC8h8dfWMnQI9kZxibSbXybH-fXtBkbQFlsKQKJs-33s_aem_4lSEWSDL9WbMJ7zb3T1TGA" target="_blank" rel="noopener noreferrer" className="app-link">
+          Get the App
+        </a>
+      </div>
+
 
 
     </div>
