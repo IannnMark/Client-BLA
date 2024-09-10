@@ -21,7 +21,9 @@ const OrderSuccess = () => {
             height="200"
           />
 
-          <h2>Your Order has been placed successfully.</h2>
+          <div className="containerr">
+            <h2>Your Order has been placed successfully.</h2>
+          </div>
 
           <Link to="/orders/me">Go to Orders</Link>
         </div>
